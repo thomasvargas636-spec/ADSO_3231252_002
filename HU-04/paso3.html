@@ -1,0 +1,113 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Parkalia – Paso 3: Reserva Confirmada</title>
+  <link href="https://fonts.googleapis.com/css2?family=Syne:wght@400;600;700;800&family=DM+Sans:wght@300;400;500&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+<div class="page">
+
+  <!-- SIDEBAR -->
+  <aside class="sidebar">
+    <div class="logo">
+      <img src="Group_2.png" alt="Parkalia Logo" />
+      <div class="logo-text">PARK<span>ALIA</span></div>
+    </div>
+    <div class="nav-label">Principal</div>
+    <div class="nav-item">📊 Panel de control</div>
+    <div class="nav-item active">🚗 Vehículos</div>
+    <div class="nav-item">⬡ Zonas</div>
+    <div class="nav-label">Actividad</div>
+    <div class="nav-item">📋 Reservaciones</div>
+    <div class="nav-item">💳 Pagos</div>
+    <div class="nav-item">🕐 Historial</div>
+    <div class="nav-label">Sistema</div>
+    <div class="nav-item">👥 Usuarios</div>
+    <div class="nav-item">⚙️ Configuración</div>
+  </aside>
+
+  <!-- MAIN -->
+  <div class="main">
+    <div class="topbar">
+      <div class="page-title">Parkalia</div>
+      <div class="topbar-user">👤 @JosephGomez8</div>
+    </div>
+
+    <div class="content">
+      <div class="screen-label">HU-05 — Reserva de Cupo</div>
+
+      <!-- STEPPER -->
+      <div class="stepper">
+        <div class="stepper-item done">
+          <div class="stepper-circle">✓</div>
+          <div class="stepper-label">Zona y horario</div>
+        </div>
+        <div class="stepper-line done"></div>
+        <div class="stepper-item done">
+          <div class="stepper-circle">✓</div>
+          <div class="stepper-label">Confirmar</div>
+        </div>
+        <div class="stepper-line done"></div>
+        <div class="stepper-item active">
+          <div class="stepper-circle">✓</div>
+          <div class="stepper-label">Confirmada</div>
+        </div>
+      </div>
+
+      <!-- CARD PASO 3 -->
+      <div class="card">
+        <div class="step-header">
+          <div class="step-number step-check">✓</div>
+          <div class="step-title">Reserva confirmada</div>
+        </div>
+        <div class="step-body">
+
+          <div class="success-banner">
+            <div class="success-icon">✅</div>
+            <div class="success-text">¡Reserva exitosa!</div>
+            <div class="success-sub">Tu cupo ha sido reservado correctamente</div>
+          </div>
+
+          <div class="reservation-code">
+            <div class="code-label">Código de reserva</div>
+            <div class="code-value" id="reservation-code">PRK-2847</div>
+          </div>
+
+          <div class="confirmation-card">
+            <div class="conf-row">
+              <span class="conf-label">Zona</span>
+              <span class="conf-value" id="final-zona">Centro A</span>
+            </div>
+            <div class="conf-row">
+              <span class="conf-label">Fecha</span>
+              <span class="conf-value" id="final-fecha">16 Mar 2026</span>
+            </div>
+            <div class="conf-row">
+              <span class="conf-label">Entrada</span>
+              <span class="conf-value" id="final-entrada">9:00 AM</span>
+            </div>
+            <div class="conf-row">
+              <span class="conf-label">Estado</span>
+              <span><span class="badge badge-green">Confirmada</span></span>
+            </div>
+          </div>
+
+          <button class="btn-primary btn-full" style="margin-bottom: 8px;" id="btn-ver-reservas">
+            Ver mis reservas
+          </button>
+          <button class="btn-secondary btn-full" id="btn-inicio">
+            Volver al inicio
+          </button>
+
+        </div>
+      </div>
+
+    </div>
+  </div>
+</div>
+<script src="script.js"></script>
+</body>
+</html>
