@@ -1,0 +1,119 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Parkalia – Paso 2: Confirmar Reserva</title>
+  <link href="https://fonts.googleapis.com/css2?family=Syne:wght@400;600;700;800&family=DM+Sans:wght@300;400;500&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+<div class="page">
+
+  <!-- SIDEBAR -->
+  <aside class="sidebar">
+    <div class="logo">
+      <img src="Group_2.png" alt="Parkalia Logo" />
+      <div class="logo-text">PARK<span>ALIA</span></div>
+    </div>
+    <div class="nav-label">Principal</div>
+    <div class="nav-item">📊 Panel de control</div>
+    <div class="nav-item active">🚗 Vehículos</div>
+    <div class="nav-item">⬡ Zonas</div>
+    <div class="nav-label">Actividad</div>
+    <div class="nav-item">📋 Reservaciones</div>
+    <div class="nav-item">💳 Pagos</div>
+    <div class="nav-item">🕐 Historial</div>
+    <div class="nav-label">Sistema</div>
+    <div class="nav-item">👥 Usuarios</div>
+    <div class="nav-item">⚙️ Configuración</div>
+  </aside>
+
+  <!-- MAIN -->
+  <div class="main">
+    <div class="topbar">
+      <div class="page-title">Parkalia</div>
+      <div class="topbar-user">👤 @JosephGomez8</div>
+    </div>
+
+    <div class="content">
+      <div class="screen-label">HU-05 — Reserva de Cupo</div>
+
+      <!-- STEPPER -->
+      <div class="stepper">
+        <div class="stepper-item done">
+          <div class="stepper-circle">✓</div>
+          <div class="stepper-label">Zona y horario</div>
+        </div>
+        <div class="stepper-line done"></div>
+        <div class="stepper-item active">
+          <div class="stepper-circle">2</div>
+          <div class="stepper-label">Confirmar</div>
+        </div>
+        <div class="stepper-line"></div>
+        <div class="stepper-item">
+          <div class="stepper-circle">3</div>
+          <div class="stepper-label">Confirmada</div>
+        </div>
+      </div>
+
+      <!-- CARD PASO 2 -->
+      <div class="card">
+        <div class="step-header">
+          <div class="step-number">2</div>
+          <div class="step-title">Confirmar reserva</div>
+        </div>
+        <div class="step-body">
+
+          <div class="confirmation-card">
+            <div class="conf-row">
+              <span class="conf-label">Zona</span>
+              <span class="conf-value" id="conf-zona">Centro A</span>
+            </div>
+            <div class="conf-row">
+              <span class="conf-label">Vehículo</span>
+              <span class="conf-value" id="conf-vehiculo">SAM 525</span>
+            </div>
+            <div class="conf-row">
+              <span class="conf-label">Fecha</span>
+              <span class="conf-value" id="conf-fecha">16 Mar 2026</span>
+            </div>
+            <div class="conf-row">
+              <span class="conf-label">Entrada</span>
+              <span class="conf-value" id="conf-entrada">9:00 AM</span>
+            </div>
+            <div class="conf-row">
+              <span class="conf-label">Duración</span>
+              <span class="conf-value" id="conf-duracion">2 horas</span>
+            </div>
+            <div class="conf-row">
+              <span class="conf-label">Tarifa</span>
+              <span class="conf-value">$2.500/hr</span>
+            </div>
+          </div>
+
+          <div class="conf-total">
+            <span>Total estimado</span>
+            <span class="conf-total-value" id="conf-total">$5.000</span>
+          </div>
+
+          <div class="divider"></div>
+
+          <div class="conf-notice">
+            ⚠ Al confirmar, el cupo quedará reservado a tu nombre. El pago se realiza al llegar.
+          </div>
+
+          <div class="btn-row">
+            <button class="btn-secondary" id="btn-volver">← Volver</button>
+            <button class="btn-primary btn-flex2" id="btn-confirmar">Confirmar reserva</button>
+          </div>
+
+        </div>
+      </div>
+
+    </div>
+  </div>
+</div>
+<script src="script.js"></script>
+</body>
+</html>

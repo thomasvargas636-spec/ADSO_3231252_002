@@ -1,0 +1,380 @@
+/* ── VARIABLES ── */
+:root {
+  --bg: #080C10;
+  --surface: #0F1520;
+  --card: #141B27;
+  --border: #1E2A3A;
+  --blue: #1A6FD4;
+  --green: #3DBE6C;
+  --blue-soft: rgba(26, 111, 212, 0.12);
+  --green-soft: rgba(61, 190, 108, 0.12);
+  --text: #E8EDF5;
+  --muted: #5A6A7E;
+  --danger: #E8404A;
+  --success: #3DBE6C;
+}
+
+/* ── RESET ── */
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+/* ── BODY ── */
+body {
+  font-family: 'DM Sans', sans-serif;
+  background: var(--bg);
+  color: var(--text);
+  min-height: 100vh;
+}
+
+body::before {
+  content: '';
+  position: fixed;
+  inset: 0;
+  background:
+    radial-gradient(ellipse 50% 50% at 15% 50%, rgba(26, 111, 212, 0.08) 0%, transparent 60%),
+    radial-gradient(ellipse 40% 40% at 85% 50%, rgba(61, 190, 108, 0.06) 0%, transparent 60%);
+  pointer-events: none;
+  z-index: 0;
+}
+
+/* ── SCREENS ── */
+.screens {
+  display: flex;
+  gap: 0;
+  min-height: 100vh;
+  position: relative;
+  z-index: 1;
+}
+
+.screen {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  padding: 40px 24px;
+  position: relative;
+  border-right: 1px solid var(--border);
+}
+
+.screen:last-child {
+  border-right: none;
+}
+
+.screen-label {
+  position: absolute;
+  top: 20px;
+  left: 24px;
+  font-size: 10px;
+  font-weight: 600;
+  letter-spacing: 1.5px;
+  text-transform: uppercase;
+  color: var(--muted);
+}
+
+/* ── LOGO ── */
+.logo {
+  margin-bottom: 28px;
+}
+
+.logo-img {
+  height: 40px;
+  width: auto;
+  object-fit: contain;
+}
+
+/* ── CARD ── */
+.card {
+  background: var(--card);
+  border: 1px solid var(--border);
+  border-radius: 16px;
+  padding: 32px;
+  width: 100%;
+  max-width: 400px;
+  animation: fadeUp 0.4s ease both;
+}
+
+.text-center {
+  text-align: center;
+}
+
+.card-title {
+  font-family: 'Syne', sans-serif;
+  font-size: 20px;
+  font-weight: 800;
+  color: var(--text);
+  margin-bottom: 6px;
+}
+
+.card-subtitle {
+  font-size: 13px;
+  color: var(--muted);
+  margin-bottom: 24px;
+  line-height: 1.5;
+}
+
+/* ── FIELDS ── */
+.field {
+  margin-bottom: 16px;
+}
+
+.field label {
+  display: block;
+  font-size: 11px;
+  font-weight: 600;
+  letter-spacing: 0.8px;
+  text-transform: uppercase;
+  color: var(--muted);
+  margin-bottom: 6px;
+}
+
+.field input {
+  width: 100%;
+  padding: 11px 14px;
+  background: var(--surface);
+  border: 1px solid var(--border);
+  border-radius: 8px;
+  color: var(--text);
+  font-family: 'DM Sans', sans-serif;
+  font-size: 13.5px;
+  outline: none;
+  transition: border-color 0.2s;
+}
+
+.field input:focus {
+  border-color: var(--blue);
+}
+
+/* Fix autocompletador Chrome */
+.field input:-webkit-autofill,
+.field input:-webkit-autofill:hover,
+.field input:-webkit-autofill:focus {
+  -webkit-box-shadow: 0 0 0px 1000px #0F1520 inset;
+  -webkit-text-fill-color: #E8EDF5;
+  caret-color: #E8EDF5;
+  border-color: var(--border);
+  transition: background-color 5000s ease-in-out 0s;
+}
+
+.field input.error {
+  border-color: var(--danger);
+}
+
+.field input.success {
+  border-color: rgba(61, 190, 108, 0.4);
+}
+
+.field-row {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 12px;
+}
+
+/* ── ERROR MESSAGE ── */
+.error-msg {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  margin-top: 6px;
+  font-size: 11px;
+  color: var(--danger);
+}
+
+/* ── REQUIREMENTS ── */
+.requirements {
+  background: var(--surface);
+  border: 1px solid var(--border);
+  border-radius: 8px;
+  padding: 12px 14px;
+  margin-top: 8px;
+  margin-bottom: 16px;
+}
+
+.req-title {
+  font-size: 11px;
+  font-weight: 600;
+  color: var(--muted);
+  margin-bottom: 8px;
+  letter-spacing: 0.5px;
+}
+
+.req-item {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  font-size: 12px;
+  color: var(--muted);
+  margin-bottom: 4px;
+}
+
+.req-item.met {
+  color: var(--green);
+}
+
+.req-dot {
+  width: 6px;
+  height: 6px;
+  border-radius: 50%;
+  background: var(--muted);
+  flex-shrink: 0;
+}
+
+.req-item.met .req-dot {
+  background: var(--green);
+}
+
+/* ── DIVIDER ── */
+.divider {
+  height: 1px;
+  background: var(--border);
+  margin: 20px 0;
+}
+
+/* ── BUTTONS ── */
+.btn-primary {
+  width: 100%;
+  padding: 12px;
+  background: linear-gradient(135deg, var(--blue), var(--green));
+  border: none;
+  border-radius: 8px;
+  color: white;
+  font-family: 'DM Sans', sans-serif;
+  font-size: 14px;
+  font-weight: 500;
+  cursor: pointer;
+  box-shadow: 0 4px 20px rgba(26, 111, 212, 0.25);
+  margin-bottom: 16px;
+  transition: opacity 0.2s;
+}
+
+.btn-primary:disabled {
+  opacity: 0.5;
+  cursor: not-allowed;
+}
+
+.btn-success {
+  width: 100%;
+  padding: 12px;
+  background: linear-gradient(135deg, var(--blue), var(--green));
+  border: none;
+  border-radius: 8px;
+  color: white;
+  font-family: 'DM Sans', sans-serif;
+  font-size: 14px;
+  font-weight: 500;
+  cursor: pointer;
+  box-shadow: 0 4px 20px rgba(26, 111, 212, 0.25);
+}
+
+/* ── LOGIN LINK ── */
+.login-link {
+  text-align: center;
+  font-size: 13px;
+  color: var(--muted);
+}
+
+.login-link a {
+  color: var(--blue);
+  text-decoration: none;
+  font-weight: 500;
+}
+
+/* ── SUCCESS ── */
+.success-icon {
+  font-size: 48px;
+  margin-bottom: 16px;
+}
+
+.success-title {
+  font-family: 'Syne', sans-serif;
+  font-size: 22px;
+  font-weight: 800;
+  margin-bottom: 8px;
+}
+
+.success-desc {
+  font-size: 13px;
+  color: var(--muted);
+  line-height: 1.6;
+  margin-bottom: 20px;
+}
+
+.success-email-wrap {
+  display: flex;
+  justify-content: center;
+  margin-bottom: 20px;
+}
+
+.success-email {
+  display: inline-block;
+  padding: 8px 16px;
+  background: var(--blue-soft);
+  border: 1px solid rgba(26, 111, 212, 0.2);
+  border-radius: 8px;
+  font-size: 13px;
+  color: var(--blue);
+  font-weight: 500;
+}
+
+/* ── STEPS ── */
+.steps {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  margin-bottom: 24px;
+  justify-content: center;
+}
+
+.step {
+  width: 28px;
+  height: 28px;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 12px;
+  font-weight: 600;
+  font-family: 'Syne', sans-serif;
+}
+
+.step.active {
+  background: linear-gradient(135deg, var(--blue), var(--green));
+  color: white;
+}
+
+.step.done {
+  background: var(--green-soft);
+  color: var(--green);
+  border: 1px solid rgba(61, 190, 108, 0.3);
+}
+
+.step-line {
+  flex: 1;
+  height: 1px;
+  background: var(--border);
+  max-width: 32px;
+}
+
+.step-line.done {
+  background: var(--green);
+  opacity: 0.3;
+}
+
+/* ── ANIMATIONS ── */
+@keyframes fadeUp {
+  from {
+    opacity: 0;
+    transform: translateY(16px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+.screen:nth-child(1) .card { animation-delay: 0s; }
+.screen:nth-child(2) .card { animation-delay: 0.1s; }
+.screen:nth-child(3) .card { animation-delay: 0.2s; }

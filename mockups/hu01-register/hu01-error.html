@@ -1,0 +1,70 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Parkalia – Registro (Errores)</title>
+  <link href="https://fonts.googleapis.com/css2?family=Syne:wght@400;600;700;800&family=DM+Sans:wght@300;400;500&display=swap" rel="stylesheet" />
+  <link rel="stylesheet" href="css/style.css"/>
+</head>
+<body>
+
+  <div class="screen">
+
+    <div class="logo">
+      <img src="Group_2.png" alt="Parkalia Logo" class="logo-img" />
+    </div>
+
+    <div class="card">
+      <div class="card-title">Crear cuenta</div>
+      <div class="card-subtitle">Regístrate para acceder a todas las funciones de la plataforma</div>
+
+      <div class="field-row">
+        <div class="field">
+          <label>Nombre</label>
+          <input type="text" value="Juan" class="success" />
+        </div>
+        <div class="field">
+          <label>Apellido</label>
+          <input type="text" value="García" class="success" />
+        </div>
+      </div>
+
+      <div class="field">
+        <label>Correo electrónico</label>
+        <input type="email" value="juan@correo.com" class="error" />
+        <div class="error-msg">⚠ Este correo ya está registrado</div>
+      </div>
+
+      <div class="field">
+        <label>Contraseña</label>
+        <input type="password" value="pass123" class="error" />
+      </div>
+
+      <div class="requirements">
+        <div class="req-title">Requisitos de contraseña</div>
+        <div class="req-item met"><div class="req-dot"></div> Máximo 12 caracteres</div>
+        <div class="req-item unmet"><div class="req-dot"></div> Al menos una mayúscula</div>
+        <div class="req-item unmet"><div class="req-dot"></div> Al menos un carácter especial</div>
+        <div class="req-item met"><div class="req-dot"></div> Debe ser alfanumérica</div>
+      </div>
+
+      <div class="field">
+        <label>Confirmar contraseña</label>
+        <input type="password" value="pass456" class="error" />
+        <div class="error-msg">⚠ Las contraseñas no coinciden</div>
+      </div>
+
+      <div class="divider"></div>
+
+      <button class="btn-primary" disabled>Crear cuenta</button>
+
+      <div class="login-link">
+        ¿Ya tienes cuenta? <a href="#">Inicia sesión</a>
+      </div>
+    </div>
+
+  </div>
+
+</body>
+</html>

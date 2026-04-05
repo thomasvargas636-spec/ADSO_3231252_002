@@ -1,0 +1,116 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Parkalia – Paso 1: Seleccionar zona y horario</title>
+  <link href="https://fonts.googleapis.com/css2?family=Syne:wght@400;600;700;800&family=DM+Sans:wght@300;400;500&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+<div class="page">
+
+  <!-- SIDEBAR -->
+  <aside class="sidebar">
+    <div class="logo">
+      <img src="Group_2.jpeg" alt="Parkalia Logo" />
+      <div class="logo-text">PARK<span>ALIA</span></div>
+    </div>
+    <div class="nav-label">Principal</div>
+    <div class="nav-item">📊 Panel de control</div>
+    <div class="nav-item active">🚗 Vehículos</div>
+    <div class="nav-item">⬡ Zonas</div>
+    <div class="nav-label">Actividad</div>
+    <div class="nav-item">📋 Reservaciones</div>
+    <div class="nav-item">💳 Pagos</div>
+    <div class="nav-item">🕐 Historial</div>
+    <div class="nav-label">Sistema</div>
+    <div class="nav-item">👥 Usuarios</div>
+    <div class="nav-item">⚙️ Configuración</div>
+  </aside>
+
+  <!-- MAIN -->
+  <div class="main">
+    <div class="topbar">
+      <div class="page-title">Parkalia</div>
+      <div class="topbar-user">👤 @JosephGomez8</div>
+    </div>
+
+    <div class="content">
+      <div class="screen-label">HU-05 — Reserva de Cupo</div>
+
+      <!-- STEPPER -->
+      <div class="stepper">
+        <div class="stepper-item active">
+          <div class="stepper-circle">1</div>
+          <div class="stepper-label">Zona y horario</div>
+        </div>
+        <div class="stepper-line"></div>
+        <div class="stepper-item">
+          <div class="stepper-circle">2</div>
+          <div class="stepper-label">Confirmar</div>
+        </div>
+        <div class="stepper-line"></div>
+        <div class="stepper-item">
+          <div class="stepper-circle">3</div>
+          <div class="stepper-label">Confirmada</div>
+        </div>
+      </div>
+
+      <!-- CARD PASO 1 -->
+      <div class="card">
+        <div class="step-header">
+          <div class="step-number">1</div>
+          <div class="step-title">Seleccionar zona y horario</div>
+        </div>
+        <div class="step-body">
+
+          <div class="selected-zone-card">
+            <div class="selected-zone-name">Zona Centro A</div>
+            <div class="selected-zone-detail">📍 Calle 15 #8-20 · 14 cupos disponibles</div>
+          </div>
+
+          <div class="field">
+            <label>Vehículo</label>
+            <select class="field-select" id="select-vehicle">
+              <option>🚗 SAM 525 — Mazda CX-30</option>
+            </select>
+          </div>
+
+          <div class="field">
+            <label>Fecha</label>
+            <input class="field-input" id="input-date" type="text" value="16 Mar 2026" />
+          </div>
+
+          <div class="field">
+            <label>Hora de entrada</label>
+          </div>
+          <div class="time-slots" id="time-slots">
+            <div class="time-slot" data-time="8:00 AM">8:00 AM</div>
+            <div class="time-slot selected" data-time="9:00 AM">9:00 AM</div>
+            <div class="time-slot" data-time="10:00 AM">10:00 AM</div>
+            <div class="time-slot unavailable" data-time="11:00 AM">11:00 AM</div>
+            <div class="time-slot" data-time="12:00 PM">12:00 PM</div>
+            <div class="time-slot" data-time="1:00 PM">1:00 PM</div>
+          </div>
+
+          <div class="field">
+            <label>Duración estimada</label>
+            <select class="field-select" id="select-duration">
+              <option value="1">1 hora</option>
+              <option value="2" selected>2 horas</option>
+              <option value="3">3 horas</option>
+              <option value="4">4 horas</option>
+            </select>
+          </div>
+
+          <button class="btn-primary btn-full" id="btn-continuar">Continuar →</button>
+        </div>
+      </div>
+
+    </div>
+  </div>
+</div>
+<script src="script.js"></script>
+</body>
+</html>
