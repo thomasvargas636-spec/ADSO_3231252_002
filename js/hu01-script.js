@@ -111,5 +111,10 @@ btnRegister.addEventListener('click', function () {
     } else {
     setSuccess('confirm-password', 'confirm-password-error');
     }
+    if (valid) {
+    document.getElementById('success-email-display').textContent = email;
+    screenForm.classList.add('hidden');
+    screenSuccess.classList.remove('hidden');
+    }
 });
 }
