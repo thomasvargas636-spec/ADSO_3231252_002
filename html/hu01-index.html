@@ -3,58 +3,87 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>PARKALIA-Register</title>
+    <title>PARKALIA - Register</title>
     <link href="https://fonts.googleapis.com/css2?family=Syne:wght@400;600;700;800&family=DM+Sans:wght@300;400;500&display=swap" rel="stylesheet" />
     <link rel="stylesheet" href="../css/hu01-style.css"/>
 </head>
 <body>
-    <div class="screen">
+
+    <!--FORM-->
+    <div class="screen" id="screen-form">
         <div class="logo">
             <img src="../img/Group_2.png" alt="logo" class="logo-img"/>
         </div>
-    </div>
-    <!--FORM-->
-    <div class="card" id="form-card">
-        <div class="card-title">Crear cuenta</div>
-        <div class="card-subtitle">Registrate para acceder a todas las funciones de la plataforma</div>
-        <div class="field-row">
-            <div class="field">
-                <label>Primer nombre</label>
-                <input type="text" id="firstname" placeholder="Camilo"/>
-                <div class="error" id="firstname-error"></div>
+        <div class="card" id="form-card">
+            <div class="card-title">Crear cuenta</div>
+            <div class="card-subtitle">Regístrate para acceder a todas las funciones de la plataforma</div>
+            <div class="field-row">
+                <div class="field">
+                    <label>Nombre</label>
+                    <input type="text" id="firstname" placeholder="Camilo"/>
+                    <div class="error" id="firstname-error"></div>
+                </div>
+                <div class="field">
+                    <label>Apellido</label>
+                    <input type="text" id="lastname" placeholder="García"/>
+                    <div class="error" id="lastname-error"></div>
+                </div>
             </div>
             <div class="field">
-                <label>Apellido</label>
-                <input type="text" id="lastname" placeholder="García"/>
-                <div class="error" id="lastname-error"></div>
+                <label>Correo electrónico</label>
+                <input type="email" id="email" placeholder="camilo@gmail.com"/>
+                <div class="error" id="email-error"></div>
             </div>
-        </div>
-        <div class="field">
-            <label>Correo electrónico</label>
-            <input type="email" id="email" placeholder="camilo@gmail.com"/>
-            <div class="error" id="email-error"></div>
-        </div>
-        <div class="field">
-            <label>Contraseña</label>
-            <input type="password" id="password" placeholder="********"/>
-            <div class="error" id="password-error"></div>
-        </div>
-        <div class="requirements">
-        <div class="req-title">Requisitos para tu contraseña</div>
-        <div class="req-item" id="req-length"><div class="req-dot"></div>Entre 8 y 12 carácteres</div>
-        <div class="req-item" id="req-upper"><div class="req-dot"></div> Al menos una letra mayúscula</div>
-        <div class="req-item" id="req-special"><div class="req-dot"></div> Al menos un carácter especial</div>
-        <div class="req-item" id="req-alnum"><div class="req-dot"></div> Debe ser alfanumérica</div>
-        </div>
-        <div class="field">
-            <label>Confirmar contraseña</label>
-            <input type="password" id="confirm-password" placeholder="********"/>
-            <div class="error" id="confirm-password-error"></div>
-        </div>
-        <div class="divider"></div>
+            <div class="field">
+                <label>Contraseña</label>
+                <input type="password" id="password" placeholder="********"/>
+                <div class="error" id="password-error"></div>
+            </div>
+            <div class="requirements">
+                <div class="req-title">Requisitos para tu contraseña</div>
+                <div class="req-item" id="req-length"><div class="req-dot"></div> Entre 8 y 12 caracteres</div>
+                <div class="req-item" id="req-upper"><div class="req-dot"></div> Al menos una letra mayúscula</div>
+                <div class="req-item" id="req-special"><div class="req-dot"></div> Al menos un carácter especial</div>
+                <div class="req-item" id="req-alnum"><div class="req-dot"></div> Debe ser alfanumérica</div>
+            </div>
+            <div class="field">
+                <label>Confirmar contraseña</label>
+                <input type="password" id="confirm-password" placeholder="********"/>
+                <div class="error" id="confirm-password-error"></div>
+            </div>
+            <div class="divider"></div>
             <button class="btn-primary" id="btn-register">Crear cuenta</button>
-            <div class="login-link">¿Ya tienes una cuenta? <a href="#">Iniciar sesión</a></div>
+            <div class="login-link">
+                ¿Ya tienes una cuenta? <a href="#">Iniciar sesión</a>
+            </div>
+        </div>
     </div>
-<script src="../js/hu01-script.js"></script>
+    <!--SUCCESS-->
+    <div class="screen hidden" id="screen-success">
+        <div class="logo">
+            <img src="../img/Group_2.png" alt="logo" class="logo-img"/>
+        </div>
+        <div class="card text-center">
+            <div class="success-icon">✅</div>
+            <div class="success-title">¡Cuenta creada!</div>
+            <div class="success-desc">
+                Tu cuenta ha sido registrada exitosamente. Ya puedes acceder a todas las funciones de Parkalia.
+            </div>
+            <div class="success-email-wrap">
+                <div class="success-email" id="success-email-display"></div>
+            </div>
+            <div class="steps">
+                <div class="step done">✓</div>
+                <div class="step-line done"></div>
+                <div class="step done">✓</div>
+                <div class="step-line done"></div>
+                <div class="step active">3</div>
+            </div>
+            <button class="btn-success" onclick="window.location.href='#'">
+                Ir a iniciar sesión
+            </button>
+        </div>
+    </div>
+    <script src="../js/hu01-script.js"></script>
 </body>
 </html>
