@@ -76,11 +76,40 @@ btnRegister.addEventListener('click', function () {
     setError('email', 'email-error', 'Ingresa un correo electrónico válido.');
     valid = false;
     } else if (registeredEmails.includes(email.toLowerCase())) {
-
     setError('email', 'email-error', 'Este correo ya está registrado.');
     valid = false;
     } else {
     setSuccess('email', 'email-error');
+    }
+    if (!password) {
+    setError('password', 'password-error', 'La contraseña es requerida.');
+    valid = false;
+    } else if (password.length < 8) {
+    setError('password', 'password-error', 'La contraseña debe tener al menos 8 caracteres.');
+    valid = false;
+    } else if (password.length > 12) {
+    setError('password', 'password-error', 'La contraseña no debe superar los 12 caracteres.');
+    valid = false;
+    } else if (!/[A-Z]/.test(password)) {
+    setError('password', 'password-error', 'La contraseña debe tener al menos una mayúscula.');
+    valid = false;
+    } else if (!/[^a-zA-Z0-9]/.test(password)) {
+    setError('password', 'password-error', 'La contraseña debe tener al menos un carácter especial.');
+    valid = false;
+    } else if (!(/[a-zA-Z]/.test(password) && /[0-9]/.test(password))) {
+    setError('password', 'password-error', 'La contraseña debe ser alfanumérica.');
+    valid = false;
+    } else {
+    setSuccess('password', 'password-error');
+    }
+    if (!confirm) {
+    setError('confirm-password', 'confirm-password-error', 'Por favor confirma tu contraseña.');
+    valid = false;
+    } else if (password !== confirm) {
+    setError('confirm-password', 'confirm-password-error', 'Las contraseñas no coinciden.');
+    valid = false;
+    } else {
+    setSuccess('confirm-password', 'confirm-password-error');
     }
 });
 }
