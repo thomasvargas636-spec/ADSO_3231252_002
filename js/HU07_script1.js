@@ -1,14 +1,13 @@
+
 // ===============================
 // BASE DE DATOS (VACÍA - REAL)
 // ===============================
 const reservas = [];
 
-
 // ===============================
 // VARIABLE GLOBAL
 // ===============================
 let reservaSeleccionada = null;
-
 
 // ===============================
 // FILTRAR RESERVAS ACTIVAS
@@ -16,7 +15,6 @@ let reservaSeleccionada = null;
 function obtenerReservasActivas() {
   return reservas.filter(r => r.estado !== "cancelado");
 }
-
 
 // ===============================
 // CREAR HTML DE RESERVA
@@ -36,10 +34,7 @@ function crearReservaHTML(reserva) {
       <p>${reserva.fecha}</p>
       <p>${reserva.tiempo} - ${reserva.precio}</p>
 
-      <button 
-        class="btn-cancelar"
-        data-id="${reserva.id}"
-      >
+      <button class="btn-cancelar" data-id="${reserva.id}">
         🗑 Cancelar reserva
       </button>
 
@@ -47,9 +42,8 @@ function crearReservaHTML(reserva) {
   `;
 }
 
-
 // ===============================
-// ACTIVAR EVENTOS (CLICK)
+// ACTIVAR EVENTOS
 // ===============================
 function activarEventosCancelar() {
 
@@ -61,12 +55,24 @@ function activarEventosCancelar() {
 
       const id = boton.dataset.id;
 
-      // BUSCAR RESERVA
+      // guardar reserva seleccionada
       reservaSeleccionada = reservas.find(r => r.id === id);
 
       console.log("Reserva seleccionada:", reservaSeleccionada);
 
-      // 👉 Aquí luego mostraremos la Card 2 (criterio 3)
+      // ===========================
+      // CRITERIO 3: MOSTRAR CARD 2
+      // ===========================
+
+      document.querySelector(".card").style.display = "none";
+      document.querySelector(".card-confirmacion").style.display = "block";
+
+      document.querySelector(".detalle-reserva").innerHTML = `
+        <p><b>${reservaSeleccionada.id}</b></p>
+        <p>${reservaSeleccionada.zona}</p>
+        <p>${reservaSeleccionada.fecha}</p>
+        <p>${reservaSeleccionada.tiempo} - ${reservaSeleccionada.precio}</p>
+      `;
 
     });
 
@@ -74,19 +80,16 @@ function activarEventosCancelar() {
 
 }
 
-
 // ===============================
 // RENDERIZAR RESERVAS
 // ===============================
 function renderReservas() {
 
   const contenedor = document.querySelector(".reservas-container");
-
   const activas = obtenerReservasActivas();
 
   contenedor.innerHTML = "";
 
-  // SI NO HAY RESERVAS
   if (activas.length === 0) {
     contenedor.innerHTML = `
       <div class="empty-state">
@@ -96,17 +99,33 @@ function renderReservas() {
     return;
   }
 
-  // SI HAY RESERVAS
   activas.forEach(reserva => {
     contenedor.innerHTML += crearReservaHTML(reserva);
   });
 
-  // ACTIVAR EVENTOS
   activarEventosCancelar();
 }
 
+// ===============================
+// BOTÓN VOLVER (CARD 2 → CARD 1)
+// ===============================
+function configurarBotonVolver() {
+
+  document.querySelector(".btn-volver").addEventListener("click", () => {
+
+    document.querySelector(".card-confirmacion").style.display = "none";
+    document.querySelector(".card").style.display = "block";
+
+  });
+
+}
 
 // ===============================
 // INICIAR APP
 // ===============================
-renderReservas();
+document.addEventListener("DOMContentLoaded", () => {
+
+  renderReservas();
+  configurarBotonVolver();
+
+});

@@ -1,3 +1,4 @@
+
 /* RESET */
 * {
   margin: 0;
@@ -20,44 +21,43 @@ body {
 
 /* SIDEBAR */
 .sidebar {
-  width: 260px;
+  width: 220px;
   background: #161B22;
   padding: 20px;
   border-right: 1px solid #21262D;
 }
 
-/* LOGO */
 .logo {
   display: flex;
   align-items: center;
-  gap: 10px;
+  justify-content: flex-start;
   margin-bottom: 30px;
-  font-family: 'Syne', sans-serif;
 }
 
-.logo-text span {
-  color: #1A6FD4;
+.logo img {
+  width: 140px;
+  max-width: 100%;
 }
 
-/* TITULOS */
+/* MENU */
 .section-title {
   color: #BB949E;
   font-size: 12px;
   margin: 15px 0 10px;
 }
 
-/* MENU */
 .menu {
   display: flex;
   flex-direction: column;
-  gap: 5px;
+  gap: 3px;
 }
 
 .menu-item {
   color: #BB949E;
   text-decoration: none;
-  padding: 10px;
-  border-radius: 8px;
+  padding: 8px 10px;
+  border-radius: 6px;
+  font-size: 14px;
 }
 
 .menu-item:hover {
@@ -66,8 +66,9 @@ body {
 }
 
 .menu-item.active {
-  background: #1A6FD4;
+  background: #21262D;
   color: white;
+  box-shadow: -4px 0 10px -2px #1A6FD4;
 }
 
 /* MAIN */
@@ -82,7 +83,6 @@ body {
   padding: 20px 30px;
   background: #161B22;
   border-bottom: 1px solid #21262D;
-  font-family: 'Syne', sans-serif;
 }
 
 /* CONTENT */
@@ -93,12 +93,6 @@ body {
   padding: 30px;
 }
 
-.content h2 {
-  margin-bottom: 20px;
-  font-family: 'Syne', sans-serif;
-}
-
-/* CENTRAR CARD */
 .cards-container {
   flex: 1;
   display: flex;
@@ -106,17 +100,41 @@ body {
   align-items: center;
 }
 
-/* CARD */
+/* CARD BASE */
 .card {
   width: 100%;
-  max-width: 500px;
+  max-width: 550px;
   background: #161B22;
   border: 1px solid #21262D;
   border-radius: 10px;
   padding: 20px;
 }
 
-/* HEADER CARD */
+/* STEP CIRCLES */
+.step {
+  width: 32px;
+  height: 32px;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-weight: bold;
+}
+
+/* COLORES STEPS */
+.step-blue {
+  background: #1A6FD4;
+}
+
+.step-red {
+  background: #DA3633;
+}
+
+.step-green {
+  background: #238636;
+}
+
+/* CARD HEADER */
 .card-header {
   display: flex;
   align-items: center;
@@ -124,32 +142,14 @@ body {
   margin-bottom: 20px;
 }
 
-/* STEP */
-.step {
-  width: 32px;
-  height: 32px;
-  min-width: 32px;
-  border-radius: 50%;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  font-weight: 600;
-  font-size: 14px;
-  color: white;
-}
-
-.step-blue {
-  background: #1A6FD4;
-}
-
-/* SUB-CARDS */
+/* RESERVAS */
 .reservas-container {
   display: flex;
   flex-direction: column;
   gap: 15px;
 }
 
-/* ITEM */
+/* SUB CARD */
 .reserva-item {
   background: #0D1117;
   border: 1px solid #21262D;
@@ -157,26 +157,27 @@ body {
   padding: 15px;
 }
 
-/* TOP */
+/* HEADER RESERVA */
 .reserva-top {
   display: flex;
   justify-content: space-between;
   margin-bottom: 10px;
 }
 
-/* CODIGO */
 .codigo {
-  font-weight: 600;
+  font-weight: bold;
 }
 
 /* ESTADO */
 .estado {
-  padding: 5px 12px;
   border-radius: 20px;
+  padding: 5px 10px;
   font-size: 12px;
-  text-transform: capitalize;
+  border: none;
+  color: white;
 }
 
+/* COLORES ESTADO */
 .estado-confirmada {
   background: #238636;
 }
@@ -190,7 +191,7 @@ body {
   background: #DA3633;
 }
 
-/* BOTON */
+/* BOTÓN CANCELAR */
 .btn-cancelar {
   margin-top: 10px;
   width: 100%;
@@ -201,11 +202,81 @@ body {
   color: white;
   cursor: pointer;
 }
-/* MENSAJE CUANDO NO HAY RESERVAS */
-.empty-state {
+
+/* ========================= */
+/* CARDS FLUJO */
+/* ========================= */
+
+.card-confirmacion,
+.card-exito {
+  display: none;
+}
+
+/* ALERTA */
+.alerta {
+  margin-top: 10px;
+  color: #ff4d4d;
+  font-weight: bold;
+}
+
+/* ACCIONES */
+.acciones {
+  display: flex;
+  justify-content: space-between;
+  gap: 10px;
+  margin-top: 15px;
+}
+
+/* BOTONES */
+.btn-confirmar {
+  background: #DA3633;
+  color: white;
+  padding: 10px;
+  border-radius: 8px;
+  border: none;
+  cursor: pointer;
+  flex: 1;
+}
+
+.btn-volver {
+  background: transparent;
+  border: 1px solid #BB949E;
+  color: white;
+  padding: 10px;
+  border-radius: 8px;
+  cursor: pointer;
+  flex: 1;
+}
+
+/* CARD ÉXITO */
+.mensaje-exito {
   text-align: center;
-  padding: 20px;
-  color: #BB949E;
-  border: 1px dashed #21262D;
-  border-radius: 10px;
+  margin: 20px 0;
+}
+
+.cupo-liberado {
+  margin-top: 10px;
+  color: #238636;
+  font-weight: bold;
+}
+
+/* BOTONES FINAL */
+.btn-ver-reservas {
+  background: #1A6FD4;
+  color: white;
+  border: none;
+  padding: 10px;
+  border-radius: 8px;
+  cursor: pointer;
+  flex: 1;
+}
+
+.btn-inicio {
+  background: transparent;
+  border: 1px solid #BB949E;
+  color: white;
+  padding: 10px;
+  border-radius: 8px;
+  cursor: pointer;
+  flex: 1;
 }
