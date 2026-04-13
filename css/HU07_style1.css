@@ -1,0 +1,211 @@
+/* RESET */
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+/* BODY */
+body {
+  background: #0D1117;
+  color: #FFFFFF;
+  font-family: 'DM Sans', sans-serif;
+}
+
+/* LAYOUT */
+.app {
+  display: flex;
+  height: 100vh;
+}
+
+/* SIDEBAR */
+.sidebar {
+  width: 260px;
+  background: #161B22;
+  padding: 20px;
+  border-right: 1px solid #21262D;
+}
+
+/* LOGO */
+.logo {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  margin-bottom: 30px;
+  font-family: 'Syne', sans-serif;
+}
+
+.logo-text span {
+  color: #1A6FD4;
+}
+
+/* TITULOS */
+.section-title {
+  color: #BB949E;
+  font-size: 12px;
+  margin: 15px 0 10px;
+}
+
+/* MENU */
+.menu {
+  display: flex;
+  flex-direction: column;
+  gap: 5px;
+}
+
+.menu-item {
+  color: #BB949E;
+  text-decoration: none;
+  padding: 10px;
+  border-radius: 8px;
+}
+
+.menu-item:hover {
+  background: #21262D;
+  color: white;
+}
+
+.menu-item.active {
+  background: #1A6FD4;
+  color: white;
+}
+
+/* MAIN */
+.main {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+}
+
+/* HEADER */
+.top-header {
+  padding: 20px 30px;
+  background: #161B22;
+  border-bottom: 1px solid #21262D;
+  font-family: 'Syne', sans-serif;
+}
+
+/* CONTENT */
+.content {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  padding: 30px;
+}
+
+.content h2 {
+  margin-bottom: 20px;
+  font-family: 'Syne', sans-serif;
+}
+
+/* CENTRAR CARD */
+.cards-container {
+  flex: 1;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+/* CARD */
+.card {
+  width: 100%;
+  max-width: 500px;
+  background: #161B22;
+  border: 1px solid #21262D;
+  border-radius: 10px;
+  padding: 20px;
+}
+
+/* HEADER CARD */
+.card-header {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  margin-bottom: 20px;
+}
+
+/* STEP */
+.step {
+  width: 32px;
+  height: 32px;
+  min-width: 32px;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-weight: 600;
+  font-size: 14px;
+  color: white;
+}
+
+.step-blue {
+  background: #1A6FD4;
+}
+
+/* SUB-CARDS */
+.reservas-container {
+  display: flex;
+  flex-direction: column;
+  gap: 15px;
+}
+
+/* ITEM */
+.reserva-item {
+  background: #0D1117;
+  border: 1px solid #21262D;
+  border-radius: 10px;
+  padding: 15px;
+}
+
+/* TOP */
+.reserva-top {
+  display: flex;
+  justify-content: space-between;
+  margin-bottom: 10px;
+}
+
+/* CODIGO */
+.codigo {
+  font-weight: 600;
+}
+
+/* ESTADO */
+.estado {
+  padding: 5px 12px;
+  border-radius: 20px;
+  font-size: 12px;
+  text-transform: capitalize;
+}
+
+.estado-confirmada {
+  background: #238636;
+}
+
+.estado-pendiente {
+  background: #facc15;
+  color: black;
+}
+
+.estado-pagada {
+  background: #DA3633;
+}
+
+/* BOTON */
+.btn-cancelar {
+  margin-top: 10px;
+  width: 100%;
+  padding: 10px;
+  border-radius: 8px;
+  border: none;
+  background: #DA3633;
+  color: white;
+  cursor: pointer;
+}
+/* MENSAJE CUANDO NO HAY RESERVAS */
+.empty-state {
+  text-align: center;
+  padding: 20px;
+  color: #BB949E;
+  border: 1px dashed #21262D;
+  border-radius: 10px;
+}
