@@ -5,16 +5,14 @@
   <title>Cancelación de reservas</title>
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-  <!-- Tipografías -->
   <link href="https://fonts.googleapis.com/css2?family=Syne:wght@400;500;600&family=DM+Sans:wght@400;500&display=swap" rel="stylesheet">
 
-  <!-- CSS -->
   <link rel="stylesheet" href="css/HU07_style1.css">
 </head>
 
 <body>
 
-  <div class="app">
+<div class="app">
 
     <!-- SIDEBAR -->
     <aside class="sidebar">
@@ -45,43 +43,71 @@
 
     </aside>
 
-    <!-- MAIN -->
-    <div class="main">
+  <div class="main">
 
-      <!-- HEADER -->
-      <header class="top-header">
-        <h1>Cancelación de reservas</h1>
-      </header>
+    <header class="top-header">
+      <h1>Cancelación de reservas</h1>
+    </header>
 
-      <!-- CONTENIDO -->
-      <section class="content">
+    <section class="content">
 
-        <h2>Mis reservaciones</h2>
+      <div class="cards-container">
 
-        <div class="cards-container">
+        <!-- CARD 1 -->
+        <div class="card card-lista">
 
-          <!-- CARD 1 -->
-          <div class="card">
-
-            <div class="card-header">
-              <div class="step step-blue">1</div>
-              <h2>Seleccionar reserva</h2>
-            </div>
-
-            <!-- DINÁMICO -->
-            <div class="reservas-container"></div>
-
+          <div class="card-header">
+            <div class="step step-blue">1</div>
+            <h2>Seleccionar reserva</h2>
           </div>
+
+          <div class="reservas-container"></div>
 
         </div>
 
-      </section>
+        <!-- CARD 2 -->
+        <div class="card card-confirmacion" style="display:none;">
 
-    </div>
+          <div class="card-header">
+            <div class="step step-red">!</div>
+            <h2>Confirmar cancelación</h2>
+          </div>
+
+          <div class="detalle-reserva"></div>
+
+          <p class="alerta">¿Seguro que deseas cancelar? El cupo será liberado.</p>
+
+          <button class="btn-volver">Volver</button>
+          <button class="btn-confirmar">Sí, cancelar</button>
+
+        </div>
+
+        <!-- CARD 3 -->
+        <div class="card card-exito" style="display:none;">
+
+          <div class="card-header">
+            <div class="step step-green">✔</div>
+            <h2>Reserva cancelada</h2>
+          </div>
+
+          <div class="mensaje-exito"></div>
+
+          <p class="cupo-liberado"></p>
+
+          <button class="btn-ver-reservas">Ver reservas</button>
+          <button class="btn-inicio">Inicio</button>
+
+        </div>
+
+      </div>
+
+    </section>
 
   </div>
 
-  <script src="js/HU07_script1.js"></script>
+</div>
+
+<script src="js/HU07_script1.js"></script>
 
 </body>
 </html>

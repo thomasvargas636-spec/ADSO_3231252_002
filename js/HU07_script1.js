@@ -1,131 +1,119 @@
+const reservas = [
+  {
+    id: "PRK-001",
+    estado: "confirmada",
+    zona: "Zona Norte B",
+    fecha: "18 Mar 2026 - 2:00 AM",
+    tiempo: "2 horas",
+    precio: "$2000"
+  },
+  {
+    id: "PRK-002",
+    estado: "pendiente",
+    zona: "Zona Sur A",
+    fecha: "19 Mar 2026 - 4:00 PM",
+    tiempo: "3 horas",
+    precio: "$3000"
+  }
+];
 
-// ===============================
-// BASE DE DATOS (VACÍA - REAL)
-// ===============================
-const reservas = [];
-
-// ===============================
-// VARIABLE GLOBAL
-// ===============================
 let reservaSeleccionada = null;
 
-// ===============================
-// FILTRAR RESERVAS ACTIVAS
-// ===============================
-function obtenerReservasActivas() {
+// ================== RENDER
+function obtenerActivas() {
   return reservas.filter(r => r.estado !== "cancelado");
 }
 
-// ===============================
-// CREAR HTML DE RESERVA
-// ===============================
-function crearReservaHTML(reserva) {
+function crearHTML(r) {
   return `
     <div class="reserva-item">
-
       <div class="reserva-top">
-        <span class="codigo">${reserva.id}</span>
-        <span class="estado estado-${reserva.estado}">
-          ${reserva.estado}
-        </span>
+        <span class="codigo">${r.id}</span>
+        <span class="estado estado-${r.estado}">${r.estado}</span>
       </div>
 
-      <p>${reserva.zona}</p>
-      <p>${reserva.fecha}</p>
-      <p>${reserva.tiempo} - ${reserva.precio}</p>
+      <p>${r.zona}</p>
+      <p>${r.fecha}</p>
+      <p>${r.tiempo} - ${r.precio}</p>
 
-      <button class="btn-cancelar" data-id="${reserva.id}">
+      <button class="btn-cancelar" data-id="${r.id}">
         🗑 Cancelar reserva
       </button>
-
     </div>
   `;
 }
 
-// ===============================
-// ACTIVAR EVENTOS
-// ===============================
-function activarEventosCancelar() {
+function render() {
+  const cont = document.querySelector(".reservas-container");
+  cont.innerHTML = "";
 
-  const botones = document.querySelectorAll(".btn-cancelar");
-
-  botones.forEach(boton => {
-
-    boton.addEventListener("click", () => {
-
-      const id = boton.dataset.id;
-
-      // guardar reserva seleccionada
-      reservaSeleccionada = reservas.find(r => r.id === id);
-
-      console.log("Reserva seleccionada:", reservaSeleccionada);
-
-      // ===========================
-      // CRITERIO 3: MOSTRAR CARD 2
-      // ===========================
-
-      document.querySelector(".card").style.display = "none";
-      document.querySelector(".card-confirmacion").style.display = "block";
-
-      document.querySelector(".detalle-reserva").innerHTML = `
-        <p><b>${reservaSeleccionada.id}</b></p>
-        <p>${reservaSeleccionada.zona}</p>
-        <p>${reservaSeleccionada.fecha}</p>
-        <p>${reservaSeleccionada.tiempo} - ${reservaSeleccionada.precio}</p>
-      `;
-
-    });
-
+  obtenerActivas().forEach(r => {
+    cont.innerHTML += crearHTML(r);
   });
-
 }
 
-// ===============================
-// RENDERIZAR RESERVAS
-// ===============================
-function renderReservas() {
+// ================== VISTAS
+function mostrar(vista) {
+  document.querySelector(".card-lista").style.display = "none";
+  document.querySelector(".card-confirmacion").style.display = "none";
+  document.querySelector(".card-exito").style.display = "none";
 
-  const contenedor = document.querySelector(".reservas-container");
-  const activas = obtenerReservasActivas();
+  vista.style.display = "block";
+}
 
-  contenedor.innerHTML = "";
+// ================== EVENTOS (DELEGACIÓN)
+document.addEventListener("click", (e) => {
 
-  if (activas.length === 0) {
-    contenedor.innerHTML = `
-      <div class="empty-state">
-        <p>No tienes reservas activas</p>
-      </div>
+  if (e.target.classList.contains("btn-cancelar")) {
+
+    const id = e.target.dataset.id;
+    reservaSeleccionada = reservas.find(r => r.id === id);
+
+    document.querySelector(".detalle-reserva").innerHTML = `
+      <b>${reservaSeleccionada.id}</b><br>
+      ${reservaSeleccionada.zona}<br>
+      ${reservaSeleccionada.fecha}
     `;
-    return;
+
+    mostrar(document.querySelector(".card-confirmacion"));
   }
 
-  activas.forEach(reserva => {
-    contenedor.innerHTML += crearReservaHTML(reserva);
-  });
+  if (e.target.classList.contains("btn-volver")) {
+    mostrar(document.querySelector(".card-lista"));
+  }
 
-  activarEventosCancelar();
+  if (e.target.classList.contains("btn-confirmar")) {
+    cancelar();
+  }
+
+  if (e.target.classList.contains("btn-ver-reservas")) {
+    mostrar(document.querySelector(".card-lista"));
+  }
+
+  if (e.target.classList.contains("btn-inicio")) {
+    location.reload();
+  }
+
+});
+
+// ================== CRITERIO 4
+function cancelar() {
+
+  reservaSeleccionada.estado = "cancelado";
+
+  render();
+
+  document.querySelector(".mensaje-exito").innerHTML =
+    `Reserva ${reservaSeleccionada.id} cancelada`;
+
+  document.querySelector(".cupo-liberado").innerText =
+    `+1 cupo liberado en ${reservaSeleccionada.zona}`;
+
+  mostrar(document.querySelector(".card-exito"));
 }
 
-// ===============================
-// BOTÓN VOLVER (CARD 2 → CARD 1)
-// ===============================
-function configurarBotonVolver() {
-
-  document.querySelector(".btn-volver").addEventListener("click", () => {
-
-    document.querySelector(".card-confirmacion").style.display = "none";
-    document.querySelector(".card").style.display = "block";
-
-  });
-
-}
-
-// ===============================
-// INICIAR APP
-// ===============================
+// ================== INIT
 document.addEventListener("DOMContentLoaded", () => {
-
-  renderReservas();
-  configurarBotonVolver();
-
+  render();
+  mostrar(document.querySelector(".card-lista"));
 });
