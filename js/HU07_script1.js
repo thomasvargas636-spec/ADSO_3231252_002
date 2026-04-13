@@ -1,14 +1,26 @@
-// BASE DE DATOS VACÍA (REALISTA)
+// ===============================
+// BASE DE DATOS (VACÍA - REAL)
+// ===============================
 const reservas = [];
 
 
-// FILTRAR ACTIVAS
+// ===============================
+// VARIABLE GLOBAL
+// ===============================
+let reservaSeleccionada = null;
+
+
+// ===============================
+// FILTRAR RESERVAS ACTIVAS
+// ===============================
 function obtenerReservasActivas() {
   return reservas.filter(r => r.estado !== "cancelado");
 }
 
 
-// CREAR HTML
+// ===============================
+// CREAR HTML DE RESERVA
+// ===============================
 function crearReservaHTML(reserva) {
   return `
     <div class="reserva-item">
@@ -24,7 +36,10 @@ function crearReservaHTML(reserva) {
       <p>${reserva.fecha}</p>
       <p>${reserva.tiempo} - ${reserva.precio}</p>
 
-      <button class="btn-cancelar">
+      <button 
+        class="btn-cancelar"
+        data-id="${reserva.id}"
+      >
         🗑 Cancelar reserva
       </button>
 
@@ -33,15 +48,45 @@ function crearReservaHTML(reserva) {
 }
 
 
-// RENDER
+// ===============================
+// ACTIVAR EVENTOS (CLICK)
+// ===============================
+function activarEventosCancelar() {
+
+  const botones = document.querySelectorAll(".btn-cancelar");
+
+  botones.forEach(boton => {
+
+    boton.addEventListener("click", () => {
+
+      const id = boton.dataset.id;
+
+      // BUSCAR RESERVA
+      reservaSeleccionada = reservas.find(r => r.id === id);
+
+      console.log("Reserva seleccionada:", reservaSeleccionada);
+
+      // 👉 Aquí luego mostraremos la Card 2 (criterio 3)
+
+    });
+
+  });
+
+}
+
+
+// ===============================
+// RENDERIZAR RESERVAS
+// ===============================
 function renderReservas() {
+
   const contenedor = document.querySelector(".reservas-container");
 
   const activas = obtenerReservasActivas();
 
   contenedor.innerHTML = "";
 
-  // 👇 CASO SIN DATOS
+  // SI NO HAY RESERVAS
   if (activas.length === 0) {
     contenedor.innerHTML = `
       <div class="empty-state">
@@ -51,12 +96,17 @@ function renderReservas() {
     return;
   }
 
-  // 👇 SI HAY DATOS
+  // SI HAY RESERVAS
   activas.forEach(reserva => {
     contenedor.innerHTML += crearReservaHTML(reserva);
   });
+
+  // ACTIVAR EVENTOS
+  activarEventosCancelar();
 }
 
 
-// INICIAR
+// ===============================
+// INICIAR APP
+// ===============================
 renderReservas();
