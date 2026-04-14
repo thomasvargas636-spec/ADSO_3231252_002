@@ -247,6 +247,11 @@ body {
   font-family: 'DM Sans', sans-serif;
 }
 
+.fila:hover {
+  background: #21262D;
+  transition: 0.2s;
+}
+
 .fila:last-child {
   border-bottom: none;
 }

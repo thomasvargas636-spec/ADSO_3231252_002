@@ -1,20 +1,29 @@
+let filtroActual = "todas";
+
 function renderTabla() {
 
   const cont = document.querySelector(".tabla-body");
   cont.innerHTML = "";
 
-  reservas.forEach(r => {
+  const data = getReservasFiltradas();
+
+  if (data.length === 0) {
+    cont.innerHTML = `<p class="sub">No hay reservas en este estado</p>`;
+    return;
+  }
+
+  data.forEach(r => {
 
     const row = document.createElement("div");
-    row.classList.add("tabla-row");
+    row.classList.add("fila");
 
     row.innerHTML = `
-      <span><span class="codigo">${r.id}</span></span>
+      <span><span class="codigo">${r.codigo}</span></span>
       <span>${r.zona}</span>
-      <span>SAM 525</span>
+      <span>${r.vehiculo}</span>
       <span>${r.fecha}</span>
-      <span>${r.tiempo}</span>
-      <span>${r.precio}</span>
+      <span>${r.duracion}</span>
+      <span class="monto ${r.estado}">${r.monto}</span>
       <span class="estado estado-${r.estado}">${r.estado}</span>
     `;
 
@@ -37,8 +46,32 @@ function renderResumen() {
     reservas.filter(r => r.estado === "cancelado").length;
 }
 
-// INIT
+function getReservasFiltradas() {
+  if (filtroActual === "todas") return reservas;
+  return reservas.filter(r => r.estado === filtroActual);
+}
+document.querySelectorAll(".filtro-btn").forEach(btn => {
+
+  btn.addEventListener("click", () => {
+
+    document.querySelectorAll(".filtro-btn")
+      .forEach(b => b.classList.remove("active"));
+
+    btn.classList.add("active");
+
+    const text = btn.textContent.toLowerCase();
+
+    if (text.includes("todas")) filtroActual = "todas";
+    if (text.includes("pagadas")) filtroActual = "pagada";
+    if (text.includes("pendientes")) filtroActual = "pendiente";
+    if (text.includes("canceladas")) filtroActual = "cancelado";
+
+    renderTabla();
+  });
+
+});
+
 document.addEventListener("DOMContentLoaded", () => {
   renderTabla();
   renderResumen();
-});
+})
