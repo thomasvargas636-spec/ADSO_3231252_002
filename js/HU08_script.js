@@ -54,6 +54,7 @@ document.querySelectorAll(".filtro-btn").forEach(btn => {
 
   btn.addEventListener("click", () => {
 
+    // quitar active
     document.querySelectorAll(".filtro-btn")
       .forEach(b => b.classList.remove("active"));
 
@@ -74,4 +75,5 @@ document.querySelectorAll(".filtro-btn").forEach(btn => {
 document.addEventListener("DOMContentLoaded", () => {
   renderTabla();
   renderResumen();
-})
+});
+
