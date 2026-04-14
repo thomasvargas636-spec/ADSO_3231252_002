@@ -80,20 +80,32 @@ function mostrar(tipo) {
 // CANCELAR
 function cancelarReserva() {
 
-  if (!reservaSeleccionada) return;
+  // VALIDACIÓN 1: existe selección
+  if (!reservaSeleccionada) {
+    mostrarAlerta("No hay ninguna reserva seleccionada");
+    return;
+  }
 
-  // Cambiar estado
+  // VALIDACIÓN 2: ya está cancelada
+  if (reservaSeleccionada.estado === "cancelado") {
+    mostrarAlerta("Esta reserva ya fue cancelada");
+    return;
+  }
+
+  // Cancelar
   reservaSeleccionada.estado = "cancelado";
 
-  // Liberar cupo
-  cuposPorZona[reservaSeleccionada.zona]++;
+  // Liberar cupo (criterio 5)
+  if (cuposPorZona[reservaSeleccionada.zona] !== undefined) {
+    cuposPorZona[reservaSeleccionada.zona]++;
+  }
 
-  // Mensaje éxito
+  // Mensajes
   document.querySelector(".mensaje-exito").innerText =
-    `Reserva ${reservaSeleccionada.id} cancelada correctamente`;
+    `Reserva ${reservaSeleccionada.id} cancelada`;
 
   document.querySelector(".cupo-liberado").innerText =
-    `+1 cupo disponible en ${reservaSeleccionada.zona}`;
+    `+1 cupo liberado en ${reservaSeleccionada.zona}`;
 
   renderReservas();
   mostrar("exito");
@@ -123,3 +135,14 @@ document.addEventListener("click", (e) => {
 // INIT
 renderReservas();
 mostrar("lista");
+
+function mostrarAlerta(mensaje) {
+  const alerta = document.getElementById("alerta");
+
+  alerta.innerText = mensaje;
+  alerta.classList.add("show");
+
+  setTimeout(() => {
+    alerta.classList.remove("show");
+  }, 3000);
+}
