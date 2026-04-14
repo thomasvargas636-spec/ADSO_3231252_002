@@ -1,5 +1,40 @@
 let filtroActual = "todas";
 
+const reservas = [
+  {
+    codigo: "PRK-001",
+    zona: "Zona Norte A",
+    vehiculo: "ABC-123",
+    fecha: "18 Mar 2026 - 2:00 AM",
+    duracion: "2 horas",
+    monto: 2000,
+    estado: "pagada"
+  },
+  {
+    codigo: "PRK-002",
+    zona: "Zona Sur B",
+    vehiculo: "XYZ-987",
+    fecha: "19 Mar 2026 - 4:00 PM",
+    duracion: "3 horas",
+    monto: 3000,
+    estado: "pendiente"
+  },
+  {
+    codigo: "PRK-003",
+    zona: "Zona Central",
+    vehiculo: "LMN-456",
+    fecha: "20 Mar 2026 - 1:00 PM",
+    duracion: "1 hora",
+    monto: 1500,
+    estado: "cancelado"
+  }
+];
+
+function getReservasFiltradas() {
+  if (filtroActual === "todas") return reservas;
+  return reservas.filter(r => r.estado === filtroActual);
+}
+
 function renderTabla() {
 
   const cont = document.querySelector(".tabla-body");
@@ -7,8 +42,15 @@ function renderTabla() {
 
   const data = getReservasFiltradas();
 
+  // 🔥 vacío total
+  if (reservas.length === 0) {
+    cont.innerHTML = `<div class="empty-state">No tienes reservas aún</div>`;
+    return;
+  }
+
+  // 🔥 filtro vacío
   if (data.length === 0) {
-    cont.innerHTML = `<p class="sub">No hay reservas en este estado</p>`;
+    cont.innerHTML = `<div class="empty-state">No hay reservas en este estado</div>`;
     return;
   }
 
@@ -31,7 +73,6 @@ function renderTabla() {
   });
 }
 
-// CONTADORES
 function renderResumen() {
 
   document.getElementById("totalReservas").innerText = reservas.length;
@@ -46,15 +87,11 @@ function renderResumen() {
     reservas.filter(r => r.estado === "cancelado").length;
 }
 
-function getReservasFiltradas() {
-  if (filtroActual === "todas") return reservas;
-  return reservas.filter(r => r.estado === filtroActual);
-}
+// 🔥 BOTONES FILTRO
 document.querySelectorAll(".filtro-btn").forEach(btn => {
 
   btn.addEventListener("click", () => {
 
-    // quitar active
     document.querySelectorAll(".filtro-btn")
       .forEach(b => b.classList.remove("active"));
 
@@ -69,11 +106,10 @@ document.querySelectorAll(".filtro-btn").forEach(btn => {
 
     renderTabla();
   });
-
 });
 
+// INIT
 document.addEventListener("DOMContentLoaded", () => {
   renderTabla();
   renderResumen();
 });
-

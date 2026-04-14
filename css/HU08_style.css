@@ -322,3 +322,14 @@ body {
 .monto.cancelado {
   color: #ff3b3b;
 }
+
+.empty-state {
+  padding: 40px;
+  text-align: center;
+  color: #BB949E;
+  font-family: 'DM Sans', sans-serif;
+  font-size: 14px;
+  background: #161B22;
+  border: 1px dashed #21262D;
+  border-radius: 12px;
+}
