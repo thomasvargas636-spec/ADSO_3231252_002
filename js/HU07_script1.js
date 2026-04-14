@@ -20,7 +20,7 @@ const reservas = [
     fecha: "19 Mar 2026 - 4:00 PM",
     tiempo: "3 horas",
     precio: "$3000"
-  }
+  },
   {
   id: "PRK-003",
   estado: "usada",
@@ -108,6 +108,7 @@ function cancelarReserva() {
     mostrarAlerta("Esta reserva ya fue cancelada");
     return;
   }
+  
 
   // ✅ SI TODO OK → cancelar
   reservaSeleccionada.estado = "cancelado";
@@ -163,4 +164,13 @@ function estaExpirada(fechaTexto) {
   const ahora = new Date();
 
   return fechaReserva < ahora;
+}
+function horasRestantes(fechaTexto) {
+
+  const fechaReserva = new Date(fechaTexto);
+  const ahora = new Date();
+
+  const diff = fechaReserva - ahora;
+
+  return diff / (1000 * 60 * 60); // convertir a horas
 }
