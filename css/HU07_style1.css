@@ -97,11 +97,11 @@ MAIN
 CENTRADO DE CARDS
 ========================= */
 .cards-container {
+  flex: 1;
   display: flex;
   justify-content: center;
-  align-items: flex-start;
-  gap: 20px;
-  padding-top: 20px;
+  align-items: center; /* 🔥 centra vertical */
+  padding: 30px;
 }
 
 /* =========================
@@ -114,6 +114,19 @@ CARD BASE
   border: 1px solid #21262D;
   border-radius: 12px;
   padding: 20px;
+  margin: 10px;
+
+}
+.card {
+  opacity: 0.6;
+  transform: scale(0.95);
+  transition: all 0.3s ease;
+}
+
+.card.activa {
+  opacity: 1;
+  transform: scale(1);
+  border: 1px solid grey;
 }
 
 /* =========================
@@ -124,6 +137,10 @@ HEADER CARD
   align-items: center;
   gap: 12px;
   margin-bottom: 20px;
+}
+.card-header h2 {
+  font-size: 18px;
+  font-weight: 600;
 }
 
 .step {
@@ -136,9 +153,10 @@ HEADER CARD
   font-weight: bold;
 }
 
-.step-blue { background: #1A6FD4; }
+.step-blue { background: linear-gradient(to right, #1A6FD4, #238636); }
 .step-red { background: #DA3633; }
-.step-green { background: #238636; }
+.step-green { background: linear-gradient(to right, #1A6FD4, #238636);; }
+
 
 /* =========================
 LISTA RESERVAS
@@ -230,15 +248,24 @@ BOTÓN CANCELAR
   background: rgba(255, 30, 30, 0.25);
 }
 
+button {
+  transition: all 0.2s ease;
+}
+
+button:hover {
+  transform: scale(1.03);
+  opacity: 0.9;
+}
 /* =========================
 EMPTY STATE
 ========================= */
 .empty-state {
   text-align: center;
-  padding: 20px;
+  padding: 30px;
   border: 1px dashed #ff3b3b;
-  border-radius: 10px;
   color: #ff6b6b;
+  border-radius: 10px;
+  font-size: 14px;
 }
 
 /* =========================
@@ -255,6 +282,9 @@ ALERTA CONFIRMACIÓN
 .alerta {
   margin: 15px 0;
   font-weight: bold;
+  margin: 15px 0;
+  font-size: 13px;       /* más pequeño */
+  color: #8b949e;        /* gris elegante (estilo GitHub dark) */
 }
 
 /* =========================
@@ -262,7 +292,7 @@ WARNING
 ========================= */
 .warning-card {
   background: rgba(218, 54, 51, 0.15);
-  border: 1px solid #da3633;
+  border: none;
   color: #ff6b6b;
   padding: 12px;
   border-radius: 10px;
@@ -292,21 +322,28 @@ BOTONES
 }
 
 /* volver */
-.btn-volver {
-  background: transparent;
-  border: 1px solid #BB949E;
-  color: white;
+.btn-group .btn-volver {
+  width: 100%;
+  padding: 12px;
+  border-radius: 8px;
+
+  border: 1px solid rgba(255, 255, 255, 0.3);
+  background: rgba(255, 255, 255, 0.05);
+  color: rgba(255, 255, 255, 0.6);
+
+  cursor: pointer;
 }
 
 /* éxito */
 .btn-ver-reservas {
   background: #1A6FD4;
   color: white;
+  background: linear-gradient(to right, #1A6FD4, #238636);
 }
 
-.btn-inicio {
+.btn-group .btn-inicio {
+  border: 1px solid grey;
   background: transparent;
-  border: 1px solid #BB949E;
   color: white;
 }
 .alert-custom {
@@ -326,4 +363,93 @@ BOTONES
 .card-activa {
   border: 2px solid #1A6FD4;
   box-shadow: 0 0 10px rgba(26, 111, 212, 0.3);
+}
+
+.basura {
+  width: 50px;
+  height: 50px;
+
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin-bottom: 10px;
+  align-self: flex-start;
+
+  font-size: 22px;
+
+  border-radius: 10px;
+
+  /* 🔴 estilo tipo sombra */
+  border: 2px solid #ff1e1e;
+  background: rgba(255, 30, 30, 0.15);
+  color: #ff4d4d;
+
+  margin-bottom: 10px;
+}
+.detalle-reserva {
+  width: 100%;
+  background: #0D1117;              /* mismo fondo que subcards */
+  border: 1px solid #21262D;        /* mismo borde */
+  border-radius: 10px;
+  padding: 12px;
+  margin-top: 10px;
+  color: #8b949e;
+  font-size: 13px;
+}
+.success-card {
+  font-weight: bold;
+  width: 100%;
+  background: rgba(35, 134, 54, 0.15); /* verde sombra */
+  border: 1px solid #238636;           /* borde verde fuerte */
+  border-radius: 10px;
+  padding: 20px;
+
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  text-align: center;
+
+  margin-bottom: 15px;
+}
+.success-card h2 {
+  font-size: 30px;
+  margin-bottom: 5px;
+  color: hwb(132 10% 30%);
+}
+
+.success-card p {
+  color: #8b949e;
+  font-size: 13px;
+}
+.success-icon{
+  font-size: 30px;
+}
+
+.cupo-card {
+  margin-top: 10px;
+  padding-top: 8px;
+  border-top: 1px solid #21262D;
+  color: #2ea043;
+  font-size: 13px;
+}
+.reserva-info-card {
+  width: 100%;
+  background: #0D1117;
+  border: 1px solid #21262D;
+  border-radius: 10px;
+  padding: 12px;
+  margin-bottom: 10px;
+  color: #8b949e;
+  font-size: 13px;
+}
+.estado-cancelado {
+  padding-top: 0;
+  padding-bottom: 0;
+}
+.btn-group-vertical {
+  flex-direction: column;
+}
+
+.btn-group-vertical button {
+  width: 100%;
 }

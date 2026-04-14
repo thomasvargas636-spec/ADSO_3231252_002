@@ -22,18 +22,20 @@ const reservas = [
     precio: "$3000"
   },
   {
-  id: "PRK-003",
-  estado: "usada",
-  zona: "Zona Central",
-  fecha: "10 Mar 2025 - 2:00 AM",
-  tiempo: "1 hora",
-  precio: "$1500"
-}
+    id: "PRK-003",
+    estado: "usada",
+    zona: "Zona Central",
+    fecha: "10 Mar 2025 - 2:00 AM",
+    tiempo: "1 hora",
+    precio: "$1500"
+  }
 ];
 
 let reservaSeleccionada = null;
 
+// ===============================
 // RENDER
+// ===============================
 function renderReservas() {
 
   const cont = document.querySelector(".reservas-container");
@@ -64,28 +66,38 @@ function renderReservas() {
 
   document.querySelectorAll(".btn-cancelar").forEach(btn => {
     btn.onclick = () => {
+
       reservaSeleccionada = reservas.find(r => r.id === btn.dataset.id);
+
       mostrar("confirmacion");
 
       document.querySelector(".detalle-reserva").innerText =
         `${reservaSeleccionada.id} - ${reservaSeleccionada.zona}`;
 
       document.querySelector(".alerta").innerText =
-        "¿Seguro que deseas cancelar esta reserva? El cupo será liberado automáticamente.";
+        "¿Seguro que deseas cancelar\n esta reserva? El cupo será liberado\n automáticamente.";
     };
   });
 }
 
+// ===============================
 // MOSTRAR CARDS
+// ===============================
 function mostrar(tipo) {
-  document.querySelector(".card-lista").style.display = "none";
-  document.querySelector(".card-confirmacion").style.display = "none";
-  document.querySelector(".card-exito").style.display = "none";
 
-  document.querySelector(`.card-${tipo}`).style.display = "block";
+  document.querySelectorAll(".card").forEach(c => {
+    c.style.display = "none";
+    c.classList.remove("activa");
+  });
+
+  const card = document.querySelector(`.card-${tipo}`);
+  card.style.display = "block";
+  card.classList.add("activa");
 }
 
+// ===============================
 // CANCELAR
+// ===============================
 function cancelarReserva() {
 
   if (!reservaSeleccionada) {
@@ -93,7 +105,7 @@ function cancelarReserva() {
     return;
   }
 
-  // ❌ VALIDACIÓN NUEVA (CRITERIO 7)
+  // ❌ VALIDACIONES
   if (reservaSeleccionada.estado === "usada") {
     mostrarAlerta("No puedes cancelar una reserva ya utilizada");
     return;
@@ -108,22 +120,44 @@ function cancelarReserva() {
     mostrarAlerta("Esta reserva ya fue cancelada");
     return;
   }
-  
 
-  // ✅ SI TODO OK → cancelar
+  // ✅ CANCELAR
   reservaSeleccionada.estado = "cancelado";
 
-  document.querySelector(".mensaje-exito").innerText =
-    `Reserva ${reservaSeleccionada.id} cancelada`;
+  // 🔥 NUEVO BLOQUE (SUBCARD DE ÉXITO)
+  document.querySelector(".detalle-exito").innerHTML = `
+  
+  <div class="info-card">
 
-  document.querySelector(".cupo-liberado").innerText =
-    `+1 cupo liberado en ${reservaSeleccionada.zona}`;
+    <div class="reserva-info-card">
+
+      <p><strong>Código:</strong> ${reservaSeleccionada.id}</p>
+      <p><strong>Zona:</strong> ${reservaSeleccionada.zona}</p>
+      <p><strong>Fecha:</strong> ${reservaSeleccionada.fecha}</p>
+
+      <p>
+        <strong>Estado:</strong> 
+        <span class="estado estado-cancelado">Cancelada</span>
+      </p>
+
+      <div class="info-card cupo-card">
+        +1 cupo liberado en ${reservaSeleccionada.zona}
+      </div>
+
+    </div>
+
+   
+
+  </div>
+`;
 
   renderReservas();
   mostrar("exito");
 }
 
+// ===============================
 // EVENTOS GLOBALES
+// ===============================
 document.addEventListener("click", (e) => {
 
   if (e.target.classList.contains("btn-confirmar")) {
@@ -144,10 +178,15 @@ document.addEventListener("click", (e) => {
 
 });
 
+// ===============================
 // INIT
+// ===============================
 renderReservas();
 mostrar("lista");
 
+// ===============================
+// ALERTA
+// ===============================
 function mostrarAlerta(mensaje) {
   const alerta = document.getElementById("alerta");
 
@@ -158,6 +197,10 @@ function mostrarAlerta(mensaje) {
     alerta.classList.remove("show");
   }, 3000);
 }
+
+// ===============================
+// VALIDACIONES
+// ===============================
 function estaExpirada(fechaTexto) {
 
   const fechaReserva = new Date(fechaTexto);
@@ -165,6 +208,7 @@ function estaExpirada(fechaTexto) {
 
   return fechaReserva < ahora;
 }
+
 function horasRestantes(fechaTexto) {
 
   const fechaReserva = new Date(fechaTexto);
@@ -172,5 +216,5 @@ function horasRestantes(fechaTexto) {
 
   const diff = fechaReserva - ahora;
 
-  return diff / (1000 * 60 * 60); // convertir a horas
+  return diff / (1000 * 60 * 60);
 }
