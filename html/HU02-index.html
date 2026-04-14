@@ -5,13 +5,13 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>PARKALIA - Login</title>
     <link href="https://fonts.googleapis.com/css2?family=Syne:wght@700;800&family=DM+Sans:wght@400;500&display=swap" rel="stylesheet" />
-    <link rel="stylesheet" href="../css/HU02-style.css"/>
+    <link rel="stylesheet" href="HU-02-style.css"/>
 </head>
 <body>
 
     <div class="screen">
         <div class="logo">
-            <img src="../img/image.png" alt="logo" class="logo-img"/>
+            <img src="image.png" alt="logo" class="logo-img"/>
         </div>
 
         <div class="card">
@@ -36,11 +36,21 @@
                     <div class="error" id="password-error"></div>
                 </div>
 
-               
+                <div id="error-box" class="alert alert-danger hidden">
+                    Las credenciales no coinciden con ninguna cuenta registrada.
+                </div>
+
+                <div class="divider"></div>
+                
+                <button type="submit" class="btn-primary">Ingresar</button>
+
+                <div id="warning-box" class="alert alert-warning hidden">
+                    Los campos de correo y contraseña son obligatorios.
+                </div>
             </form>
         </div>
     </div>
 
-    <script src="../js/HU02-script.js"></script>
+    <script src="HU-02-script.js"></script>
 </body>
 </html>
