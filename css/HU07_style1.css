@@ -1,25 +1,32 @@
-
-/* RESET */
+/* =========================
+RESET
+========================= */
 * {
   margin: 0;
   padding: 0;
   box-sizing: border-box;
 }
 
-/* BODY */
+/* =========================
+BODY
+========================= */
 body {
   background: #0D1117;
   color: #FFFFFF;
   font-family: 'DM Sans', sans-serif;
 }
 
-/* LAYOUT */
+/* =========================
+LAYOUT GENERAL
+========================= */
 .app {
   display: flex;
   height: 100vh;
 }
 
-/* SIDEBAR */
+/* =========================
+SIDEBAR
+========================= */
 .sidebar {
   width: 220px;
   background: #161B22;
@@ -28,18 +35,13 @@ body {
 }
 
 .logo {
-  display: flex;
-  align-items: center;
-  justify-content: flex-start;
   margin-bottom: 30px;
 }
 
 .logo img {
   width: 140px;
-  max-width: 100%;
 }
 
-/* MENU */
 .section-title {
   color: #BB949E;
   font-size: 12px;
@@ -49,7 +51,7 @@ body {
 .menu {
   display: flex;
   flex-direction: column;
-  gap: 3px;
+  gap: 5px;
 }
 
 .menu-item {
@@ -71,46 +73,59 @@ body {
   box-shadow: -4px 0 10px -2px #1A6FD4;
 }
 
-/* MAIN */
+/* =========================
+MAIN
+========================= */
 .main {
   flex: 1;
   display: flex;
   flex-direction: column;
 }
 
-/* HEADER */
 .top-header {
   padding: 20px 30px;
   background: #161B22;
   border-bottom: 1px solid #21262D;
 }
 
-/* CONTENT */
 .content {
   flex: 1;
-  display: flex;
-  flex-direction: column;
   padding: 30px;
 }
 
+/* =========================
+CENTRADO DE CARDS
+========================= */
 .cards-container {
-  flex: 1;
   display: flex;
   justify-content: center;
-  align-items: center;
+  align-items: flex-start;
+  gap: 20px;
+  padding-top: 20px;
 }
 
-/* CARD BASE */
+/* =========================
+CARD BASE
+========================= */
 .card {
   width: 100%;
-  max-width: 550px;
+  max-width: 350px;
   background: #161B22;
   border: 1px solid #21262D;
-  border-radius: 10px;
+  border-radius: 12px;
   padding: 20px;
 }
 
-/* STEP CIRCLES */
+/* =========================
+HEADER CARD
+========================= */
+.card-header {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  margin-bottom: 20px;
+}
+
 .step {
   width: 32px;
   height: 32px;
@@ -121,43 +136,34 @@ body {
   font-weight: bold;
 }
 
-/* COLORES STEPS */
-.step-blue {
-  background: #1A6FD4;
-}
+.step-blue { background: #1A6FD4; }
+.step-red { background: #DA3633; }
+.step-green { background: #238636; }
 
-.step-red {
-  background: #DA3633;
-}
-
-.step-green {
-  background: #238636;
-}
-
-/* CARD HEADER */
-.card-header {
-  display: flex;
-  align-items: center;
-  gap: 12px;
-  margin-bottom: 20px;
-}
-
-/* RESERVAS */
+/* =========================
+LISTA RESERVAS
+========================= */
 .reservas-container {
   display: flex;
   flex-direction: column;
   gap: 15px;
 }
 
-/* SUB CARD */
+/* CARD RESERVA */
 .reserva-item {
   background: #0D1117;
   border: 1px solid #21262D;
   border-radius: 10px;
   padding: 15px;
+  transition: all 0.2s ease;
 }
 
-/* HEADER RESERVA */
+.reserva-item:hover {
+  border: 1px solid #ff3b3b;
+  transform: scale(1.02);
+}
+
+/* TOP RESERVA */
 .reserva-top {
   display: flex;
   justify-content: space-between;
@@ -168,115 +174,138 @@ body {
   font-weight: bold;
 }
 
-/* ESTADO */
+/* =========================
+ESTADOS (SOMBRA + BORDE)
+========================= */
 .estado {
+  padding: 5px 12px;
   border-radius: 20px;
-  padding: 5px 10px;
   font-size: 12px;
-  border: none;
-  color: white;
+  border: 1px solid transparent;
 }
 
-/* COLORES ESTADO */
+/* confirmada */
 .estado-confirmada {
-  background: #238636;
+  background: rgba(35, 134, 54, 0.15);
+  border-color: #238636;
+  color: #2ea043;
 }
 
+/* pendiente */
 .estado-pendiente {
-  background: #facc15;
-  color: black;
+  background: rgba(250, 204, 21, 0.15);
+  border-color: #facc15;
+  color: #facc15;
 }
 
-.estado-pagada {
-  background: #DA3633;
+/* cancelado */
+.estado-cancelado {
+  background: rgba(218, 54, 51, 0.15);
+  border-color: #da3633;
+  color: #ff6b6b;
 }
 
-/* BOTÓN CANCELAR */
+/* =========================
+BOTÓN CANCELAR
+========================= */
 .btn-cancelar {
-  margin-top: 10px;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+
   width: 100%;
+  margin-top: 10px;
   padding: 10px;
+
   border-radius: 8px;
-  border: none;
-  background: #DA3633;
-  color: white;
+  border: 2px solid #ff1e1e;
+
+  background: rgba(255, 30, 30, 0.12);
+  color: #ff4d4d;
+
   cursor: pointer;
 }
 
-/* ========================= */
-/* CARDS FLUJO */
-/* ========================= */
+.btn-cancelar:hover {
+  background: rgba(255, 30, 30, 0.25);
+}
 
+/* =========================
+EMPTY STATE
+========================= */
+.empty-state {
+  text-align: center;
+  padding: 20px;
+  border: 1px dashed #ff3b3b;
+  border-radius: 10px;
+  color: #ff6b6b;
+}
+
+/* =========================
+CARDS OCULTAS
+========================= */
 .card-confirmacion,
 .card-exito {
   display: none;
 }
 
-/* ALERTA */
+/* =========================
+ALERTA CONFIRMACIÓN
+========================= */
 .alerta {
-  margin-top: 10px;
-  color: #ff4d4d;
+  margin: 15px 0;
   font-weight: bold;
 }
 
-/* ACCIONES */
-.acciones {
-  display: flex;
-  justify-content: space-between;
-  gap: 10px;
-  margin-top: 15px;
+/* =========================
+WARNING
+========================= */
+.warning-card {
+  background: rgba(218, 54, 51, 0.15);
+  border: 1px solid #da3633;
+  color: #ff6b6b;
+  padding: 12px;
+  border-radius: 10px;
+  margin: 15px 0;
 }
 
-/* BOTONES */
+/* =========================
+BOTONES
+========================= */
+.btn-group {
+  display: flex;
+  gap: 10px;
+}
+
+.btn-group button {
+  flex: 1;
+  padding: 12px;
+  border-radius: 8px;
+  cursor: pointer;
+  border: none;
+}
+
+/* confirmar */
 .btn-confirmar {
   background: #DA3633;
   color: white;
-  padding: 10px;
-  border-radius: 8px;
-  border: none;
-  cursor: pointer;
-  flex: 1;
 }
 
+/* volver */
 .btn-volver {
   background: transparent;
   border: 1px solid #BB949E;
   color: white;
-  padding: 10px;
-  border-radius: 8px;
-  cursor: pointer;
-  flex: 1;
 }
 
-/* CARD ÉXITO */
-.mensaje-exito {
-  text-align: center;
-  margin: 20px 0;
-}
-
-.cupo-liberado {
-  margin-top: 10px;
-  color: #238636;
-  font-weight: bold;
-}
-
-/* BOTONES FINAL */
+/* éxito */
 .btn-ver-reservas {
   background: #1A6FD4;
   color: white;
-  border: none;
-  padding: 10px;
-  border-radius: 8px;
-  cursor: pointer;
-  flex: 1;
 }
 
 .btn-inicio {
   background: transparent;
   border: 1px solid #BB949E;
   color: white;
-  padding: 10px;
-  border-radius: 8px;
-  cursor: pointer;
-  flex: 1;
 }

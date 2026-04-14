@@ -5,8 +5,6 @@
   <title>Cancelación de reservas</title>
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-  <link href="https://fonts.googleapis.com/css2?family=Syne:wght@400;500;600&family=DM+Sans:wght@400;500&display=swap" rel="stylesheet">
-
   <link rel="stylesheet" href="css/HU07_style1.css">
 </head>
 
@@ -14,35 +12,36 @@
 
 <div class="app">
 
-    <!-- SIDEBAR -->
-    <aside class="sidebar">
+  <!-- SIDEBAR -->
+  <aside class="sidebar">
 
-      <div class="logo">
-        <img src="img/Group_2.png" alt="Logo Parkalia">
-      </div>
+    <div class="logo">
+      <img src="img/Group_2.png" alt="Logo Parkalia">
+    </div>
 
-      <p class="section-title">Principal</p>
-      <nav class="menu">
-        <a href="#" class="menu-item">📊 Panel de control</a>
-        <a href="#" class="menu-item">🚗 Vehículos</a>
-        <a href="#" class="menu-item">&#11041; Zonas</a>
-      </nav>
+    <p class="section-title">Principal</p>
+    <nav class="menu">
+      <a href="#" class="menu-item">📊 Panel de control</a>
+      <a href="#" class="menu-item">🚗 Vehículos</a>
+      <a href="#" class="menu-item">&#11041; Zonas</a>
+    </nav>
 
-      <p class="section-title">Actividad</p>
-      <nav class="menu">
-        <a href="#" class="menu-item active">📅 Reservaciones</a>
-        <a href="#" class="menu-item">💳 Pagos</a>
-        <a href="#" class="menu-item">📜 Historial</a>
-      </nav>
+    <p class="section-title">Actividad</p>
+    <nav class="menu">
+      <a href="#" class="menu-item active">📅 Reservaciones</a>
+      <a href="#" class="menu-item">💳 Pagos</a>
+      <a href="#" class="menu-item">📜 Historial</a>
+    </nav>
 
-      <p class="section-title">Sistema</p>
+    <p class="section-title">Sistema</p>
       <nav class="menu">
         <a href="#" class="menu-item">👤 Usuarios</a>
         <a href="#" class="menu-item">⚙️ Configuración</a>
       </nav>
 
-    </aside>
+  </aside>
 
+  <!-- MAIN -->
   <div class="main">
 
     <header class="top-header">
@@ -55,14 +54,12 @@
 
         <!-- CARD 1 -->
         <div class="card card-lista">
-
           <div class="card-header">
             <div class="step step-blue">1</div>
             <h2>Seleccionar reserva</h2>
           </div>
 
           <div class="reservas-container"></div>
-
         </div>
 
         <!-- CARD 2 -->
@@ -72,13 +69,26 @@
             <div class="step step-red">!</div>
             <h2>Confirmar cancelación</h2>
           </div>
-
+          <div class="basura">
+            🗑️
+          </div>
+          <br>
+          <div class="parrafo">
+            <h2>Cancelar<br>Reserva</h2>
+          </div> <br>
+          <p class="alerta"></p>
           <div class="detalle-reserva"></div>
+          <br>
+          
 
-          <p class="alerta">¿Seguro que deseas cancelar? El cupo será liberado.</p>
+          <div class="warning-card">
+            ⚠️ Esta acción no se puede deshacer
+          </div>
 
-          <button class="btn-volver">Volver</button>
-          <button class="btn-confirmar">Sí, cancelar</button>
+          <div class="btn-group">
+            <button class="btn-volver">Volver</button>
+            <button class="btn-confirmar">Sí, <br> cancelar</button>
+          </div>
 
         </div>
 
@@ -91,11 +101,12 @@
           </div>
 
           <div class="mensaje-exito"></div>
-
           <p class="cupo-liberado"></p>
 
-          <button class="btn-ver-reservas">Ver reservas</button>
-          <button class="btn-inicio">Inicio</button>
+          <div class="btn-group">
+            <button class="btn-ver-reservas">Ver reservas</button>
+            <button class="btn-inicio">Inicio</button>
+          </div>
 
         </div>
 
