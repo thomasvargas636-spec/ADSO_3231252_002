@@ -21,6 +21,14 @@ const reservas = [
     tiempo: "3 horas",
     precio: "$3000"
   }
+  {
+  id: "PRK-003",
+  estado: "usada",
+  zona: "Zona Central",
+  fecha: "10 Mar 2025 - 2:00 AM",
+  tiempo: "1 hora",
+  precio: "$1500"
+}
 ];
 
 let reservaSeleccionada = null;
@@ -80,27 +88,30 @@ function mostrar(tipo) {
 // CANCELAR
 function cancelarReserva() {
 
-  // VALIDACIÓN 1: existe selección
   if (!reservaSeleccionada) {
     mostrarAlerta("No hay ninguna reserva seleccionada");
     return;
   }
 
-  // VALIDACIÓN 2: ya está cancelada
+  // ❌ VALIDACIÓN NUEVA (CRITERIO 7)
+  if (reservaSeleccionada.estado === "usada") {
+    mostrarAlerta("No puedes cancelar una reserva ya utilizada");
+    return;
+  }
+
+  if (estaExpirada(reservaSeleccionada.fecha)) {
+    mostrarAlerta("No puedes cancelar una reserva expirada");
+    return;
+  }
+
   if (reservaSeleccionada.estado === "cancelado") {
     mostrarAlerta("Esta reserva ya fue cancelada");
     return;
   }
 
-  // Cancelar
+  // ✅ SI TODO OK → cancelar
   reservaSeleccionada.estado = "cancelado";
 
-  // Liberar cupo (criterio 5)
-  if (cuposPorZona[reservaSeleccionada.zona] !== undefined) {
-    cuposPorZona[reservaSeleccionada.zona]++;
-  }
-
-  // Mensajes
   document.querySelector(".mensaje-exito").innerText =
     `Reserva ${reservaSeleccionada.id} cancelada`;
 
@@ -145,4 +156,11 @@ function mostrarAlerta(mensaje) {
   setTimeout(() => {
     alerta.classList.remove("show");
   }, 3000);
+}
+function estaExpirada(fechaTexto) {
+
+  const fechaReserva = new Date(fechaTexto);
+  const ahora = new Date();
+
+  return fechaReserva < ahora;
 }

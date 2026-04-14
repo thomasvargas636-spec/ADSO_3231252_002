@@ -323,3 +323,7 @@ BOTONES
 .alert-custom.show {
   display: block;
 }
+.card-activa {
+  border: 2px solid #1A6FD4;
+  box-shadow: 0 0 10px rgba(26, 111, 212, 0.3);
+}
