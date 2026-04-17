@@ -110,6 +110,23 @@ document.querySelectorAll(".filtro-btn").forEach(btn => {
 
 // INIT
 document.addEventListener("DOMContentLoaded", () => {
+
+  validarAutenticacion(); // 🔥 primero
+
   renderTabla();
   renderResumen();
+
 });
+
+function validarAutenticacion() {
+
+  const usuario = localStorage.getItem("usuario");
+
+  if (!usuario) {
+    alert("Debes iniciar sesión");
+
+    // redirección (simulada)
+    window.location.href = "login.html";
+  }
+
+}
