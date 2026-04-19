@@ -118,6 +118,7 @@ document.addEventListener("DOMContentLoaded", () => {
 
 });
 
+
 function validarAutenticacion() {
 
   const usuario = localStorage.getItem("usuario");
@@ -126,7 +127,7 @@ function validarAutenticacion() {
     alert("Debes iniciar sesión");
 
     // redirección (simulada)
-    window.location.href = "login.html";
+    // window.location.href = "login.html";
   }
 
 }
