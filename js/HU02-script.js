@@ -17,6 +17,14 @@ loginForm.addEventListener('submit', function(e) {
     const emailValue = emailInput.value.trim();
     const passValue  = passInput.value.trim();
 
+    /* --- CRITERIO 4: Validar campos obligatorios --- */
+    if (emailValue === "" || passValue === "") {
+        showWarning("Los campos de correo y contraseña son obligatorios.");
+        if (emailValue === "") emailInput.classList.add('input-error');
+        if (passValue === "")  passInput.classList.add('input-error');
+        return;
+    }
+
     /* --- CRITERIO 2: Simulación de cuenta registrada --- */
 
     const validUser = "camilo@gmail.com";// Usuario registrado simulado
@@ -52,14 +60,6 @@ function showError(message) {
     errorBox.classList.remove('hidden');
 }
 
-function handleLoginSuccess() {
-    // Guardamos sesión simple (opcional)
-    sessionStorage.setItem('isLoggedIn', 'true');
-    
-    // Alerta de éxito y redirección al Dashboard
-    alert("¡Bienvenido a Parkalia!");
-    window.location.href = "dashboard.html"; 
-}
 function handleLoginSuccess() {
     // Guardamos sesión simple (opcional)
     sessionStorage.setItem('isLoggedIn', 'true');
