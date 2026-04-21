@@ -1,3 +1,4 @@
+
 const loginForm   = document.getElementById('loginForm');
 const emailInput  = document.getElementById('email');
 const passInput   = document.getElementById('password');
@@ -7,31 +8,32 @@ const errorBox    = document.getElementById('error-box');
 const warningBox  = document.getElementById('warning-box');
 
 loginForm.addEventListener('submit', function(e) {
+    // Prevenir el envío automático para validar primero
     e.preventDefault();
 
-    // Resetear estados visuales
+    // Resetear estados visuales en cada intento
     resetFormStates();
 
     const emailValue = emailInput.value.trim();
     const passValue  = passInput.value.trim();
 
-    /* --- CRITERIO 4: Validar campos obligatorios --- */
-    if (emailValue === "" || passValue === "") {
-        showWarning("Los campos de correo y contraseña son obligatorios.");
-        if (emailValue === "") emailInput.classList.add('input-error');
-        if (passValue === "")  passInput.classList.add('input-error');
-        return;
-    }
-
     /* --- CRITERIO 2: Simulación de cuenta registrada --- */
-    const validUser = "camilo@gmail.com";
-    const validPass = "parkalia2026";
+
+    const validUser = "camilo@gmail.com";// Usuario registrado simulado
+    const validPass = "parkalia2026";// Contraseña registrada simulada
 
     if (emailValue === validUser && passValue === validPass) {
         /* --- CRITERIO 1: Redirección exitosa --- */
         handleLoginSuccess();
-    } 
+    } else {
+        /* --- CRITERIO 3: Credenciales incorrectas --- */
+        showError("Las credenciales no coinciden. Verifica tu correo y contraseña.");
+    }
 });
+
+/* =========================================
+   3. FUNCIONES DE APOYO (HELPERS)
+   ========================================= */
 
 function resetFormStates() {
     errorBox.classList.add('hidden');
@@ -51,10 +53,18 @@ function showError(message) {
 }
 
 function handleLoginSuccess() {
+    // Guardamos sesión simple (opcional)
     sessionStorage.setItem('isLoggedIn', 'true');
-    sessionStorage.setItem('userEmail', emailInput.value);
     
+    // Alerta de éxito y redirección al Dashboard
     alert("¡Bienvenido a Parkalia!");
-    // Asegúrate de que dashboard.html exista en la misma carpeta
+    window.location.href = "dashboard.html"; 
+}
+function handleLoginSuccess() {
+    // Guardamos sesión simple (opcional)
+    sessionStorage.setItem('isLoggedIn', 'true');
+    
+    // Alerta de éxito y redirección al Dashboard
+    alert("¡Bienvenido a Parkalia!");
     window.location.href = "dashboard.html"; 
 }

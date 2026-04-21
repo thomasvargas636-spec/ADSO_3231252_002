@@ -5,7 +5,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>PARKALIA - Login</title>
     <link href="https://fonts.googleapis.com/css2?family=Syne:wght@700;800&family=DM+Sans:wght@400;500&display=swap" rel="stylesheet" />
-    <link rel="stylesheet" href="../css/HU02-style.css">
+    <link rel="stylesheet" href="../css/HU02-style.css"/>
 </head>
 <body>
 
@@ -22,21 +22,20 @@
             
             <form id="loginForm">
                 <div class="field">
-                    <div class="label-row">
-                        <label for="email">Correo electrónico</label>
-                    </div>
+                    <label for="email">Correo electrónico</label>
                     <input type="email" id="email" placeholder="usuario@ejemplo.com">
+                    <div class="error" id="email-error"></div>
                 </div>
 
                 <div class="field">
                     <div class="label-row">
                         <label for="password">Contraseña</label>
-                        <a href="../HU-02.1.1/HU-02.1.1-index.html" class="forgot-link">¿Olvidé mi contraseña?</a>
+                        <a href="../HU-02.1.1/HU-02.1.1-index.html" class="forgot-link">¿Olvide mi contraseña?</a>
                     </div>
                     <input type="password" id="password" placeholder="********">
+                    <div class="error" id="password-error"></div>
                 </div>
 
-                <div id="warning-box" class="alert alert-warning hidden"></div>
                 <div id="error-box" class="alert alert-danger hidden">
                     Las credenciales no coinciden con ninguna cuenta registrada.
                 </div>
@@ -44,6 +43,10 @@
                 <div class="divider"></div>
                 
                 <button type="submit" class="btn-primary">Ingresar</button>
+
+                <div id="warning-box" class="alert alert-warning hidden">
+                    Los campos de correo y contraseña son obligatorios.
+                </div>
             </form>
         </div>
     </div>
