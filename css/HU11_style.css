@@ -1,0 +1,227 @@
+/* ========================= */
+/* RESET */
+/* ========================= */
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+/* ========================= */
+/* BODY */
+/* ========================= */
+body {
+  background: #0D1117;
+  color: #FFFFFF;
+  font-family: 'DM Sans', sans-serif;
+}
+
+/* ========================= */
+/* LAYOUT */
+/* ========================= */
+.app {
+  display: flex;
+  height: 100vh;
+}
+
+/* ========================= */
+/* SIDEBAR */
+/* ========================= */
+.sidebar {
+  width: 220px;
+  background: #161B22;
+  padding: 20px;
+  border-right: 1px solid #21262D;
+}
+
+.logo {
+  margin-bottom: 30px;
+}
+
+.logo img {
+  width: 140px;
+}
+
+/* ========================= */
+/* MENU */
+/* ========================= */
+.section-title {
+  color: #BB949E;
+  font-size: 12px;
+  margin: 15px 0 10px;
+  font-family: 'Syne', sans-serif;
+}
+
+.menu {
+  display: flex;
+  flex-direction: column;
+  gap: 3px;
+}
+
+.menu-item {
+  color: #BB949E;
+  text-decoration: none;
+  padding: 8px 10px;
+  border-radius: 6px;
+  font-size: 14px;
+  transition: 0.2s;
+}
+
+.menu-item:hover {
+  background: #21262D;
+  color: #FFFFFF;
+}
+
+.menu-item.active {
+  background: #21262D;
+  color: #FFFFFF;
+  box-shadow: -4px 0 10px -2px #1A6FD4;
+}
+
+/* ========================= */
+/* MAIN */
+/* ========================= */
+.main {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+}
+
+/* ========================= */
+/* HEADER */
+/* ========================= */
+.top-header {
+  padding: 20px 30px;
+  background: #161B22;
+  border-bottom: 1px solid #21262D;
+}
+
+.top-header h1 {
+  font-size: 18px;
+  font-family: 'Syne', sans-serif;
+}
+
+/* ========================= */
+/* CONTENT */
+/* ========================= */
+.content {
+  padding: 30px;
+}
+
+.content h1 {
+  font-size: 28px;
+  margin-bottom: 5px;
+  font-family: 'Syne', sans-serif;
+}
+
+.sub {
+  color: #BB949E;
+  margin-bottom: 20px;
+}
+
+/* ========================= */
+/* TABLA */
+/* ========================= */
+.tabla-card {
+  width: 100%;
+  background: #161B22;
+  border: 1px solid #21262D;
+  border-radius: 12px;
+  overflow: hidden;
+}
+
+/* HEADER TABLA */
+.tabla-header {
+  display: grid;
+  grid-template-columns: repeat(5, 1fr);
+  padding: 15px;
+  border-bottom: 1px solid #21262D;
+  color: #BB949E;
+  font-size: 12px;
+  font-family: 'Syne', sans-serif;
+}
+
+/* BODY */
+.tabla-body {
+  display: flex;
+  flex-direction: column;
+}
+
+/* FILA */
+.fila {
+  display: grid;
+  grid-template-columns: repeat(5, 1fr);
+  padding: 15px;
+  border-bottom: 1px solid #21262D;
+  align-items: center;
+  font-size: 14px;
+}
+
+.fila:last-child {
+  border-bottom: none;
+}
+
+/* ========================= */
+/* USUARIO */
+/* ========================= */
+.fila span small {
+  color: #BB949E;
+  font-size: 12px;
+}
+
+/* ========================= */
+/* ESTADOS */
+/* ========================= */
+.estado {
+  padding: 5px 10px;
+  border-radius: 20px;
+  font-size: 12px;
+  width: fit-content;
+}
+
+/* ACTIVO */
+.estado-activo {
+  border: 1px solid #238636;
+  background: rgba(35, 134, 54, 0.15);
+  color: #4CAF50;
+}
+
+/* INACTIVO */
+.estado-inactivo {
+  border: 1px solid #DA3633;
+  background: rgba(218, 54, 51, 0.15);
+  color: #ff3b3b;
+}
+
+.tabla-header {
+  display: grid;
+  grid-template-columns: repeat(5, 1fr);
+  padding: 15px;
+  border-bottom: 1px solid #21262D;
+  color: #BB949E;
+  font-size: 12px;
+}
+
+.fila {
+  display: grid;
+  grid-template-columns: repeat(5, 1fr);
+  padding: 15px;
+  border-bottom: 1px solid #21262D;
+  align-items: center;
+}
+
+.estado {
+  padding: 5px 10px;
+  border-radius: 20px;
+  font-size: 12px;
+}
+
+.estado-activo {
+  border: 1px solid #238636;
+  color: #4CAF50;
+}
+
+.estado-inactivo {
+  border: 1px solid #DA3633;
+  color: #ff3b3b;
+}

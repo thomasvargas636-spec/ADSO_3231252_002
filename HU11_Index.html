@@ -1,0 +1,81 @@
+<!-- HU11.html -->
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <title>Gestión de Usuarios</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+  <link rel="stylesheet" href="css/HU11_style.css">
+</head>
+
+<body>
+
+<div class="app">
+
+  <!-- SIDEBAR (MISMO DE HU08) -->
+  <aside class="sidebar">
+
+    <div class="logo">
+      <img src="img/Group_2.png">
+    </div>
+
+    <p class="section-title">Principal</p>
+    <nav class="menu">
+      <a href="#" class="menu-item">📊 Panel de control</a>
+      <a href="#" class="menu-item">🚗 Vehículos</a>
+      <a href="#" class="menu-item">⬡ Zonas</a>
+    </nav>
+
+    <p class="section-title">Actividad</p>
+    <nav class="menu">
+      <a href="#" class="menu-item">📅 Reservaciones</a>
+      <a href="#" class="menu-item">💳 Pagos</a>
+      <a href="#" class="menu-item">📜 Historial</a>
+    </nav>
+
+    <p class="section-title">Sistema</p>
+    <nav class="menu">
+      <a href="#" class="menu-item active">👤 Usuarios</a>
+      <a href="#" class="menu-item">⚙️ Configuración</a>
+    </nav>
+
+  </aside>
+
+  <!-- MAIN -->
+  <div class="main">
+
+    <header class="top-header">
+      <h1>Gestión de Usuarios</h1>
+    </header>
+
+    <section class="content">
+
+      <h1>Usuarios registrados</h1>
+      <p class="sub">Listado general</p>
+
+      <!-- TABLA -->
+      <div class="tabla-card">
+
+        <div class="tabla-header">
+          <span>USUARIO</span>
+          <span>ROL</span>
+          <span>FECHA</span>
+          <span>RESERVAS</span>
+          <span>ESTADO</span>
+        </div>
+
+        <div class="tabla-body"></div>
+
+      </div>
+
+    </section>
+
+  </div>
+
+</div>
+
+<script src="js/HU11_script.js"></script>
+
+</body>
+</html>
