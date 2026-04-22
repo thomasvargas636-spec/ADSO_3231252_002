@@ -1,7 +1,7 @@
 // =========================
-// DATOS DE PRUEBA
+// DATOS
 // =========================
-const usuarios = [
+let usuarios = [
   {
     nombre: "JosephGomez8",
     correo: "joseph@correo.com",
@@ -56,9 +56,9 @@ function renderTabla() {
       </span>
 
       <span class="acciones">
-        <button class="btn editar" data-index="${index}">
-          ✏️
-        </button>
+        <button class="btn editar" data-index="${index}">✏️</button>
+        <button class="btn toggle" data-index="${index}">⏸️</button>
+        <button class="btn delete" data-index="${index}">🗑️</button>
       </span>
     `;
 
@@ -67,32 +67,41 @@ function renderTabla() {
 }
 
 // =========================
-// EDITAR USUARIO
+// EVENTOS
 // =========================
 document.addEventListener("click", (e) => {
 
+  const index = e.target.dataset.index;
+
+  // 🔵 EDITAR (criterio 2)
   if (e.target.classList.contains("editar")) {
 
-    const index = e.target.dataset.index;
     const user = usuarios[index];
 
-    const nuevoNombre = prompt(
-      "Editar nombre:",
-      user.nombre
-    );
+    const nuevoNombre = prompt("Editar nombre:", user.nombre);
+    const nuevoCorreo = prompt("Editar correo:", user.correo);
 
-    const nuevoCorreo = prompt(
-      "Editar correo:",
-      user.correo
-    );
+    if (nuevoNombre) user.nombre = nuevoNombre;
+    if (nuevoCorreo) user.correo = nuevoCorreo;
 
-    if (nuevoNombre) {
-      user.nombre = nuevoNombre;
-    }
+    renderTabla();
+  }
 
-    if (nuevoCorreo) {
-      user.correo = nuevoCorreo;
-    }
+  // 🟡 TOGGLE ESTADO
+  if (e.target.classList.contains("toggle")) {
+
+    const user = usuarios[index];
+
+    user.estado =
+      user.estado === "activo" ? "inactivo" : "activo";
+
+    renderTabla();
+  }
+
+  // 🔴 ELIMINAR
+  if (e.target.classList.contains("delete")) {
+
+    usuarios.splice(index, 1);
 
     renderTabla();
   }

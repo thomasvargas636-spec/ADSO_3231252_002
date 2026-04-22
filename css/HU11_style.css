@@ -217,3 +217,27 @@ body {
   background: #1A6FD4;
   color: #FFFFFF;
 }
+
+/* BOTÓN PAUSA */
+.btn.toggle {
+  border: 1px solid #facc15;
+  background: rgba(250, 204, 21, 0.15);
+  color: #facc15;
+}
+
+.btn.toggle:hover {
+  background: #facc15;
+  color: #000;
+}
+
+/* BOTÓN ELIMINAR */
+.btn.delete {
+  border: 1px solid #DA3633;
+  background: rgba(218, 54, 51, 0.15);
+  color: #ff3b3b;
+}
+
+.btn.delete:hover {
+  background: #DA3633;
+  color: #fff;
+}
