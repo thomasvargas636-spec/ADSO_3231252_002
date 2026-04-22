@@ -1,0 +1,110 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>PARKALIA - Mis Vehículos</title>
+  <link href="https://fonts.googleapis.com/css2?family=Syne:wght@400;600;700;800&family=DM+Sans:wght@300;400;500&display=swap" rel="stylesheet" />
+  <link rel="stylesheet" href="../css/hu03-style.css" />
+</head>
+<body>
+<div class="layout">
+
+  <aside class="sidebar">
+    <div class="logo">
+      <img src="../img/Group_2.png" alt="Parkalia" class="logo-img" />
+    </div>
+    <nav class="nav">
+      <div class="nav-label">Principal</div>
+      <div class="nav-item active"><span class="icon">🚗</span> Vehículos</div>
+      <div class="nav-item"><span class="icon">⬡</span> Zonas</div>
+      <div class="nav-label">Actividad</div>
+      <div class="nav-item"><span class="icon">📋</span> Reservaciones</div>
+      <div class="nav-item"><span class="icon">💳</span> Pagos</div>
+      <div class="nav-item"><span class="icon">🕐</span> Historial</div>
+      <div class="nav-label">Sistema</div>
+      <div class="nav-item"><span class="icon">👥</span> Usuarios</div>
+      <div class="nav-item"><span class="icon">⚙️</span> Configuración</div>
+    </nav>
+    <div class="sidebar-footer">
+      <div class="user-chip">
+        <div class="avatar">TV</div>
+        <div class="user-info">
+          <div class="user-name">T_vxrgs</div>
+          <div class="user-role">Ciudadano</div>
+        </div>
+      </div>
+    </div>
+  </aside>
+
+  <div class="main">
+    <div class="topbar">
+      <div class="page-title" id="topbar-title">Mis Vehículos</div>
+    </div>
+
+    <!-- CA-01: listado + registro -->
+    <div class="content" id="screen-list">
+      <div class="section-header">
+        <div>
+          <div class="section-title">Mis Vehículos</div>
+          <div class="section-sub">Gestiona los vehículos registrados en tu cuenta</div>
+        </div>
+        <button type="button" class="btn-primary" id="btn-show-form">＋ Agregar vehículo</button>
+      </div>
+
+      <div class="table-card">
+        <table id="vehicles-table">
+          <thead>
+            <tr>
+              <th>Placa</th>
+              <th>Marca</th>
+              <th>Modelo</th>
+              <th>Año</th>
+            </tr>
+          </thead>
+          <tbody id="vehicles-body"></tbody>
+        </table>
+        <div class="empty-state hidden" id="empty-state">
+          <div class="empty-icon">🚗</div>
+          <div class="empty-title">No tienes vehículos registrados</div>
+          <div class="empty-sub">Agrega tu primer vehículo para comenzar</div>
+          <button type="button" class="btn-primary" id="btn-empty-add">＋ Agregar vehículo</button>
+        </div>
+      </div>
+    </div>
+
+    <div class="content hidden" id="screen-form">
+      <a class="back-link" id="btn-back">← Volver a Mis Vehículos</a>
+      <div class="form-card">
+        <div class="form-card-title">
+          <div class="dot"></div>
+          <span>Nuevo vehículo</span>
+        </div>
+        <div class="field">
+          <label for="plate">Placa</label>
+          <input type="text" id="plate" placeholder="ej. ABC 123" />
+        </div>
+        <div class="field">
+          <label for="brand">Marca</label>
+          <input type="text" id="brand" placeholder="ej. Toyota" />
+        </div>
+        <div class="field">
+          <label for="model">Modelo</label>
+          <input type="text" id="model" placeholder="ej. Corolla" />
+        </div>
+        <div class="field">
+          <label for="year">Año</label>
+          <input type="number" id="year" placeholder="ej. 2022" min="1900" max="2099" />
+        </div>
+        <div class="form-actions">
+          <button type="button" class="btn-cancel" id="btn-cancel">Cancelar</button>
+          <button type="button" class="btn-save" id="btn-save">Registrar vehículo</button>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<script src="../js/HU03-Script.js"></script>
+</body>
+</html>
