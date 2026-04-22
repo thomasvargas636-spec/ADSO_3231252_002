@@ -1,5 +1,6 @@
-// HU11_script.js
-
+// =========================
+// DATOS DE PRUEBA
+// =========================
 const usuarios = [
   {
     nombre: "JosephGomez8",
@@ -27,12 +28,15 @@ const usuarios = [
   }
 ];
 
+// =========================
+// RENDER TABLA
+// =========================
 function renderTabla() {
 
   const cont = document.querySelector(".tabla-body");
   cont.innerHTML = "";
 
-  usuarios.forEach(u => {
+  usuarios.forEach((u, index) => {
 
     const row = document.createElement("div");
     row.classList.add("fila");
@@ -50,12 +54,54 @@ function renderTabla() {
       <span class="estado estado-${u.estado}">
         ${u.estado}
       </span>
+
+      <span class="acciones">
+        <button class="btn editar" data-index="${index}">
+          ✏️
+        </button>
+      </span>
     `;
 
     cont.appendChild(row);
   });
 }
 
+// =========================
+// EDITAR USUARIO
+// =========================
+document.addEventListener("click", (e) => {
+
+  if (e.target.classList.contains("editar")) {
+
+    const index = e.target.dataset.index;
+    const user = usuarios[index];
+
+    const nuevoNombre = prompt(
+      "Editar nombre:",
+      user.nombre
+    );
+
+    const nuevoCorreo = prompt(
+      "Editar correo:",
+      user.correo
+    );
+
+    if (nuevoNombre) {
+      user.nombre = nuevoNombre;
+    }
+
+    if (nuevoCorreo) {
+      user.correo = nuevoCorreo;
+    }
+
+    renderTabla();
+  }
+
+});
+
+// =========================
+// INIT
+// =========================
 document.addEventListener("DOMContentLoaded", () => {
   renderTabla();
 });

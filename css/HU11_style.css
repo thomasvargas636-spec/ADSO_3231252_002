@@ -133,7 +133,7 @@ body {
 /* HEADER TABLA */
 .tabla-header {
   display: grid;
-  grid-template-columns: repeat(5, 1fr);
+  grid-template-columns: repeat(6, 1fr);
   padding: 15px;
   border-bottom: 1px solid #21262D;
   color: #BB949E;
@@ -150,7 +150,7 @@ body {
 /* FILA */
 .fila {
   display: grid;
-  grid-template-columns: repeat(5, 1fr);
+  grid-template-columns: repeat(6, 1fr);
   padding: 15px;
   border-bottom: 1px solid #21262D;
   align-items: center;
@@ -193,35 +193,27 @@ body {
   color: #ff3b3b;
 }
 
-.tabla-header {
-  display: grid;
-  grid-template-columns: repeat(5, 1fr);
-  padding: 15px;
-  border-bottom: 1px solid #21262D;
-  color: #BB949E;
+/* ========================= */
+/* ACCIONES */
+/* ========================= */
+.acciones {
+  display: flex;
+  gap: 10px;
+}
+
+/* BOTÓN EDITAR */
+.btn {
+  border: 1px solid #1A6FD4;
+  background: rgba(26, 111, 212, 0.15);
+  color: #1A6FD4;
+  padding: 5px 8px;
+  border-radius: 6px;
+  cursor: pointer;
   font-size: 12px;
+  transition: 0.2s;
 }
 
-.fila {
-  display: grid;
-  grid-template-columns: repeat(5, 1fr);
-  padding: 15px;
-  border-bottom: 1px solid #21262D;
-  align-items: center;
-}
-
-.estado {
-  padding: 5px 10px;
-  border-radius: 20px;
-  font-size: 12px;
-}
-
-.estado-activo {
-  border: 1px solid #238636;
-  color: #4CAF50;
-}
-
-.estado-inactivo {
-  border: 1px solid #DA3633;
-  color: #ff3b3b;
+.btn:hover {
+  background: #1A6FD4;
+  color: #FFFFFF;
 }
