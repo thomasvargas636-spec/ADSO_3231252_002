@@ -87,24 +87,41 @@ document.addEventListener("click", (e) => {
     renderTabla();
   }
 
-  // 🟡 TOGGLE ESTADO
+  // 🟡 TOGGLE ESTADO (con confirmación)
   if (e.target.classList.contains("toggle")) {
 
-    const user = usuarios[index];
+  const user = usuarios[index];
 
-    user.estado =
-      user.estado === "activo" ? "inactivo" : "activo";
+  const accion =
+    user.estado === "activo"
+      ? "desactivar"
+      : "activar";
 
-    renderTabla();
-  }
+  const confirmar = confirm(
+    `¿Seguro que deseas ${accion} este usuario?`
+  );
 
-  // 🔴 ELIMINAR
-  if (e.target.classList.contains("delete")) {
+  if (!confirmar) return;
 
-    usuarios.splice(index, 1);
+  user.estado =
+    user.estado === "activo" ? "inactivo" : "activo";
 
-    renderTabla();
-  }
+  renderTabla();
+}
+
+// 🔴 ELIMINAR (con confirmación)
+if (e.target.classList.contains("delete")) {
+
+  const confirmar = confirm(
+    "¿Seguro que deseas eliminar este usuario?"
+  );
+
+  if (!confirmar) return;
+
+  usuarios.splice(index, 1);
+
+  renderTabla();
+}
 
 });
 
