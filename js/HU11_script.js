@@ -52,7 +52,7 @@ function renderTabla() {
       <span>${u.reservas}</span>
 
       <span class="estado estado-${u.estado}">
-        ${u.estado}
+        ${u.estado === "activo" ? "Activo" : "Inactivo"}
       </span>
 
       <span class="acciones">
