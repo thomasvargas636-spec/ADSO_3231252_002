@@ -42,7 +42,7 @@
       <div class="page-title" id="topbar-title">Mis Vehículos</div>
     </div>
 
-    <!-- CA-01: listado + registro -->
+    <!-- CA-01: registro · CA-02: placa única -->
     <div class="content" id="screen-list">
       <div class="section-header">
         <div>
@@ -82,7 +82,8 @@
         </div>
         <div class="field">
           <label for="plate">Placa</label>
-          <input type="text" id="plate" placeholder="ej. ABC 123" />
+          <input type="text" id="plate" placeholder="ej. ABC 123" autocomplete="off" />
+          <div class="error" id="plate-error" role="alert"></div>
         </div>
         <div class="field">
           <label for="brand">Marca</label>

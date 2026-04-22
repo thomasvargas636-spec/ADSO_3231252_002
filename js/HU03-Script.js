@@ -1,6 +1,22 @@
-// HU-03 — CA-01: registrar vehículo (placa, marca, modelo, año)
+// HU-03 — CA-01: registrar (placa, marca, modelo, año)
+// CA-02: la placa debe ser única (comparación normalizada)
 
 let vehicles = [];
+
+function normalizePlate(value) {
+  return String(value).trim().toUpperCase().replace(/\s+/g, ' ');
+}
+
+function setPlateDuplicateError(show, message = '') {
+  const input = document.getElementById('plate');
+  const err = document.getElementById('plate-error');
+  if (input) input.classList.toggle('input-error', show);
+  if (err) err.textContent = show ? message : '';
+}
+
+function plateExists(normalized) {
+  return vehicles.some((v) => normalizePlate(v.plate) === normalized);
+}
 
 const screenList = document.getElementById('screen-list');
 const screenForm = document.getElementById('screen-form');
@@ -36,6 +52,7 @@ function showForm() {
     const el = document.getElementById(id);
     if (el) el.value = '';
   });
+  setPlateDuplicateError(false);
 }
 
 function showList() {
@@ -45,13 +62,24 @@ function showList() {
 }
 
 document.getElementById('btn-save').addEventListener('click', () => {
-  const plate = document.getElementById('plate').value.trim();
+  const plateNorm = normalizePlate(document.getElementById('plate').value);
   const brand = document.getElementById('brand').value.trim();
   const model = document.getElementById('model').value.trim();
   const year = document.getElementById('year').value.trim();
-  vehicles.push({ plate, brand, model, year });
+
+  if (plateExists(plateNorm)) {
+    setPlateDuplicateError(true, '⚠ Esta placa ya está registrada.');
+    return;
+  }
+  setPlateDuplicateError(false);
+
+  vehicles.push({ plate: plateNorm, brand, model, year });
   showList();
   renderTable();
+});
+
+document.getElementById('plate').addEventListener('input', () => {
+  setPlateDuplicateError(false);
 });
 
 document.getElementById('btn-show-form').addEventListener('click', showForm);
