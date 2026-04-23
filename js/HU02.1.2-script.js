@@ -29,5 +29,6 @@ form.addEventListener('submit', function (e) {
     emailError.classList.add('visible');
     return;
   }
-
+console.log("Validación exitosa, redirigiendo...");
+window.location.href = '../html/HU02.1.3-index.html';
 });
