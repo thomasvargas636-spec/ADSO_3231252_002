@@ -1,8 +1,14 @@
+// =========================
+// USUARIO ACTUAL
+// =========================
 const usuarioActual = {
   nombre: "AdminUser",
-  rol: "Administrador" // cambia a "Ciudadano" para probar bloqueo
+  rol: "Administrador"
 };
 
+// =========================
+// DATOS
+// =========================
 let usuarios = [
   {
     nombre: "JosephGomez8",
@@ -35,6 +41,7 @@ let usuarios = [
 // =========================
 let filtroActual = "todos";
 let textoBusqueda = "";
+let usuarioSeleccionado = null;
 
 // =========================
 // SUBCARDS
@@ -75,7 +82,9 @@ function renderTabla() {
         u.correo.toLowerCase().includes(textoBusqueda)
       );
     })
-    .forEach((u, index) => {
+    .forEach((u) => {
+
+      const index = usuarios.indexOf(u);
 
       const row = document.createElement("div");
       row.classList.add("fila");
@@ -87,8 +96,9 @@ function renderTabla() {
         </span>
 
         <span class="rol ${u.rol === "Administrador" ? "admin" : ""}">
-            ${u.rol}
+          ${u.rol}
         </span>
+
         <span>${u.fecha}</span>
         <span>${u.reservas}</span>
 
@@ -97,9 +107,9 @@ function renderTabla() {
         </span>
 
         <span class="acciones">
-          <button class="btn editar" data-index="${usuarios.indexOf(u)}">✏️</button>
-          <button class="btn toggle" data-index="${usuarios.indexOf(u)}">⏸️</button>
-          <button class="btn delete" data-index="${usuarios.indexOf(u)}">🗑️</button>
+          <button class="btn editar" data-index="${index}">✏️</button>
+          <button class="btn toggle" data-index="${index}">⏸️</button>
+          <button class="btn delete" data-index="${index}">🗑️</button>
         </span>
       `;
 
@@ -110,27 +120,62 @@ function renderTabla() {
 }
 
 // =========================
+// CAMBIO DE VISTA
+// =========================
+function volverTabla() {
+  document.querySelector(".tabla-card").classList.remove("oculto");
+  document.getElementById("vista-editar").classList.add("oculto");
+  renderTabla();
+  document.querySelector(".cards").classList.remove("oculto");
+  document.querySelector(".filtros").classList.remove("oculto");
+}
+
+// =========================
 // EVENTOS GENERALES
 // =========================
 document.addEventListener("click", (e) => {
 
   const index = e.target.dataset.index;
 
-  // 🔵 EDITAR (criterio 2)
+  // 🔵 EDITAR (NUEVA VISTA)
   if (e.target.classList.contains("editar")) {
 
+    usuarioSeleccionado = index;
     const user = usuarios[index];
 
-    const nuevoNombre = prompt("Editar nombre:", user.nombre);
-    const nuevoCorreo = prompt("Editar correo:", user.correo);
+    document.getElementById("editNombre").value = user.nombre;
+    document.getElementById("editCorreo").value = user.correo;
+    document.getElementById("editRol").value = user.rol;
+    document.getElementById("editEstado").value = user.estado;
 
-    if (nuevoNombre) user.nombre = nuevoNombre;
-    if (nuevoCorreo) user.correo = nuevoCorreo;
-
-    renderTabla();
+    document.querySelector(".tabla-card").classList.add("oculto");
+    document.querySelector(".cards").classList.add("oculto");
+    document.querySelector(".filtros").classList.add("oculto");
+    document.getElementById("vista-editar").classList.remove("oculto");
   }
 
-  // 🟡 TOGGLE ESTADO (criterio 5)
+  // 💾 GUARDAR EDICIÓN
+  if (e.target.id === "guardarEditar") {
+
+    const user = usuarios[usuarioSeleccionado];
+
+    user.nombre = document.getElementById("editNombre").value;
+    user.correo = document.getElementById("editCorreo").value;
+    user.rol = document.getElementById("editRol").value;
+    user.estado = document.getElementById("editEstado").value;
+
+    volverTabla();
+  }
+
+  // ❌ CANCELAR / CERRAR
+  if (
+    e.target.id === "cancelarEditar" ||
+    e.target.id === "cerrarEditar"
+  ) {
+    volverTabla();
+  }
+
+  // 🟡 TOGGLE ESTADO (SIN CAMBIOS)
   if (e.target.classList.contains("toggle")) {
 
     const user = usuarios[index];
@@ -152,7 +197,7 @@ document.addEventListener("click", (e) => {
     renderTabla();
   }
 
-  // 🔴 ELIMINAR (criterio 5)
+  // 🔴 ELIMINAR (SIN CAMBIOS)
   if (e.target.classList.contains("delete")) {
 
     const confirmar = confirm(
@@ -200,7 +245,7 @@ document.querySelectorAll(".botones button").forEach(btn => {
 // =========================
 document.addEventListener("DOMContentLoaded", () => {
 
-  // 🔒 VALIDACIÓN DE ACCESO
+  // 🔒 VALIDACIÓN ADMIN
   if (usuarioActual.rol !== "Administrador") {
 
     document.body.innerHTML = `
@@ -221,9 +266,8 @@ document.addEventListener("DOMContentLoaded", () => {
       </div>
     `;
 
-    return; // 🚨 detiene todo
+    return;
   }
 
-  // ✅ SI ES ADMIN
   renderTabla();
 });

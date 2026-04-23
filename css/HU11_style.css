@@ -315,5 +315,120 @@ body {
   width: fit-content;
 }
 
+/* ========================= */
+/* CONTROL DE VISTAS */
+/* ========================= */
+.oculto {
+  display: none ;
+}
+
+/* ========================= */
+/* VISTA EDITAR (LAYOUT) */
+/* ========================= */
+#vista-editar {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  min-height: 60vh;
+}
+
+/* CARD CENTRADA */
+.edit-card {
+  width: 100%;
+  max-width: 520px;
+
+  background: #161B22;
+  border: 1px solid #21262D;
+  border-radius: 16px;
+
+  padding: 25px;
+}
+
+/* HEADER */
+.edit-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 15px;
+}
+
+.edit-header h2 {
+  font-family: 'Syne', sans-serif;
+  font-size: 18px;
+}
+
+/* INPUTS */
+.edit-card input,
+.edit-card select {
+  width: 100%;
+  margin-top: 12px;
+
+  padding: 12px;
+  border-radius: 10px;
+
+  border: 1px solid #30363D;
+  background: #0D1117;
+  color: #fff;
+
+  font-size: 14px;
+}
+
+/* GRID */
+.form-grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 12px;
+}
+
+.acciones-form {
+  display: flex;
+  justify-content: flex-end;
+  gap: 10px;
+  margin-top: 20px;
+}
+
+/* BOTÓN BASE */
+.acciones-form .btn {
+  padding: 10px 16px;
+  border-radius: 8px;
+  font-size: 13px;
+  cursor: pointer;
+  transition: 0.2s;
+}
+
+/* CANCELAR (gris) */
+#cancelarEditar {
+  border: 1px solid #30363D;
+  background: transparent;
+  color: #8B949E;
+}
+
+#cancelarEditar:hover {
+  background: #21262D;
+  color: #fff;
+}
+
+#guardarEditar {
+  border: 1px solid #1A6FD4;
+  background: rgba(26,111,212,0.15);
+  color: #58A6FF;
+}
+
+#guardarEditar:hover {
+  background: #1A6FD4;
+  color: #fff;
+}
+
+/* BOTÓN CERRAR */
+#cerrarEditar {
+  border: 1px solid #30363D;
+  background: transparent;
+  color: #8B949E;
+}
+
+#cerrarEditar:hover {
+  background: #21262D;
+  color: #fff;
+}
 
 

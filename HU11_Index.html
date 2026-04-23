@@ -56,7 +56,9 @@
 
       <h1>Gestión de Usuarios</h1><br>
 
+      <!-- ========================= -->
       <!-- SUBCARDS -->
+      <!-- ========================= -->
       <div class="cards">
 
         <div class="card total">
@@ -101,7 +103,9 @@
 
       </div>
 
+      <!-- ========================= -->
       <!-- FILTROS -->
+      <!-- ========================= -->
       <div class="filtros">
 
         <input 
@@ -119,7 +123,9 @@
 
       </div>
 
+      <!-- ========================= -->
       <!-- TABLA -->
+      <!-- ========================= -->
       <div class="tabla-card">
 
         <div class="tabla-header">
@@ -132,6 +138,42 @@
         </div>
 
         <div class="tabla-body"></div>
+
+      </div>
+
+      <!-- ========================= -->
+      <!-- VISTA EDITAR -->
+      <!-- ========================= -->
+      <div id="vista-editar" class="vista oculto">
+
+        <div class="edit-card">
+
+          <div class="edit-header">
+            <h2>Editar usuario</h2>
+            <button id="cerrarEditar" class="btn">✖</button>
+          </div>
+
+          <input id="editNombre" type="text" placeholder="Nombre">
+          <input id="editCorreo" type="email" placeholder="Correo">
+
+          <div class="form-grid">
+            <select id="editRol">
+              <option>Ciudadano</option>
+              <option>Administrador</option>
+            </select>
+
+            <select id="editEstado">
+              <option value="activo">Activo</option>
+              <option value="inactivo">Inactivo</option>
+            </select>
+          </div>
+
+          <div class="acciones-form">
+            <button id="cancelarEditar" class="btn">Cancelar</button>
+            <button id="guardarEditar" class="btn">Guardar Cambios</button>
+          </div>
+
+        </div>
 
       </div>
 
