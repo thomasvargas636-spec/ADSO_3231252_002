@@ -211,7 +211,6 @@ body {
 .botones button.activo,
 .botones button:hover {
   border: 1px solid #1A6FD4;
-  background: rgba(26,111,212,0.15);
   color: #58A6FF;
 }
 

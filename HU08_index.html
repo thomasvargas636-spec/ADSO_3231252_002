@@ -1,0 +1,118 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <title>Historial de reservas</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+  <link rel="stylesheet" href="css/HU08_style.css">
+</head>
+
+<body>
+
+<div class="app">
+
+  <!-- SIDEBAR (IGUAL) -->
+  <aside class="sidebar">
+
+    <div class="logo">
+      <img src="img/Group_2.png" alt="Logo Parkalia">
+    </div>
+
+    <p class="section-title">PRINCIPAL</p>
+    <nav class="menu">
+      <a href="#" class="menu-item">🚗 Vehículos</a>
+      <a href="#" class="menu-item">&#11041; Zonas</a>
+    </nav>
+
+    <p class="section-title">ACTIVIDAD</p>
+    <nav class="menu">
+      <a href="#" class="menu-item">📅 Reservaciones</a>
+      <a href="#" class="menu-item">💳 Pagos</a>
+      <a href="#" class="menu-item active">📜 Historial</a>
+    </nav>
+
+    <p class="section-title">SISTEMA</p>
+    <nav class="menu">
+      <a href="#" class="menu-item">👤 Usuarios</a>
+      <a href="#" class="menu-item">⚙️ Configuración</a>
+    </nav>
+
+  </aside>
+
+  <!-- MAIN -->
+  <div class="main">
+
+    <!-- HEADER -->
+    <header class="top-header">
+      <h1>Historial de reservas</h1>
+    </header>
+
+    <!-- CONTENT -->
+    <section class="content">
+
+      <!-- TITULOS -->
+      <h1>Mi Historial</h1> <br>
+      <p class="sub">Con historial</p>
+
+      <!-- CARDS RESUMEN -->
+      <div class="resumen-cards">
+
+        <div class="resumen-card">
+          <h2 id="totalReservas">0</h2>
+          <p>Total reservas</p>
+        </div>
+
+        <div class="resumen-card">
+          <h2 id="totalPagadas" class="text-green">0</h2>
+          <p>Pagadas</p>
+        </div>
+
+        <div class="resumen-card">
+          <h2 id="totalPendientes" class="text-yellow">0</h2>
+          <p>Pendientes</p>
+        </div>
+
+        <div class="resumen-card">
+          <h2 id="totalCanceladas" class="text-red">0</h2>
+          <p>Canceladas</p>
+        </div>
+
+      </div>
+
+      <!-- FILTROS -->
+      <div class="filtros">
+        <button class="filtro-btn active">Todas</button>
+        <button class="filtro-btn">Pagadas</button>
+        <button class="filtro-btn">Pendientes</button>
+        <button class="filtro-btn">Canceladas</button>
+      </div>
+
+      
+      <!-- TABLA -->
+      <div class="tabla-card">
+
+        <div class="tabla-header">
+          <span>CÓDIGO</span>
+          <span>ZONA</span>
+          <span>VEHÍCULO</span>
+          <span>FECHA</span>
+          <span>DURACIÓN</span>
+          <span>MONTO</span>
+          <span>ESTADO</span>
+        </div>
+
+        <div class="tabla-body"></div>
+
+      </div>
+
+    </section>
+
+  </div>
+
+</div>
+
+<script src="js/HU08_script.js"></script>
+
+</body>
+</html>
