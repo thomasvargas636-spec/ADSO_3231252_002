@@ -75,7 +75,7 @@ function renderReservas() {
         `${reservaSeleccionada.id} - ${reservaSeleccionada.zona}`;
 
       document.querySelector(".alerta").innerText =
-        "¿Seguro que deseas cancelar\n esta reserva? El cupo será liberado\n automáticamente.";
+        "¿Estás seguro que deseas cancelar\n esta reserva? El cupo será liberado\n automáticamente.";
     };
   });
 }
@@ -130,7 +130,7 @@ function cancelarReserva() {
   <div class="info-card">
 
     <div class="reserva-info-card">
-
+      
       <p><strong>Código:</strong> ${reservaSeleccionada.id}</p>
       <p><strong>Zona:</strong> ${reservaSeleccionada.zona}</p>
       <p><strong>Fecha:</strong> ${reservaSeleccionada.fecha}</p>

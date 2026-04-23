@@ -100,7 +100,7 @@ CENTRADO DE CARDS
   flex: 1;
   display: flex;
   justify-content: center;
-  align-items: center; /* 🔥 centra vertical */
+  align-items: center; 
   padding: 30px;
 }
 
@@ -186,6 +186,7 @@ LISTA RESERVAS
   display: flex;
   justify-content: space-between;
   margin-bottom: 10px;
+  color: #1A6FD4;
 }
 
 .codigo {
@@ -283,8 +284,8 @@ ALERTA CONFIRMACIÓN
   margin: 15px 0;
   font-weight: bold;
   margin: 15px 0;
-  font-size: 13px;       /* más pequeño */
-  color: #8b949e;        /* gris elegante (estilo GitHub dark) */
+  font-size: 13px;       
+  color: #8b949e;     
 }
 
 /* =========================
@@ -388,8 +389,8 @@ BOTONES
 }
 .detalle-reserva {
   width: 100%;
-  background: #0D1117;              /* mismo fondo que subcards */
-  border: 1px solid #21262D;        /* mismo borde */
+  background: #0D1117;             
+  border: 1px solid #21262D;       
   border-radius: 10px;
   padding: 12px;
   margin-top: 10px;
@@ -399,8 +400,8 @@ BOTONES
 .success-card {
   font-weight: bold;
   width: 100%;
-  background: rgba(35, 134, 54, 0.15); /* verde sombra */
-  border: 1px solid #238636;           /* borde verde fuerte */
+  background: rgba(35, 134, 54, 0.15); 
+  border: 1px solid #238636;           
   border-radius: 10px;
   padding: 20px;
 
