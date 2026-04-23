@@ -1,7 +1,10 @@
 // HU-03 — CA-01: registrar (placa, marca, modelo, año)
-// CA-02: la placa debe ser única (comparación normalizada)
+// CA-02: placa única
+// CA-03: editar vehículos existentes
 
 let vehicles = [];
+/** null = alta nueva; número = índice en `vehicles` al editar */
+let editingIndex = null;
 
 function normalizePlate(value) {
   return String(value).trim().toUpperCase().replace(/\s+/g, ' ');
@@ -14,8 +17,17 @@ function setPlateDuplicateError(show, message = '') {
   if (err) err.textContent = show ? message : '';
 }
 
-function plateExists(normalized) {
-  return vehicles.some((v) => normalizePlate(v.plate) === normalized);
+/** @param {number|null} excludeIndex índice a ignorar (misma fila en edición) */
+function plateExists(normalized, excludeIndex = null) {
+  return vehicles.some(
+    (v, i) => normalizePlate(v.plate) === normalized && i !== excludeIndex
+  );
+}
+
+function esc(text) {
+  const d = document.createElement('div');
+  d.textContent = text;
+  return d.innerHTML;
 }
 
 const screenList = document.getElementById('screen-list');
@@ -23,6 +35,9 @@ const screenForm = document.getElementById('screen-form');
 const vehiclesBody = document.getElementById('vehicles-body');
 const emptyState = document.getElementById('empty-state');
 const topbarTitle = document.getElementById('topbar-title');
+const formCardTitle = document.getElementById('form-card-title');
+const btnSave = document.getElementById('btn-save');
+const btnCancelEdit = document.getElementById('btn-cancel-edit');
 
 function renderTable() {
   vehiclesBody.innerHTML = '';
@@ -33,21 +48,34 @@ function renderTable() {
   }
   document.getElementById('vehicles-table').classList.remove('hidden');
   emptyState.classList.add('hidden');
-  vehicles.forEach((v) => {
+  vehicles.forEach((v, index) => {
     const row = document.createElement('tr');
     row.innerHTML = `
-      <td><span class="plate-badge">${v.plate}</span></td>
-      <td>${v.brand}</td>
-      <td>${v.model}</td>
-      <td><span class="year-badge">${v.year}</span></td>`;
+      <td><span class="plate-badge">${esc(v.plate)}</span></td>
+      <td>${esc(v.brand)}</td>
+      <td>${esc(v.model)}</td>
+      <td><span class="year-badge">${esc(String(v.year))}</span></td>
+      <td>
+        <div class="action-btns">
+          <button type="button" class="btn-edit" data-index="${index}" title="Editar">✏</button>
+        </div>
+      </td>`;
     vehiclesBody.appendChild(row);
   });
 }
 
-function showForm() {
+function setFormMode(isEdit) {
+  formCardTitle.textContent = isEdit ? 'Editar vehículo' : 'Nuevo vehículo';
+  btnSave.textContent = isEdit ? 'Guardar cambios' : 'Registrar vehículo';
+  btnCancelEdit.classList.toggle('hidden', !isEdit);
+  topbarTitle.textContent = isEdit ? 'Editar vehículo' : 'Agregar vehículo';
+}
+
+function showFormNew() {
+  editingIndex = null;
   screenList.classList.add('hidden');
   screenForm.classList.remove('hidden');
-  topbarTitle.textContent = 'Agregar vehículo';
+  setFormMode(false);
   ['plate', 'brand', 'model', 'year'].forEach((id) => {
     const el = document.getElementById(id);
     if (el) el.value = '';
@@ -55,7 +83,23 @@ function showForm() {
   setPlateDuplicateError(false);
 }
 
+function startEdit(index) {
+  const v = vehicles[index];
+  if (!v) return;
+  editingIndex = index;
+  screenList.classList.add('hidden');
+  screenForm.classList.remove('hidden');
+  setFormMode(true);
+  document.getElementById('plate').value = v.plate;
+  document.getElementById('brand').value = v.brand;
+  document.getElementById('model').value = v.model;
+  document.getElementById('year').value = v.year;
+  setPlateDuplicateError(false);
+  document.getElementById('plate').focus();
+}
+
 function showList() {
+  editingIndex = null;
   screenList.classList.remove('hidden');
   screenForm.classList.add('hidden');
   topbarTitle.textContent = 'Mis Vehículos';
@@ -67,13 +111,18 @@ document.getElementById('btn-save').addEventListener('click', () => {
   const model = document.getElementById('model').value.trim();
   const year = document.getElementById('year').value.trim();
 
-  if (plateExists(plateNorm)) {
+  if (plateExists(plateNorm, editingIndex)) {
     setPlateDuplicateError(true, '⚠ Esta placa ya está registrada.');
     return;
   }
   setPlateDuplicateError(false);
 
-  vehicles.push({ plate: plateNorm, brand, model, year });
+  const entry = { plate: plateNorm, brand, model, year };
+  if (editingIndex !== null) {
+    vehicles[editingIndex] = entry;
+  } else {
+    vehicles.push(entry);
+  }
   showList();
   renderTable();
 });
@@ -82,9 +131,17 @@ document.getElementById('plate').addEventListener('input', () => {
   setPlateDuplicateError(false);
 });
 
-document.getElementById('btn-show-form').addEventListener('click', showForm);
-document.getElementById('btn-empty-add').addEventListener('click', showForm);
+vehiclesBody.addEventListener('click', (e) => {
+  const btn = e.target.closest('.btn-edit[data-index]');
+  if (!btn) return;
+  const i = Number.parseInt(btn.getAttribute('data-index'), 10);
+  if (Number.isFinite(i)) startEdit(i);
+});
+
+document.getElementById('btn-show-form').addEventListener('click', showFormNew);
+document.getElementById('btn-empty-add').addEventListener('click', showFormNew);
 document.getElementById('btn-back').addEventListener('click', showList);
 document.getElementById('btn-cancel').addEventListener('click', showList);
+document.getElementById('btn-cancel-edit').addEventListener('click', showList);
 
 renderTable();

@@ -42,7 +42,7 @@
       <div class="page-title" id="topbar-title">Mis Vehículos</div>
     </div>
 
-    <!-- CA-01: registro · CA-02: placa única -->
+    <!-- CA-01 · CA-02 · CA-03 -->
     <div class="content" id="screen-list">
       <div class="section-header">
         <div>
@@ -60,6 +60,7 @@
               <th>Marca</th>
               <th>Modelo</th>
               <th>Año</th>
+              <th>Acciones</th>
             </tr>
           </thead>
           <tbody id="vehicles-body"></tbody>
@@ -78,7 +79,7 @@
       <div class="form-card">
         <div class="form-card-title">
           <div class="dot"></div>
-          <span>Nuevo vehículo</span>
+          <span id="form-card-title">Nuevo vehículo</span>
         </div>
         <div class="field">
           <label for="plate">Placa</label>
@@ -99,6 +100,7 @@
         </div>
         <div class="form-actions">
           <button type="button" class="btn-cancel" id="btn-cancel">Cancelar</button>
+          <button type="button" class="btn-cancel hidden" id="btn-cancel-edit">Cancelar edición</button>
           <button type="button" class="btn-save" id="btn-save">Registrar vehículo</button>
         </div>
       </div>

@@ -62,10 +62,13 @@ body::before {
 .logo {
   padding: 20px 16px;
   border-bottom: 1px solid var(--border);
+  display: flex;
+  justify-content: center;
+  align-items: center;
 }
 
 .logo-img {
-  height: 36px;
+  height: 48px;
   width: auto;
   object-fit: contain;
 }
