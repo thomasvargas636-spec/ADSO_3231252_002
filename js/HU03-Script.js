@@ -39,6 +39,7 @@ const topbarTitle = document.getElementById('topbar-title');
 const formCardTitle = document.getElementById('form-card-title');
 const btnSave = document.getElementById('btn-save');
 const btnCancelEdit = document.getElementById('btn-cancel-edit');
+const successMsg = document.getElementById('success-msg');
 
 function renderTable() {
   vehiclesBody.innerHTML = '';
@@ -116,7 +117,18 @@ function showList() {
   topbarTitle.textContent = 'Mis Vehículos';
 }
 
+function showSuccess(message) {
+  if (!successMsg) return;
+  successMsg.textContent = message;
+  successMsg.classList.remove('hidden');
+  window.clearTimeout(showSuccess._timer);
+  showSuccess._timer = window.setTimeout(() => {
+    successMsg.classList.add('hidden');
+  }, 2500);
+}
+
 document.getElementById('btn-save').addEventListener('click', () => {
+  const isEdit = editingIndex !== null;
   const plateNorm = normalizePlate(document.getElementById('plate').value);
   const brand = document.getElementById('brand').value.trim();
   const model = document.getElementById('model').value.trim();
@@ -136,6 +148,7 @@ document.getElementById('btn-save').addEventListener('click', () => {
   }
   showList();
   renderTable();
+  showSuccess(isEdit ? '✅ Cambios guardados correctamente.' : '✅ Vehículo registrado correctamente.');
 });
 
 document.getElementById('plate').addEventListener('input', () => {
