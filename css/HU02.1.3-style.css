@@ -1,0 +1,136 @@
+/* --- 1. Variables y Base --- */
+:root {
+    --bg: #080C10;
+    --card: #141B27;
+    --border: #1E2A3A;
+    --blue: #1A6FD4;
+    --green: #3DBE6C;
+    --text: #E8EDF5;
+    --muted: #5A6A7E;
+}
+
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+/* --- 2. Layout y Fondo --- */
+body {
+    font-family: 'DM Sans', sans-serif;
+    background-color: var(--bg);
+    color: var(--text);
+    min-height: 100vh;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+body::before {
+    content: '';
+    position: fixed;
+    inset: 0;
+    background: radial-gradient(ellipse at 15% 50%, rgba(26, 111, 212, 0.08), transparent 60%),
+                radial-gradient(ellipse at 85% 50%, rgba(61, 190, 108, 0.06), transparent 60%);
+    z-index: 0;
+}
+
+/* --- 3. Componentes de la Tarjeta --- */
+.screen {
+    position: relative;
+    z-index: 1;
+    width: 100%;
+    max-width: 400px;
+}
+
+.card {
+    background-color: var(--card);
+    border: 1px solid var(--border);
+    border-radius: 16px;
+    padding: 32px;
+}
+
+.logo {
+    text-align: center;
+    margin-bottom: 24px;
+}
+
+.logo-img {
+    height: 40px;
+}
+
+/* --- 4. Títulos --- */
+.card-title {
+    font-family: 'Syne', sans-serif;
+    font-size: 22px;
+    font-weight: 800;
+    margin-bottom: 8px;
+}
+
+.card-subtitle {
+    font-size: 13px;
+    color: var(--muted);
+    line-height: 1.5;
+}
+
+/* --- 5. Alertas e Información --- */
+.alert-info {
+    background-color: rgba(61, 190, 108, 0.08); 
+    border: 1px solid rgba(61, 190, 108, 0.2); 
+    color: var(--green); 
+    padding: 16px;
+    border-radius: 12px;
+    font-size: 14px;
+    line-height: 1.5;
+    margin: 20px 0;
+}
+
+.alert-info strong {
+    font-weight: 700;
+}
+
+/* --- 6. Enlaces y Utilidades --- */
+.divider {
+    height: 1px;
+    background-color: var(--border);
+    margin: 20px 0;
+}
+
+.forgot-link {
+    font-size: 12px;
+    color: var(--blue);
+    text-decoration: none;
+    font-weight: 500;
+    display: flex;
+    justify-content: center;
+    transition: opacity 0.2s;
+}
+
+.forgot-link:hover {
+    opacity: 0.8;
+}
+.field {
+    margin-bottom: 20px;
+    COLOR: var(--muted);
+}
+input {
+    width: 100%;
+    padding: 12px;
+    background-color: var(--surface);
+    border: 1px solid var(--border);
+    border-radius: 8px;
+    color: var(--text);
+    outline: none;
+    transition: border-color 0.2s;
+}
+
+.btn-primary {
+    width: 100%;
+    padding: 12px;
+    background: linear-gradient(135deg, var(--blue), var(--green));
+    border: none;
+    border-radius: 8px;
+    color: white;
+    font-weight: 600;
+    cursor: pointer;
+}
