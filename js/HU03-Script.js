@@ -8,6 +8,7 @@
 let vehicles = [];
 /** null = alta nueva; número = índice en `vehicles` al editar */
 let editingIndex = null;
+let pendingDeleteIndex = null;
 
 function normalizePlate(value) {
   return String(value).trim().toUpperCase().replace(/\s+/g, ' ');
@@ -24,7 +25,10 @@ function setFieldError(fieldId, message = '') {
   const input = document.getElementById(fieldId);
   const err = document.getElementById(`${fieldId}-error`);
   const hasError = Boolean(message);
-  if (input) input.classList.toggle('input-error', hasError);
+  if (input) {
+    input.classList.toggle('input-error', hasError);
+    input.setAttribute('aria-invalid', hasError ? 'true' : 'false');
+  }
   if (err) err.textContent = hasError ? `⚠ ${message}` : '';
 }
 
@@ -54,6 +58,11 @@ const formCardTitle = document.getElementById('form-card-title');
 const btnSave = document.getElementById('btn-save');
 const btnCancelEdit = document.getElementById('btn-cancel-edit');
 const successMsg = document.getElementById('success-msg');
+const modalDelete = document.getElementById('modal-delete');
+const modalPlate = document.getElementById('modal-plate');
+const modalDetail = document.getElementById('modal-detail');
+const btnCancelDelete = document.getElementById('btn-cancel-delete');
+const btnConfirmDelete = document.getElementById('btn-confirm-delete');
 
 function renderTable() {
   vehiclesBody.innerHTML = '';
@@ -73,8 +82,8 @@ function renderTable() {
       <td><span class="year-badge">${esc(String(v.year))}</span></td>
       <td>
         <div class="action-btns">
-          <button type="button" class="btn-edit" data-index="${index}" title="Editar">✏</button>
-          <button type="button" class="btn-del" data-index="${index}" title="Eliminar">🗑</button>
+          <button type="button" class="btn-edit" data-index="${index}" title="Editar" aria-label="Editar vehículo ${esc(v.plate)}">✏</button>
+          <button type="button" class="btn-del" data-index="${index}" title="Eliminar" aria-label="Eliminar vehículo ${esc(v.plate)}">🗑</button>
         </div>
       </td>`;
     vehiclesBody.appendChild(row);
@@ -115,13 +124,39 @@ function startEdit(index) {
   document.getElementById('plate').focus();
 }
 
-function deleteVehicle(index) {
+function openDeleteModal(index) {
   if (!Number.isInteger(index) || !vehicles[index]) return;
+  pendingDeleteIndex = index;
+  const v = vehicles[index];
+  modalPlate.textContent = v.plate;
+  modalDetail.textContent = `${v.brand} ${v.model} · ${v.year}`;
+  modalDelete.classList.remove('hidden');
+  btnConfirmDelete.focus();
+}
+
+function closeDeleteModal() {
+  pendingDeleteIndex = null;
+  modalDelete.classList.add('hidden');
+}
+
+function confirmDeleteVehicle() {
+  if (!Number.isInteger(pendingDeleteIndex) || !vehicles[pendingDeleteIndex]) {
+    closeDeleteModal();
+    return;
+  }
+  const index = pendingDeleteIndex;
   const plate = vehicles[index].plate;
-  if (!window.confirm(`¿Eliminar el vehículo ${plate}?`)) return;
+  closeDeleteModal();
+  deleteVehicle(index, plate);
+}
+
+function deleteVehicle(index, plateText = null) {
+  if (!Number.isInteger(index) || !vehicles[index]) return;
+  const plate = plateText || vehicles[index].plate;
   vehicles.splice(index, 1);
   showList();
   renderTable();
+  showSuccess(`✅ Vehículo ${plate} eliminado correctamente.`);
 }
 
 function showList() {
@@ -129,6 +164,7 @@ function showList() {
   screenList.classList.remove('hidden');
   screenForm.classList.add('hidden');
   topbarTitle.textContent = 'Mis Vehículos';
+  document.getElementById('btn-show-form').focus();
 }
 
 function showSuccess(message) {
@@ -214,7 +250,7 @@ vehiclesBody.addEventListener('click', (e) => {
   const i = Number.parseInt(btn.getAttribute('data-index'), 10);
   if (!Number.isFinite(i)) return;
   if (btn.classList.contains('btn-edit')) startEdit(i);
-  if (btn.classList.contains('btn-del')) deleteVehicle(i);
+  if (btn.classList.contains('btn-del')) openDeleteModal(i);
 });
 
 document.getElementById('btn-show-form').addEventListener('click', showFormNew);
@@ -222,5 +258,20 @@ document.getElementById('btn-empty-add').addEventListener('click', showFormNew);
 document.getElementById('btn-back').addEventListener('click', showList);
 document.getElementById('btn-cancel').addEventListener('click', showList);
 document.getElementById('btn-cancel-edit').addEventListener('click', showList);
+btnCancelDelete.addEventListener('click', closeDeleteModal);
+btnConfirmDelete.addEventListener('click', confirmDeleteVehicle);
+modalDelete.addEventListener('click', (e) => {
+  if (e.target === modalDelete) closeDeleteModal();
+});
+
+document.addEventListener('keydown', (e) => {
+  if (e.key === 'Escape' && !modalDelete.classList.contains('hidden')) {
+    closeDeleteModal();
+    return;
+  }
+  if (e.key === 'Escape' && !screenForm.classList.contains('hidden')) {
+    showList();
+  }
+});
 
 renderTable();

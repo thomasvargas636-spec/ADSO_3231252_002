@@ -208,6 +208,14 @@ body::before {
 
 .btn-primary:hover { opacity: 0.9; }
 
+/* ── FOCUS ACCESIBLE ── */
+button:focus-visible,
+a:focus-visible,
+input:focus-visible {
+  outline: 2px solid var(--blue);
+  outline-offset: 2px;
+}
+
 .btn-cancel {
   flex: 1;
   padding: 10px;
