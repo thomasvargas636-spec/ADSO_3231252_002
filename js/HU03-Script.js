@@ -2,6 +2,8 @@
 // CA-02: placa única
 // CA-03: editar vehículos existentes
 // CA-04: eliminar vehículos
+// CA-05: mensaje de confirmación al guardar
+// CA-06: validar campos obligatorios
 
 let vehicles = [];
 /** null = alta nueva; número = índice en `vehicles` al editar */
@@ -16,6 +18,18 @@ function setPlateDuplicateError(show, message = '') {
   const err = document.getElementById('plate-error');
   if (input) input.classList.toggle('input-error', show);
   if (err) err.textContent = show ? message : '';
+}
+
+function setFieldError(fieldId, message = '') {
+  const input = document.getElementById(fieldId);
+  const err = document.getElementById(`${fieldId}-error`);
+  const hasError = Boolean(message);
+  if (input) input.classList.toggle('input-error', hasError);
+  if (err) err.textContent = hasError ? `⚠ ${message}` : '';
+}
+
+function clearFieldError(fieldId) {
+  setFieldError(fieldId, '');
 }
 
 /** @param {number|null} excludeIndex índice a ignorar (misma fila en edición) */
@@ -83,7 +97,7 @@ function showFormNew() {
     const el = document.getElementById(id);
     if (el) el.value = '';
   });
-  setPlateDuplicateError(false);
+  ['plate', 'brand', 'model', 'year'].forEach(clearFieldError);
 }
 
 function startEdit(index) {
@@ -97,7 +111,7 @@ function startEdit(index) {
   document.getElementById('brand').value = v.brand;
   document.getElementById('model').value = v.model;
   document.getElementById('year').value = v.year;
-  setPlateDuplicateError(false);
+  ['plate', 'brand', 'model', 'year'].forEach(clearFieldError);
   document.getElementById('plate').focus();
 }
 
@@ -134,11 +148,38 @@ document.getElementById('btn-save').addEventListener('click', () => {
   const model = document.getElementById('model').value.trim();
   const year = document.getElementById('year').value.trim();
 
+  let isValid = true;
+  if (!plateNorm) {
+    setFieldError('plate', 'La placa es obligatoria.');
+    isValid = false;
+  } else {
+    clearFieldError('plate');
+  }
+  if (!brand) {
+    setFieldError('brand', 'La marca es obligatoria.');
+    isValid = false;
+  } else {
+    clearFieldError('brand');
+  }
+  if (!model) {
+    setFieldError('model', 'El modelo es obligatorio.');
+    isValid = false;
+  } else {
+    clearFieldError('model');
+  }
+  if (!year) {
+    setFieldError('year', 'El año es obligatorio.');
+    isValid = false;
+  } else {
+    clearFieldError('year');
+  }
+  if (!isValid) return;
+
   if (plateExists(plateNorm, editingIndex)) {
     setPlateDuplicateError(true, '⚠ Esta placa ya está registrada.');
     return;
   }
-  setPlateDuplicateError(false);
+  clearFieldError('plate');
 
   const entry = { plate: plateNorm, brand, model, year };
   if (editingIndex !== null) {
@@ -152,7 +193,19 @@ document.getElementById('btn-save').addEventListener('click', () => {
 });
 
 document.getElementById('plate').addEventListener('input', () => {
-  setPlateDuplicateError(false);
+  clearFieldError('plate');
+});
+
+document.getElementById('brand').addEventListener('input', () => {
+  clearFieldError('brand');
+});
+
+document.getElementById('model').addEventListener('input', () => {
+  clearFieldError('model');
+});
+
+document.getElementById('year').addEventListener('input', () => {
+  clearFieldError('year');
 });
 
 vehiclesBody.addEventListener('click', (e) => {
