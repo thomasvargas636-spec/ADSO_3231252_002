@@ -1,6 +1,7 @@
 // HU-03 — CA-01: registrar (placa, marca, modelo, año)
 // CA-02: placa única
 // CA-03: editar vehículos existentes
+// CA-04: eliminar vehículos
 
 let vehicles = [];
 /** null = alta nueva; número = índice en `vehicles` al editar */
@@ -58,6 +59,7 @@ function renderTable() {
       <td>
         <div class="action-btns">
           <button type="button" class="btn-edit" data-index="${index}" title="Editar">✏</button>
+          <button type="button" class="btn-del" data-index="${index}" title="Eliminar">🗑</button>
         </div>
       </td>`;
     vehiclesBody.appendChild(row);
@@ -98,6 +100,15 @@ function startEdit(index) {
   document.getElementById('plate').focus();
 }
 
+function deleteVehicle(index) {
+  if (!Number.isInteger(index) || !vehicles[index]) return;
+  const plate = vehicles[index].plate;
+  if (!window.confirm(`¿Eliminar el vehículo ${plate}?`)) return;
+  vehicles.splice(index, 1);
+  showList();
+  renderTable();
+}
+
 function showList() {
   editingIndex = null;
   screenList.classList.remove('hidden');
@@ -132,10 +143,12 @@ document.getElementById('plate').addEventListener('input', () => {
 });
 
 vehiclesBody.addEventListener('click', (e) => {
-  const btn = e.target.closest('.btn-edit[data-index]');
+  const btn = e.target.closest('button[data-index]');
   if (!btn) return;
   const i = Number.parseInt(btn.getAttribute('data-index'), 10);
-  if (Number.isFinite(i)) startEdit(i);
+  if (!Number.isFinite(i)) return;
+  if (btn.classList.contains('btn-edit')) startEdit(i);
+  if (btn.classList.contains('btn-del')) deleteVehicle(i);
 });
 
 document.getElementById('btn-show-form').addEventListener('click', showFormNew);
