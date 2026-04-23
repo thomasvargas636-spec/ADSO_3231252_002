@@ -1,4 +1,3 @@
-<!-- HU11.html -->
 <!DOCTYPE html>
 <html lang="es">
 <head>
@@ -6,6 +5,10 @@
   <title>Gestión de Usuarios</title>
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
+  <!-- TIPOGRAFÍAS -->
+  <link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@300;400;500;600&family=Syne:wght@500;600;700&display=swap" rel="stylesheet">
+
+  <!-- CSS -->
   <link rel="stylesheet" href="css/HU11_style.css">
 </head>
 
@@ -13,28 +16,28 @@
 
 <div class="app">
 
-  <!-- SIDEBAR (MISMO DE HU08) -->
+  <!-- SIDEBAR -->
   <aside class="sidebar">
 
     <div class="logo">
-      <img src="img/Group_2.png">
+      <img src="img/Group_2.png" alt="Logo">
     </div>
 
-    <p class="section-title">Principal</p>
+    <p class="section-title">PRINCIPAL</p>
     <nav class="menu">
       <a href="#" class="menu-item">📊 Panel de control</a>
       <a href="#" class="menu-item">🚗 Vehículos</a>
       <a href="#" class="menu-item">⬡ Zonas</a>
     </nav>
 
-    <p class="section-title">Actividad</p>
+    <p class="section-title">ACTIVIDAD</p>
     <nav class="menu">
       <a href="#" class="menu-item">📅 Reservaciones</a>
       <a href="#" class="menu-item">💳 Pagos</a>
       <a href="#" class="menu-item">📜 Historial</a>
     </nav>
 
-    <p class="section-title">Sistema</p>
+    <p class="section-title">SISTEMA</p>
     <nav class="menu">
       <a href="#" class="menu-item active">👤 Usuarios</a>
       <a href="#" class="menu-item">⚙️ Configuración</a>
@@ -51,8 +54,70 @@
 
     <section class="content">
 
-      <h1>Gestión de Usuarios</h1>
-      <p class="sub">Listado general</p>
+      <h1>Gestión de Usuarios</h1><br>
+
+      <!-- SUBCARDS -->
+      <div class="cards">
+
+        <div class="card total">
+          <div class="card-content">
+            <div class="icono">👥</div>
+            <div class="info">
+              <h3 id="totalUsuarios">0</h3>
+              <p>Total Usuarios</p>
+            </div>
+          </div>
+        </div>
+
+        <div class="card activos">
+          <div class="card-content">
+            <div class="icono">✅</div>
+            <div class="info">
+              <h3 id="activos">0</h3>
+              <p>Activos</p>
+            </div>
+          </div>
+        </div>
+
+        <div class="card inactivos">
+          <div class="card-content">
+            <div class="icono">🚫</div>
+            <div class="info">
+              <h3 id="inactivos">0</h3>
+              <p>Inactivos</p>
+            </div>
+          </div>
+        </div>
+
+        <div class="card admins">
+          <div class="card-content">
+            <div class="icono">🛡️</div>
+            <div class="info">
+              <h3 id="admins">0</h3>
+              <p>Administradores</p>
+            </div>
+          </div>
+        </div>
+
+      </div>
+
+      <!-- FILTROS -->
+      <div class="filtros">
+
+        <input 
+          type="text" 
+          id="buscador" 
+          placeholder="🔍Buscar por nombre o correo..."
+        >
+
+        <div class="botones">
+          <button class="activo" data-filtro="todos">Todos</button>
+          <button data-filtro="activo">Activos</button>
+          <button data-filtro="inactivo">Inactivos</button>
+          <button data-filtro="admin">Administradores</button>
+        </div>
+
+      </div>
 
       <!-- TABLA -->
       <div class="tabla-card">

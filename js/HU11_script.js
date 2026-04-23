@@ -1,6 +1,8 @@
-// =========================
-// DATOS
-// =========================
+const usuarioActual = {
+  nombre: "AdminUser",
+  rol: "Administrador" // cambia a "Ciudadano" para probar bloqueo
+};
+
 let usuarios = [
   {
     nombre: "JosephGomez8",
@@ -29,6 +31,28 @@ let usuarios = [
 ];
 
 // =========================
+// ESTADO GLOBAL
+// =========================
+let filtroActual = "todos";
+let textoBusqueda = "";
+
+// =========================
+// SUBCARDS
+// =========================
+function actualizarCards() {
+
+  const total = usuarios.length;
+  const activos = usuarios.filter(u => u.estado === "activo").length;
+  const inactivos = usuarios.filter(u => u.estado === "inactivo").length;
+  const admins = usuarios.filter(u => u.rol === "Administrador").length;
+
+  document.getElementById("totalUsuarios").textContent = total;
+  document.getElementById("activos").textContent = activos;
+  document.getElementById("inactivos").textContent = inactivos;
+  document.getElementById("admins").textContent = admins;
+}
+
+// =========================
 // RENDER TABLA
 // =========================
 function renderTabla() {
@@ -36,38 +60,57 @@ function renderTabla() {
   const cont = document.querySelector(".tabla-body");
   cont.innerHTML = "";
 
-  usuarios.forEach((u, index) => {
+  usuarios
+    .filter(u => {
 
-    const row = document.createElement("div");
-    row.classList.add("fila");
+      if (filtroActual === "activo") return u.estado === "activo";
+      if (filtroActual === "inactivo") return u.estado === "inactivo";
+      if (filtroActual === "admin") return u.rol === "Administrador";
 
-    row.innerHTML = `
-      <span>
-        <b>${u.nombre}</b><br>
-        <small>${u.correo}</small>
-      </span>
+      return true;
+    })
+    .filter(u => {
+      return (
+        u.nombre.toLowerCase().includes(textoBusqueda) ||
+        u.correo.toLowerCase().includes(textoBusqueda)
+      );
+    })
+    .forEach((u, index) => {
 
-      <span>${u.rol}</span>
-      <span>${u.fecha}</span>
-      <span>${u.reservas}</span>
+      const row = document.createElement("div");
+      row.classList.add("fila");
 
-      <span class="estado estado-${u.estado}">
-        ${u.estado === "activo" ? "Activo" : "Inactivo"}
-      </span>
+      row.innerHTML = `
+        <span>
+          <b>${u.nombre}</b><br>
+          <small>${u.correo}</small>
+        </span>
 
-      <span class="acciones">
-        <button class="btn editar" data-index="${index}">✏️</button>
-        <button class="btn toggle" data-index="${index}">⏸️</button>
-        <button class="btn delete" data-index="${index}">🗑️</button>
-      </span>
-    `;
+        <span class="rol ${u.rol === "Administrador" ? "admin" : ""}">
+            ${u.rol}
+        </span>
+        <span>${u.fecha}</span>
+        <span>${u.reservas}</span>
 
-    cont.appendChild(row);
-  });
+        <span class="estado estado-${u.estado}">
+          ${u.estado === "activo" ? "Activo" : "Inactivo"}
+        </span>
+
+        <span class="acciones">
+          <button class="btn editar" data-index="${usuarios.indexOf(u)}">✏️</button>
+          <button class="btn toggle" data-index="${usuarios.indexOf(u)}">⏸️</button>
+          <button class="btn delete" data-index="${usuarios.indexOf(u)}">🗑️</button>
+        </span>
+      `;
+
+      cont.appendChild(row);
+    });
+
+  actualizarCards();
 }
 
 // =========================
-// EVENTOS
+// EVENTOS GENERALES
 // =========================
 document.addEventListener("click", (e) => {
 
@@ -87,41 +130,68 @@ document.addEventListener("click", (e) => {
     renderTabla();
   }
 
-  // 🟡 TOGGLE ESTADO (con confirmación)
+  // 🟡 TOGGLE ESTADO (criterio 5)
   if (e.target.classList.contains("toggle")) {
 
-  const user = usuarios[index];
+    const user = usuarios[index];
 
-  const accion =
-    user.estado === "activo"
-      ? "desactivar"
-      : "activar";
+    const accion =
+      user.estado === "activo"
+        ? "desactivar"
+        : "activar";
 
-  const confirmar = confirm(
-    `¿Seguro que deseas ${accion} este usuario?`
-  );
+    const confirmar = confirm(
+      `¿Seguro que deseas ${accion} este usuario?`
+    );
 
-  if (!confirmar) return;
+    if (!confirmar) return;
 
-  user.estado =
-    user.estado === "activo" ? "inactivo" : "activo";
+    user.estado =
+      user.estado === "activo" ? "inactivo" : "activo";
 
+    renderTabla();
+  }
+
+  // 🔴 ELIMINAR (criterio 5)
+  if (e.target.classList.contains("delete")) {
+
+    const confirmar = confirm(
+      "¿Seguro que deseas eliminar este usuario?"
+    );
+
+    if (!confirmar) return;
+
+    usuarios.splice(index, 1);
+
+    renderTabla();
+  }
+
+});
+
+// =========================
+// BUSCADOR
+// =========================
+document.getElementById("buscador").addEventListener("input", (e) => {
+  textoBusqueda = e.target.value.toLowerCase();
   renderTabla();
-}
+});
 
-// 🔴 ELIMINAR (con confirmación)
-if (e.target.classList.contains("delete")) {
+// =========================
+// FILTROS
+// =========================
+document.querySelectorAll(".botones button").forEach(btn => {
 
-  const confirmar = confirm(
-    "¿Seguro que deseas eliminar este usuario?"
-  );
+  btn.addEventListener("click", () => {
 
-  if (!confirmar) return;
+    document.querySelectorAll(".botones button")
+      .forEach(b => b.classList.remove("activo"));
 
-  usuarios.splice(index, 1);
+    btn.classList.add("activo");
 
-  renderTabla();
-}
+    filtroActual = btn.dataset.filtro;
+
+    renderTabla();
+  });
 
 });
 
@@ -129,5 +199,31 @@ if (e.target.classList.contains("delete")) {
 // INIT
 // =========================
 document.addEventListener("DOMContentLoaded", () => {
+
+  // 🔒 VALIDACIÓN DE ACCESO
+  if (usuarioActual.rol !== "Administrador") {
+
+    document.body.innerHTML = `
+      <div style="
+        display:flex;
+        justify-content:center;
+        align-items:center;
+        height:100vh;
+        background:#0D1117;
+        color:#fff;
+        font-family:DM Sans;
+        text-align:center;
+      ">
+        <div>
+          <h1 style="color:#F85149;">Acceso restringido</h1>
+          <p>No tienes permisos para acceder a esta sección.</p>
+        </div>
+      </div>
+    `;
+
+    return; // 🚨 detiene todo
+  }
+
+  // ✅ SI ES ADMIN
   renderTabla();
 });
