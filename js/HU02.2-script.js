@@ -83,7 +83,5 @@ localStorage.removeItem("recoveryTime");
   // mensaje de exito
   successMessage.textContent = 'Contrasena actualizada correctamente.';
   successMessage.classList.add('visible');
-  setTimeout(() => {
-  window.location.href = "HU02.2.2-index.html"; // usa tu ruta real
-}, 2000);
+ 
 });
