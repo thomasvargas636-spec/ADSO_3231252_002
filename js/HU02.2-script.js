@@ -8,57 +8,51 @@ const error2 = document.getElementById("confirm-password-error");
 form.addEventListener("submit", function(e) {
     e.preventDefault();
 
-    // limpiar errores
-    error1.textContent = "";
-    error2.textContent = "";
-    error1.classList.remove("visible");
-    error2.classList.remove("visible");
+    limpiarErrores();
 
     let password = pass1.value;
     let confirm = pass2.value;
 
-    // validaciones de seguridad
+    // VALIDACIONES
     if (password.length < 8) {
-        mostrarError(error1, "Minimo 8 caracteres");
-        return;
+        return mostrarError(error1, "Minimo 8 caracteres");
     }
 
     if (password.length > 12) {
-        mostrarError(error1, "Maximo 12 caracteres");
-        return;
+        return mostrarError(error1, "Maximo 12 caracteres");
     }
 
     if (!/[A-Z]/.test(password)) {
-        mostrarError(error1, "Debe tener una mayuscula");
-        return;
+        return mostrarError(error1, "Debe tener una mayuscula");
     }
 
     if (!/[0-9]/.test(password)) {
-        mostrarError(error1, "Debe tener un numero");
-        return;
+        return mostrarError(error1, "Debe tener un numero");
     }
 
     if (!/[!@#$%^&*(),.?\":{}|<>]/.test(password)) {
-        mostrarError(error1, "Debe tener un caracter especial");
-        return;
+        return mostrarError(error1, "Debe tener un caracter especial");
     }
 
-    if (!/^[a-zA-Z0-9!@#$%^&*(),.?\":{}|<>]+$/.test(password)) {
-        mostrarError(error1, "Solo caracteres validos");
-        return;
-    }
-
-    // validar que coincidan
     if (password !== confirm) {
-        mostrarError(error2, "Las contrasenas no coinciden");
-        return;
+        return mostrarError(error2, "Las contrasenas no coinciden");
     }
 
-    alert("Contrasena actualizada correctamente");
+    // GUARDADO SIN BASE DE DATOS
+    localStorage.setItem("password", password);
+
+    alert("Contrasena guardada correctamente");
 });
 
-// funcion reutilizable
+// funciones
 function mostrarError(elemento, mensaje) {
     elemento.textContent = mensaje;
     elemento.classList.add("visible");
+}
+
+function limpiarErrores() {
+    error1.textContent = "";
+    error2.textContent = "";
+    error1.classList.remove("visible");
+    error2.classList.remove("visible");
 }
