@@ -1,0 +1,154 @@
+/* --- 1. Variables y Base --- */
+:root {
+    --bg: #080C10;
+    --surface: #0F1520;
+    --card: #141B27;
+    --border: #1E2A3A;
+    --blue: #1A6FD4;
+    --green: #3DBE6C;
+    --text: #E8EDF5;
+    --muted: #5A6A7E;
+    --danger: #E8404A;
+}
+
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+/* --- 2. Layout y Fondo --- */
+body {
+    font-family: 'DM Sans', sans-serif;
+    background-color: var(--bg);
+    color: var(--text);
+    min-height: 100vh;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+body::before {
+    content: '';
+    position: fixed;
+    inset: 0;
+    background: radial-gradient(ellipse at 15% 50%, rgba(26, 111, 212, 0.08), transparent 60%),
+                radial-gradient(ellipse at 85% 50%, rgba(61, 190, 108, 0.06), transparent 60%);
+    z-index: 0;
+}
+
+/* --- 3. Componentes de la Tarjeta --- */
+.screen {
+    position: relative;
+    z-index: 1;
+    width: 100%;
+    max-width: 400px;
+}
+
+.card {
+    background-color: var(--card);
+    border: 1px solid var(--border);
+    border-radius: 16px;
+    padding: 32px;
+}
+
+.logo {
+    text-align: center;
+    margin-bottom: 24px;
+}
+
+.logo-img {
+    height: 40px;
+}
+
+/* --- 4. Títulos --- */
+.card-title {
+    font-family: 'Syne', sans-serif;
+    font-size: 22px;
+    font-weight: 800;
+    margin-bottom: 4px;
+}
+
+.card-subtitle {
+    font-size: 13px;
+    color: var(--muted);
+    margin-bottom: 24px;
+}
+
+/* --- 5. Inputs y Etiquetas (Corrección de Orden) --- */
+.field {
+    margin-bottom: 20px;
+}
+
+.label-row {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 8px;
+}
+
+label {
+    font-size: 11px;
+    font-weight: 600;
+    text-transform: uppercase;
+    color: var(--muted);
+    letter-spacing: 0.8px;
+}
+
+.forgot-link {
+    font-size: 11px;
+    color: var(--blue);
+    text-decoration: none;
+    font-weight: 500;
+}
+
+input {
+    width: 100%;
+    padding: 12px;
+    background-color: var(--surface);
+    border: 1px solid var(--border);
+    border-radius: 8px;
+    color: var(--text);
+    outline: none;
+    transition: border-color 0.2s;
+}
+
+input:focus {
+    border-color: var(--blue);
+}
+
+/* --- 6. Botones y Alertas --- */
+.btn-primary {
+    width: 100%;
+    padding: 12px;
+    background: linear-gradient(135deg, var(--blue), var(--green));
+    border: none;
+    border-radius: 8px;
+    color: white;
+    font-weight: 600;
+    cursor: pointer;
+}
+
+.divider {
+    height: 1px;
+    background-color: var(--border);
+    margin: 24px 0;
+}
+
+.alert {
+    font-size: 12px;
+    padding: 12px;
+    border-radius: 8px;
+    margin-top: 16px;
+    text-align: center;
+}
+
+.alert-danger {
+    background-color: rgba(232, 64, 74, 0.1);
+    border: 1px solid var(--danger);
+    color: #ff7b72;
+}
+
+.hidden {
+    display: none !important;
+}
