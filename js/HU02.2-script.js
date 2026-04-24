@@ -1,58 +1,72 @@
-const form = document.getElementById("resetForm");
-const pass1 = document.getElementById("new-password");
-const pass2 = document.getElementById("confirm-password");
+const newUser = {
+  email: "camilo@gmail.com",
+  password: null
+};
 
-const error1 = document.getElementById("new-password-error");
-const error2 = document.getElementById("confirm-password-error");
+const form = document.getElementById('resetForm');
+const newPasswordInput = document.getElementById('new-password');
+const confirmPasswordInput = document.getElementById('confirm-password');
+const newPasswordError = document.getElementById('new-password-error');
+const confirmPasswordError = document.getElementById('confirm-password-error');
+const successMessage = document.getElementById('success-message');
 
-form.addEventListener("submit", function(e) {
-    e.preventDefault();
+function clearErrors() {
+  newPasswordInput.classList.remove('error');
+  confirmPasswordInput.classList.remove('error');
 
-    limpiarErrores();
+  newPasswordError.classList.remove('visible');
+  confirmPasswordError.classList.remove('visible');
+  successMessage.classList.remove('visible');
 
-    let password = pass1.value;
-    let confirm = pass2.value;
+  newPasswordError.textContent = '';
+  confirmPasswordError.textContent = '';
+  successMessage.textContent = '';
+}
 
-    // VALIDACIONES
-    if (password.length < 8) {
-        return mostrarError(error1, "Minimo 8 caracteres");
-    }
+function validatePassword(pass) {
+  if (!pass) return 'La contrasena es obligatoria.';
+  if (pass.length < 8) return 'Minimo 8 caracteres.';
+  if (pass.length > 12) return 'Maximo 12 caracteres.';
+  if (!/[A-Z]/.test(pass)) return 'Debe tener una mayuscula.';
+  if (!/[0-9]/.test(pass)) return 'Debe tener un numero.';
+  if (!/[!@#$%^&*(),.?\":{}|<>]/.test(pass)) return 'Debe tener un caracter especial.';
+  return null;
+}
 
-    if (password.length > 12) {
-        return mostrarError(error1, "Maximo 12 caracteres");
-    }
+form.addEventListener('submit', function (e) {
+  e.preventDefault();
+  clearErrors();
 
-    if (!/[A-Z]/.test(password)) {
-        return mostrarError(error1, "Debe tener una mayuscula");
-    }
+  const pass1 = newPasswordInput.value.trim();
+  const pass2 = confirmPasswordInput.value.trim();
 
-    if (!/[0-9]/.test(password)) {
-        return mostrarError(error1, "Debe tener un numero");
-    }
+  const error = validatePassword(pass1);
+  if (error) {
+    newPasswordInput.classList.add('error');
+    newPasswordError.textContent = error;
+    newPasswordError.classList.add('visible');
+    return;
+  }
 
-    if (!/[!@#$%^&*(),.?\":{}|<>]/.test(password)) {
-        return mostrarError(error1, "Debe tener un caracter especial");
-    }
+  if (!pass2) {
+    confirmPasswordInput.classList.add('error');
+    confirmPasswordError.textContent = 'Debes confirmar tu contrasena.';
+    confirmPasswordError.classList.add('visible');
+    return;
+  }
 
-    if (password !== confirm) {
-        return mostrarError(error2, "Las contrasenas no coinciden");
-    }
+  if (pass1 !== pass2) {
+    confirmPasswordInput.classList.add('error');
+    confirmPasswordError.textContent = 'Las contrasenas no coinciden.';
+    confirmPasswordError.classList.add('visible');
+    return;
+  }
 
-    // GUARDADO SIN BASE DE DATOS
-    localStorage.setItem("password", password);
+  // guardar sin base de datos
+  localStorage.setItem("password", pass1);
+  newUser.password = pass1;
 
-    alert("Contrasena guardada correctamente");
+  // mensaje de exito
+  successMessage.textContent = 'Contrasena actualizada correctamente.';
+  successMessage.classList.add('visible');
 });
-
-// funciones
-function mostrarError(elemento, mensaje) {
-    elemento.textContent = mensaje;
-    elemento.classList.add("visible");
-}
-
-function limpiarErrores() {
-    error1.textContent = "";
-    error2.textContent = "";
-    error1.classList.remove("visible");
-    error2.classList.remove("visible");
-}

@@ -175,3 +175,14 @@ input.error {
   display: block;
   text-decoration: none;
 }
+
+.success {
+  font-size: 14px;
+  color: #22c55e;
+  text-align: center;
+  display: none;
+}
+
+.success.visible {
+  display: block;
+}
