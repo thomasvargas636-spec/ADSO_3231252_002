@@ -1,3 +1,17 @@
+const tiempoGuardado = localStorage.getItem("recoveryTime");
+
+if (tiempoGuardado) {
+    const ahora = Date.now();
+    const diferencia = ahora - tiempoGuardado;
+
+    const limite = 15 * 60 * 1000; // 15 minutos
+
+    if (diferencia > limite) {
+        alert("El enlace ha expirado. Solicita uno nuevo.");
+        window.location.href = "../HU-02/HU-02-index.html";
+    }
+}
+
 const newUser = {
   email: "camilo@gmail.com",
   password: null
@@ -36,7 +50,7 @@ function validatePassword(pass) {
 form.addEventListener('submit', function (e) {
   e.preventDefault();
   clearErrors();
-
+localStorage.removeItem("recoveryTime");
   const pass1 = newPasswordInput.value.trim();
   const pass2 = confirmPasswordInput.value.trim();
 
