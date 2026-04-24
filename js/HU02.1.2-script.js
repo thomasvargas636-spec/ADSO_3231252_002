@@ -1,3 +1,5 @@
+const tiempoActual = Date.now();
+localStorage.setItem("recoveryTime", tiempoActual);
 const registeredEmail = "camilo@gmail.com"; // Usuario registrado simulado
 
 const form = document.getElementById('loginForm');
