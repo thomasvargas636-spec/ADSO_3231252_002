@@ -1,0 +1,46 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>PARKALIA - Nueva Contraseña</title>
+    <link href="https://fonts.googleapis.com/css2?family=Syne:wght@700;800&family=DM+Sans:wght@400;500&display=swap" rel="stylesheet" />
+    <link rel="stylesheet" href="../css/HU02.2-style.css"/>
+</head>
+<body>
+    <div class="screen">
+        <div class="logo">
+            <img src="../img/image.png" alt="logo" class="logo-img"/>
+        </div>
+
+        <div class="card">
+            <div class="card-header">
+                <h1 class="card-title">Nueva Contraseña</h1>
+                <p class="card-subtitle">Establece una nueva contraseña para tu cuenta</p>
+            </div>
+
+            
+
+            <form id="resetForm">
+                <div class="field">
+                    <label for="new-password"></label>
+                    <input type="password" id="new-password" placeholder="••••••••"/>
+                    <div class="error" id="new-password-error"></div>
+                </div>
+
+                <div class="field">
+                    <label for="confirm-password"></label>
+                    <input type="password" id="confirm-password" placeholder="••••••••"/>
+                    <div class="error" id="confirm-password-error"></div>
+                </div>
+
+                <div class="divider"></div>
+
+                <button type="submit" class="btn-primary"></button>
+            </form>
+        </div>
+    </div>
+
+    <script src="../js/HU02.2-script.js"></script>
+</body>
+</html>
