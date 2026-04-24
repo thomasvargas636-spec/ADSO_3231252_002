@@ -29,5 +29,5 @@ form.addEventListener('submit', function (e) {
     codeError.classList.add('visible');
     return;
   }
-window.location.href = '../HU-02.1.3/HU-02.1.3-index.html';
+window.location.href = '../feature-HU02.2/html/HU-02.2.-index.html';
 });
