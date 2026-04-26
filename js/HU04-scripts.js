@@ -8,7 +8,7 @@ class ZoneManager {
 
     init() {
         this.renderMapPins();
-        this.renderZonesList(); // Added for Step 2
+        this.renderZonesList();
     }
 
     loadZones() {
@@ -56,17 +56,22 @@ class ZoneManager {
         ];
     }
 
-    // Logic for the occupancy progress bar
+    // Requirement 3: Logic to determine status text and badge class
+    getZoneStatus(available) {
+        if (available === 0) return { text: 'Sin cupos', class: 'badge-red' };
+        if (available <= 5) return { text: 'Casi llena', class: 'badge-warning' };
+        return { text: 'Disponible', class: 'badge-green' };
+    }
+
     calculateOccupancyPercentage(zone) {
         const occupied = zone.totalSpots - zone.availableSpots;
         return (occupied / zone.totalSpots) * 100;
     }
 
-    // Determine bar color based on occupancy levels
-    getProgressBarClass(percentage) {
-        if (percentage >= 100) return 'high'; // Red equivalent in CSS
-        if (percentage >= 75) return 'medium'; // Warning equivalent
-        return 'low'; // Normal/Available
+    getProgressBarClass(available) {
+        if (available === 0) return 'low'; // Red styling in CSS
+        if (available <= 5) return 'medium'; // Yellow styling
+        return 'high'; // Green styling
     }
 
     renderMapPins() {
@@ -77,8 +82,8 @@ class ZoneManager {
         this.filteredZones.forEach(zone => {
             const isSelected = this.selectedZone && this.selectedZone.id === zone.id;
             const pinClass = isSelected ? 'pin-selected' : 
-                             (zone.availableSpots === 0 ? 'pin-full' : 
-                             (zone.availableSpots <= 5 ? 'pin-warning' : 'pin-available'));
+                            (zone.availableSpots === 0 ? 'pin-full' : 
+                            (zone.availableSpots <= 5 ? 'pin-warning' : 'pin-available'));
 
             const pin = document.createElement('div');
             pin.className = `map-pin ${pinClass}`;
@@ -90,8 +95,6 @@ class ZoneManager {
             mapPlaceholder.appendChild(pin);
         });
     }
-
-    // New method for Requirement 2: Render the side list
     renderZonesList() {
         const listContainer = document.querySelector('.zones-list');
         if (!listContainer) return;
@@ -101,7 +104,8 @@ class ZoneManager {
         this.filteredZones.forEach(zone => {
             const isSelected = this.selectedZone && this.selectedZone.id === zone.id;
             const occupancyPercent = this.calculateOccupancyPercentage(zone);
-            const barClass = this.getProgressBarClass(occupancyPercent);
+            const barClass = this.getProgressBarClass(zone.availableSpots);
+            const status = this.getZoneStatus(zone.availableSpots);
 
             const zoneItem = document.createElement('div');
             zoneItem.className = `zone-item ${isSelected ? 'selected' : ''}`;
@@ -109,6 +113,7 @@ class ZoneManager {
             zoneItem.innerHTML = `
                 <div class="zone-item-header">
                     <div class="zone-name">${zone.name}</div>
+                    <span class="badge ${status.class}">${status.text}</span>
                 </div>
                 <div class="zone-address">📍 ${zone.address}</div>
                 <div class="zone-details">
@@ -116,6 +121,7 @@ class ZoneManager {
                     <div class="spots-bar">
                         <div class="spots-fill ${barClass}" style="width: ${occupancyPercent}%;"></div>
                     </div>
+                    <div class="spots-text">${zone.availableSpots}/${zone.totalSpots} cupos</div>
                 </div>
             `;
             listContainer.appendChild(zoneItem);
