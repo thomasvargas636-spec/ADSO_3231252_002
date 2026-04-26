@@ -7,56 +7,43 @@ class ZoneManager {
     }
 
     init() {
+        this.bindEvents();
         this.renderMapPins();
         this.renderZonesList();
     }
 
     loadZones() {
         return [
-            {
-                id: 'centro-a',
-                name: 'Zona Centro A',
-                shortName: 'Centro A',
-                address: 'Calle 15 #8-20, Centro',
-                price: 2500,
-                availableSpots: 14,
-                totalSpots: 20,
-                position: { top: '22%', left: '18%' }
-            },
-            {
-                id: 'norte-b',
-                name: 'Zona Norte B',
-                shortName: 'Norte B',
-                address: 'Carrera 10 #24-45, Norte',
-                price: 3000,
-                availableSpots: 3,
-                totalSpots: 20,
-                position: { top: '18%', left: '58%' }
-            },
-            {
-                id: 'sur-c',
-                name: 'Zona Sur C',
-                shortName: 'Sur C',
-                address: 'Calle 80 #12-10, Sur',
-                price: 2000,
-                availableSpots: 12,
-                totalSpots: 20,
-                position: { top: '55%', left: '30%' }
-            },
-            {
-                id: 'occidental-d',
-                name: 'Zona Occidental D',
-                shortName: 'Occ. D',
-                address: 'Av. Américas #45-00',
-                price: 2800,
-                availableSpots: 0,
-                totalSpots: 20,
-                position: { top: '52%', left: '68%' }
-            }
+            { id: 'centro-a', name: 'Zona Centro A', shortName: 'Centro A', address: 'Calle 15 #8-20, Centro', price: 2500, availableSpots: 14, totalSpots: 20, position: { top: '22%', left: '18%' } },
+            { id: 'norte-b', name: 'Zona Norte B', shortName: 'Norte B', address: 'Carrera 10 #24-45, Norte', price: 3000, availableSpots: 3, totalSpots: 20, position: { top: '18%', left: '58%' } },
+            { id: 'sur-c', name: 'Zona Sur C', shortName: 'Sur C', address: 'Calle 80 #12-10, Sur', price: 2000, availableSpots: 12, totalSpots: 20, position: { top: '55%', left: '30%' } },
+            { id: 'occidental-d', name: 'Zona Occidental D', shortName: 'Occ. D', address: 'Av. Américas #45-00', price: 2800, availableSpots: 0, totalSpots: 20, position: { top: '52%', left: '68%' } }
         ];
     }
+    bindEvents() {
+        document.addEventListener('click', (e) => {
+            const zoneItem = e.target.closest('.zone-item');
+            if (zoneItem) {
+                const zoneId = zoneItem.dataset.zoneId;
+                this.selectZone(zoneId);
+            }
+        });
 
-    // Requirement 3: Logic to determine status text and badge class
+        // Event delegation for map pins
+        document.addEventListener('click', (e) => {
+            const mapPin = e.target.closest('.map-pin');
+            if (mapPin) {
+                const zoneId = mapPin.dataset.zoneId;
+                this.selectZone(zoneId);
+            }
+        });
+    }
+    selectZone(zoneId) {
+        this.selectedZone = this.zonesData.find(z => z.id === zoneId);
+        this.renderMapPins();
+        this.renderZonesList();
+    }
+
     getZoneStatus(available) {
         if (available === 0) return { text: 'Sin cupos', class: 'badge-red' };
         if (available <= 5) return { text: 'Casi llena', class: 'badge-warning' };
@@ -69,9 +56,9 @@ class ZoneManager {
     }
 
     getProgressBarClass(available) {
-        if (available === 0) return 'low'; // Red styling in CSS
-        if (available <= 5) return 'medium'; // Yellow styling
-        return 'high'; // Green styling
+        if (available === 0) return 'low';
+        if (available <= 5) return 'medium';
+        return 'high';
     }
 
     renderMapPins() {
@@ -82,19 +69,26 @@ class ZoneManager {
         this.filteredZones.forEach(zone => {
             const isSelected = this.selectedZone && this.selectedZone.id === zone.id;
             const pinClass = isSelected ? 'pin-selected' : 
-                            (zone.availableSpots === 0 ? 'pin-full' : 
-                            (zone.availableSpots <= 5 ? 'pin-warning' : 'pin-available'));
+                             (zone.availableSpots === 0 ? 'pin-full' : 
+                             (zone.availableSpots <= 5 ? 'pin-warning' : 'pin-available'));
+
+            const textClass = isSelected ? 'text-blue' : 
+                             (zone.availableSpots === 0 ? 'text-danger' :
+                             (zone.availableSpots <= 5 ? 'text-warning' : 'text-green'));
 
             const pin = document.createElement('div');
             pin.className = `map-pin ${pinClass}`;
             pin.style.cssText = `top: ${zone.position.top}; left: ${zone.position.left};`;
+            pin.dataset.zoneId = zone.id; // Essential for identification
+            
             pin.innerHTML = `
                 <div class="map-pin-icon"><span>📍</span></div>
-                <div class="map-pin-label">${zone.shortName}</div>
+                <div class="map-pin-label ${textClass}">${zone.shortName}</div>
             `;
             mapPlaceholder.appendChild(pin);
         });
     }
+
     renderZonesList() {
         const listContainer = document.querySelector('.zones-list');
         if (!listContainer) return;
@@ -109,6 +103,7 @@ class ZoneManager {
 
             const zoneItem = document.createElement('div');
             zoneItem.className = `zone-item ${isSelected ? 'selected' : ''}`;
+            zoneItem.dataset.zoneId = zone.id;
             
             zoneItem.innerHTML = `
                 <div class="zone-item-header">
