@@ -21,9 +21,12 @@ class ZoneManager {
             { id: 'occidental-d', name: 'Zona Occidental D', shortName: 'Occ. D', address: 'Av. Américas #45-00', price: 2800, availableSpots: 0, totalSpots: 20, schedule: '6:00 AM — 11:00 PM', position: { top: '52%', left: '68%' } }
         ];
     }
+
     filterZones() {
         this.isFilterActive = !this.isFilterActive;
-        
+        this.applyFilters();
+    }
+    applyFilters() {
         if (this.isFilterActive) {
             this.filteredZones = this.zonesData.filter(zone => zone.availableSpots > 0);
             document.getElementById('filter-btn').textContent = '✅ Mostrando disponibles';
@@ -31,10 +34,10 @@ class ZoneManager {
             this.filteredZones = [...this.zonesData];
             document.getElementById('filter-btn').textContent = '🔍 Filtrar zonas';
         }
+
         if (this.selectedZone && !this.filteredZones.find(z => z.id === this.selectedZone.id)) {
             this.selectedZone = null;
         }
-
         this.updateUI();
     }
 
@@ -44,17 +47,7 @@ class ZoneManager {
                 const change = Math.floor(Math.random() * 3) - 1;
                 zone.availableSpots = Math.max(0, Math.min(zone.totalSpots, zone.availableSpots + change));
             });
-            if (this.isFilterActive) {
-                this.filteredZones = this.zonesData.filter(zone => zone.availableSpots > 0);
-            } else {
-                this.filteredZones = [...this.zonesData];
-            }
-
-            if (this.selectedZone) {
-                this.selectedZone = this.zonesData.find(z => z.id === this.selectedZone.id);
-            }
-
-            this.updateUI();
+            this.applyFilters();
         }, 5000);
     }
 
@@ -65,9 +58,11 @@ class ZoneManager {
             
             const mapPin = e.target.closest('.map-pin');
             if (mapPin) this.selectZone(mapPin.dataset.zoneId);
+
             if (e.target.id === 'reserve-btn' && !e.target.disabled) {
                 alert(`Redirecting to reservation for: ${this.selectedZone.name}`);
             }
+
             if (e.target.id === 'filter-btn') {
                 this.filterZones();
             }
@@ -90,8 +85,7 @@ class ZoneManager {
         const statusText = document.querySelector('.zones-status-text');
         if (!statusText) return;
         const availableCount = this.zonesData.filter(z => z.availableSpots > 0).length;
-        const fullCount = this.zonesData.length - availableCount;
-        statusText.textContent = `${availableCount} disponibles · ${fullCount} llenas`;
+        statusText.textContent = `${availableCount} disponibles · ${this.zonesData.length - availableCount} llenas`;
     }
 
     updateDetailPanel() {
@@ -118,18 +112,10 @@ class ZoneManager {
             </div>
             <div class="detail-row">
                 <span class="detail-label">Cupos disponibles</span>
-                <span class="detail-value ${isAvailable ? 'text-green' : 'text-danger'}">
-                    ${this.selectedZone.availableSpots} de ${this.selectedZone.totalSpots}
-                </span>
+                <span class="detail-value ${isAvailable ? 'text-green' : 'text-danger'}">${this.selectedZone.availableSpots} de ${this.selectedZone.totalSpots}</span>
             </div>
-            <div class="detail-row">
-                <span class="detail-label">Tarifa</span>
-                <span class="detail-value">$${this.selectedZone.price.toLocaleString()} por hora</span>
-            </div>
-            <div class="detail-row">
-                <span class="detail-label">Horario</span>
-                <span class="detail-value">${this.selectedZone.schedule}</span>
-            </div>
+            <div class="detail-row"><span class="detail-label">Tarifa</span><span class="detail-value">$${this.selectedZone.price.toLocaleString()} por hora</span></div>
+            <div class="detail-row"><span class="detail-label">Horario</span><span class="detail-value">${this.selectedZone.schedule}</span></div>
         `;
     }
 
@@ -139,39 +125,28 @@ class ZoneManager {
         return { text: 'Disponible', class: 'badge-green' };
     }
 
-    calculateOccupancyPercentage(zone) {
-        return ((zone.totalSpots - zone.availableSpots) / zone.totalSpots) * 100;
-    }
-
-    getProgressBarClass(available) {
-        if (available === 0) return 'low';
-        if (available <= 5) return 'medium';
-        return 'high';
-    }
-
     renderMapPins() {
         const mapPlaceholder = document.querySelector('.map-placeholder');
         if (!mapPlaceholder) return;
         mapPlaceholder.querySelectorAll('.map-pin').forEach(pin => pin.remove());
 
+        if (this.filteredZones.length === 0) {
+            const emptyMsg = document.createElement('div');
+            emptyMsg.className = 'map-empty-state';
+            emptyMsg.innerHTML = '<p>No matching zones found on the map.</p>';
+            mapPlaceholder.appendChild(emptyMsg);
+            return;
+        }
+
         this.filteredZones.forEach(zone => {
             const isSelected = this.selectedZone && this.selectedZone.id === zone.id;
-            const pinClass = isSelected ? 'pin-selected' : 
-                            (zone.availableSpots === 0 ? 'pin-full' : 
-                            (zone.availableSpots <= 5 ? 'pin-warning' : 'pin-available'));
-
-            const textClass = isSelected ? 'text-blue' : 
-                            (zone.availableSpots === 0 ? 'text-danger' :
-                            (zone.availableSpots <= 5 ? 'text-warning' : 'text-green'));
-
+            const pinClass = isSelected ? 'pin-selected' : (zone.availableSpots === 0 ? 'pin-full' : (zone.availableSpots <= 5 ? 'pin-warning' : 'pin-available'));
+            const textClass = isSelected ? 'text-blue' : (zone.availableSpots === 0 ? 'text-danger' : (zone.availableSpots <= 5 ? 'text-warning' : 'text-green'));
             const pin = document.createElement('div');
             pin.className = `map-pin ${pinClass}`;
             pin.style.cssText = `top: ${zone.position.top}; left: ${zone.position.left};`;
             pin.dataset.zoneId = zone.id;
-            pin.innerHTML = `
-                <div class="map-pin-icon"><span>📍</span></div>
-                <div class="map-pin-label ${textClass}">${zone.shortName}</div>
-            `;
+            pin.innerHTML = `<div class="map-pin-icon"><span>📍</span></div><div class="map-pin-label ${textClass}">${zone.shortName}</div>`;
             mapPlaceholder.appendChild(pin);
         });
     }
@@ -179,25 +154,31 @@ class ZoneManager {
     renderZonesList() {
         const listContainer = document.querySelector('.zones-list');
         if (!listContainer) return;
-
         listContainer.innerHTML = '';
+
+        if (this.filteredZones.length === 0) {
+            listContainer.innerHTML = `
+                <div class="empty-state">
+                    <div class="empty-state-icon">⚠️</div>
+                    <div class="empty-state-title">No hay zonas disponibles</div>
+                    <div class="empty-state-text">Intenta ajustar los filtros para ver más resultados.</div>
+                </div>
+            `;
+            return;
+        }
+
         this.filteredZones.forEach(zone => {
             const isSelected = this.selectedZone && this.selectedZone.id === zone.id;
-            const occupancyPercent = this.calculateOccupancyPercentage(zone);
             const status = this.getZoneStatus(zone.availableSpots);
-
             const zoneItem = document.createElement('div');
             zoneItem.className = `zone-item ${isSelected ? 'selected' : ''}`;
             zoneItem.dataset.zoneId = zone.id;
             zoneItem.innerHTML = `
-                <div class="zone-item-header">
-                    <div class="zone-name">${zone.name}</div>
-                    <span class="badge ${status.class}">${status.text}</span>
-                </div>
+                <div class="zone-item-header"><div class="zone-name">${zone.name}</div><span class="badge ${status.class}">${status.text}</span></div>
                 <div class="zone-address">📍 ${zone.address}</div>
                 <div class="zone-details">
                     <div class="zone-price">$${zone.price.toLocaleString()}/hr</div>
-                    <div class="spots-bar"><div class="spots-fill ${this.getProgressBarClass(zone.availableSpots)}" style="width: ${occupancyPercent}%;"></div></div>
+                    <div class="spots-bar"><div class="spots-fill ${(zone.availableSpots === 0 ? 'low' : (zone.availableSpots <= 5 ? 'medium' : 'high'))}" style="width: ${((zone.totalSpots - zone.availableSpots) / zone.totalSpots) * 100}%;"></div></div>
                     <div class="spots-text">${zone.availableSpots}/${zone.totalSpots} cupos</div>
                 </div>
             `;
@@ -206,6 +187,4 @@ class ZoneManager {
     }
 }
 
-document.addEventListener('DOMContentLoaded', () => {
-    window.zoneManager = new ZoneManager();
-});
+document.addEventListener('DOMContentLoaded', () => { window.zoneManager = new ZoneManager(); });
