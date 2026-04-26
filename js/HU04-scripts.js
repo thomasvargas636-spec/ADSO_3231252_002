@@ -29,6 +29,9 @@ class ZoneManager {
             
             const mapPin = e.target.closest('.map-pin');
             if (mapPin) this.selectZone(mapPin.dataset.zoneId);
+            if (e.target.id === 'reserve-btn' && !e.target.disabled) {
+                alert(`Redirecting to reservation for: ${this.selectedZone.name}`);
+            }
         });
     }
 
@@ -47,10 +50,15 @@ class ZoneManager {
             return;
         }
 
+        const isAvailable = this.selectedZone.availableSpots > 0;
+
         detailContainer.style.display = 'block';
         detailContainer.innerHTML = `
             <div class="zone-detail-header">
                 <div class="zone-detail-name">${this.selectedZone.name}</div>
+                <button id="reserve-btn" class="btn-primary" ${!isAvailable ? 'disabled' : ''}>
+                    ${isAvailable ? 'Reservar plaza →' : 'Sin disponibilidad'}
+                </button>
             </div>
             <div class="detail-row">
                 <span class="detail-label">Dirección</span>
@@ -58,7 +66,7 @@ class ZoneManager {
             </div>
             <div class="detail-row">
                 <span class="detail-label">Cupos disponibles</span>
-                <span class="detail-value ${this.selectedZone.availableSpots > 0 ? 'text-green' : 'text-danger'}">
+                <span class="detail-value ${isAvailable ? 'text-green' : 'text-danger'}">
                     ${this.selectedZone.availableSpots} de ${this.selectedZone.totalSpots}
                 </span>
             </div>
