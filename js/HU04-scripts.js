@@ -10,38 +10,67 @@ class ZoneManager {
         this.bindEvents();
         this.renderMapPins();
         this.renderZonesList();
+        this.updateDetailPanel();
     }
 
     loadZones() {
         return [
-            { id: 'centro-a', name: 'Zona Centro A', shortName: 'Centro A', address: 'Calle 15 #8-20, Centro', price: 2500, availableSpots: 14, totalSpots: 20, position: { top: '22%', left: '18%' } },
-            { id: 'norte-b', name: 'Zona Norte B', shortName: 'Norte B', address: 'Carrera 10 #24-45, Norte', price: 3000, availableSpots: 3, totalSpots: 20, position: { top: '18%', left: '58%' } },
-            { id: 'sur-c', name: 'Zona Sur C', shortName: 'Sur C', address: 'Calle 80 #12-10, Sur', price: 2000, availableSpots: 12, totalSpots: 20, position: { top: '55%', left: '30%' } },
-            { id: 'occidental-d', name: 'Zona Occidental D', shortName: 'Occ. D', address: 'Av. Américas #45-00', price: 2800, availableSpots: 0, totalSpots: 20, position: { top: '52%', left: '68%' } }
+            { id: 'centro-a', name: 'Zona Centro A', shortName: 'Centro A', address: 'Calle 15 #8-20, Centro', price: 2500, availableSpots: 14, totalSpots: 20, schedule: '6:00 AM — 10:00 PM', position: { top: '22%', left: '18%' } },
+            { id: 'norte-b', name: 'Zona Norte B', shortName: 'Norte B', address: 'Carrera 10 #24-45, Norte', price: 3000, availableSpots: 3, totalSpots: 20, schedule: '7:00 AM — 9:00 PM', position: { top: '18%', left: '58%' } },
+            { id: 'sur-c', name: 'Zona Sur C', shortName: 'Sur C', address: 'Calle 80 #12-10, Sur', price: 2000, availableSpots: 12, totalSpots: 20, schedule: '24 Horas', position: { top: '55%', left: '30%' } },
+            { id: 'occidental-d', name: 'Zona Occidental D', shortName: 'Occ. D', address: 'Av. Américas #45-00', price: 2800, availableSpots: 0, totalSpots: 20, schedule: '6:00 AM — 11:00 PM', position: { top: '52%', left: '68%' } }
         ];
     }
+
     bindEvents() {
         document.addEventListener('click', (e) => {
             const zoneItem = e.target.closest('.zone-item');
-            if (zoneItem) {
-                const zoneId = zoneItem.dataset.zoneId;
-                this.selectZone(zoneId);
-            }
-        });
-
-        // Event delegation for map pins
-        document.addEventListener('click', (e) => {
+            if (zoneItem) this.selectZone(zoneItem.dataset.zoneId);
+            
             const mapPin = e.target.closest('.map-pin');
-            if (mapPin) {
-                const zoneId = mapPin.dataset.zoneId;
-                this.selectZone(zoneId);
-            }
+            if (mapPin) this.selectZone(mapPin.dataset.zoneId);
         });
     }
+
     selectZone(zoneId) {
         this.selectedZone = this.zonesData.find(z => z.id === zoneId);
         this.renderMapPins();
         this.renderZonesList();
+        this.updateDetailPanel();
+    }
+    updateDetailPanel() {
+        const detailContainer = document.querySelector('.zone-detail-card');
+        if (!detailContainer) return;
+
+        if (!this.selectedZone) {
+            detailContainer.style.display = 'none';
+            return;
+        }
+
+        detailContainer.style.display = 'block';
+        detailContainer.innerHTML = `
+            <div class="zone-detail-header">
+                <div class="zone-detail-name">${this.selectedZone.name}</div>
+            </div>
+            <div class="detail-row">
+                <span class="detail-label">Dirección</span>
+                <span class="detail-value">${this.selectedZone.address}</span>
+            </div>
+            <div class="detail-row">
+                <span class="detail-label">Cupos disponibles</span>
+                <span class="detail-value ${this.selectedZone.availableSpots > 0 ? 'text-green' : 'text-danger'}">
+                    ${this.selectedZone.availableSpots} de ${this.selectedZone.totalSpots}
+                </span>
+            </div>
+            <div class="detail-row">
+                <span class="detail-label">Tarifa</span>
+                <span class="detail-value">$${this.selectedZone.price.toLocaleString()} por hora</span>
+            </div>
+            <div class="detail-row">
+                <span class="detail-label">Horario</span>
+                <span class="detail-value">${this.selectedZone.schedule}</span>
+            </div>
+        `;
     }
 
     getZoneStatus(available) {
@@ -51,8 +80,7 @@ class ZoneManager {
     }
 
     calculateOccupancyPercentage(zone) {
-        const occupied = zone.totalSpots - zone.availableSpots;
-        return (occupied / zone.totalSpots) * 100;
+        return ((zone.totalSpots - zone.availableSpots) / zone.totalSpots) * 100;
     }
 
     getProgressBarClass(available) {
@@ -69,17 +97,17 @@ class ZoneManager {
         this.filteredZones.forEach(zone => {
             const isSelected = this.selectedZone && this.selectedZone.id === zone.id;
             const pinClass = isSelected ? 'pin-selected' : 
-                             (zone.availableSpots === 0 ? 'pin-full' : 
-                             (zone.availableSpots <= 5 ? 'pin-warning' : 'pin-available'));
+                            (zone.availableSpots === 0 ? 'pin-full' : 
+                            (zone.availableSpots <= 5 ? 'pin-warning' : 'pin-available'));
 
             const textClass = isSelected ? 'text-blue' : 
-                             (zone.availableSpots === 0 ? 'text-danger' :
-                             (zone.availableSpots <= 5 ? 'text-warning' : 'text-green'));
+                            (zone.availableSpots === 0 ? 'text-danger' :
+                            (zone.availableSpots <= 5 ? 'text-warning' : 'text-green'));
 
             const pin = document.createElement('div');
             pin.className = `map-pin ${pinClass}`;
             pin.style.cssText = `top: ${zone.position.top}; left: ${zone.position.left};`;
-            pin.dataset.zoneId = zone.id; // Essential for identification
+            pin.dataset.zoneId = zone.id;
             
             pin.innerHTML = `
                 <div class="map-pin-icon"><span>📍</span></div>
