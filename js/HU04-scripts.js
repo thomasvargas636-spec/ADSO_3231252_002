@@ -3,6 +3,7 @@ class ZoneManager {
         this.zonesData = this.loadZones();
         this.filteredZones = [...this.zonesData];
         this.selectedZone = null;
+        this.isFilterActive = false;
         this.init();
     }
 
@@ -20,12 +21,35 @@ class ZoneManager {
             { id: 'occidental-d', name: 'Zona Occidental D', shortName: 'Occ. D', address: 'Av. Américas #45-00', price: 2800, availableSpots: 0, totalSpots: 20, schedule: '6:00 AM — 11:00 PM', position: { top: '52%', left: '68%' } }
         ];
     }
+    filterZones() {
+        this.isFilterActive = !this.isFilterActive;
+        
+        if (this.isFilterActive) {
+            this.filteredZones = this.zonesData.filter(zone => zone.availableSpots > 0);
+            document.getElementById('filter-btn').textContent = '✅ Mostrando disponibles';
+        } else {
+            this.filteredZones = [...this.zonesData];
+            document.getElementById('filter-btn').textContent = '🔍 Filtrar zonas';
+        }
+        if (this.selectedZone && !this.filteredZones.find(z => z.id === this.selectedZone.id)) {
+            this.selectedZone = null;
+        }
+
+        this.updateUI();
+    }
+
     simulateRealTimeUpdates() {
         setInterval(() => {
             this.zonesData.forEach(zone => {
                 const change = Math.floor(Math.random() * 3) - 1;
                 zone.availableSpots = Math.max(0, Math.min(zone.totalSpots, zone.availableSpots + change));
             });
+            if (this.isFilterActive) {
+                this.filteredZones = this.zonesData.filter(zone => zone.availableSpots > 0);
+            } else {
+                this.filteredZones = [...this.zonesData];
+            }
+
             if (this.selectedZone) {
                 this.selectedZone = this.zonesData.find(z => z.id === this.selectedZone.id);
             }
@@ -41,9 +65,11 @@ class ZoneManager {
             
             const mapPin = e.target.closest('.map-pin');
             if (mapPin) this.selectZone(mapPin.dataset.zoneId);
-
             if (e.target.id === 'reserve-btn' && !e.target.disabled) {
                 alert(`Redirecting to reservation for: ${this.selectedZone.name}`);
+            }
+            if (e.target.id === 'filter-btn') {
+                this.filterZones();
             }
         });
     }
@@ -52,6 +78,7 @@ class ZoneManager {
         this.selectedZone = this.zonesData.find(z => z.id === zoneId);
         this.updateUI();
     }
+
     updateUI() {
         this.renderMapPins();
         this.renderZonesList();
@@ -69,7 +96,12 @@ class ZoneManager {
 
     updateDetailPanel() {
         const detailContainer = document.querySelector('.zone-detail-card');
-        if (!detailContainer || !this.selectedZone) return;
+        if (!detailContainer) return;
+
+        if (!this.selectedZone) {
+            detailContainer.style.display = 'none';
+            return;
+        }
 
         const isAvailable = this.selectedZone.availableSpots > 0;
         detailContainer.style.display = 'block';
