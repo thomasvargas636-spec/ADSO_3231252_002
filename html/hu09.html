@@ -1,0 +1,124 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>PARKALIA - Gestión de Zonas</title>
+  <link href="https://fonts.googleapis.com/css2?family=Syne:wght@400;600;700;800&family=DM+Sans:wght@300;400;500&display=swap" rel="stylesheet" />
+  <link rel="stylesheet" href="../css/hu09-style.css" />
+</head>
+<body>
+<div class="layout">
+
+  <!-- ── SIDEBAR ── -->
+  <aside class="sidebar">
+    <div class="logo">
+      <img src="../img/Group_2.png" alt="Parkalia" class="logo-img" />
+    </div>
+    <nav class="nav">
+      <div class="nav-label">Principal</div>
+      <div class="nav-item"><span class="icon">📊</span> Panel de control</div>
+      <div class="nav-item"><span class="icon">🚗</span> Vehículos</div>
+      <div class="nav-item active"><span class="icon">⬡</span> Zonas</div>
+      <div class="nav-label">Actividad</div>
+      <div class="nav-item"><span class="icon">📋</span> Reservaciones</div>
+      <div class="nav-item"><span class="icon">💳</span> Pagos</div>
+      <div class="nav-item"><span class="icon">🕐</span> Historial</div>
+      <div class="nav-label">Sistema</div>
+      <div class="nav-item"><span class="icon">👥</span> Usuarios</div>
+      <div class="nav-item"><span class="icon">⚙️</span> Configuración</div>
+    </nav>
+    <div class="sidebar-footer">
+      <div class="user-chip">
+        <div class="avatar">TV</div>
+        <div class="user-info">
+          <div class="user-name">t_vxrgas</div>
+          <div class="user-role">Administrador</div>
+        </div>
+      </div>
+    </div>
+  </aside>
+
+  <!-- ── MAIN ── -->
+  <div class="main">
+    <div class="topbar">
+      <div class="topbar-title" id="topbar-title">Gestión de Zonas</div>
+    </div>
+
+    <!-- PANTALLA: LISTA -->
+    <div class="content" id="screen-list">
+      <div class="section-header">
+        <div>
+          <div class="section-title">Gestión de Zonas</div>
+          <div class="section-sub">Administra las zonas de parqueo del sistema</div>
+        </div>
+        <button class="btn-primary" id="btn-show-form">＋ Nueva Zona</button>
+      </div>
+
+      <!-- Mensaje éxito -->
+      <div class="success-msg hidden" id="success-msg"></div>
+
+      <!-- Tabla -->
+      <div class="table-card">
+        <table id="zones-table">
+          <thead>
+            <tr>
+              <th>ID</th>
+              <th>Nombre</th>
+              <th>Dirección</th>
+              <th>Capacidad</th>
+            </tr>
+          </thead>
+          <tbody id="zones-body"></tbody>
+        </table>
+
+        <!-- Estado vacío -->
+        <div class="empty-state hidden" id="empty-state">
+          <div class="empty-icon">⬡</div>
+          <div class="empty-title">No hay zonas registradas</div>
+          <div class="empty-sub">Agrega la primera zona de parqueo al sistema</div>
+          <button class="btn-primary" id="btn-empty-add">＋ Nueva Zona</button>
+        </div>
+      </div>
+    </div>
+
+    <!-- PANTALLA: FORMULARIO -->
+    <div class="content hidden" id="screen-form">
+      <a class="back-link" id="btn-back">← Volver a Gestión de Zonas</a>
+
+      <div class="form-card">
+        <div class="form-card-title">
+          <div class="dot"></div>
+          <span id="form-card-title">Nueva Zona de Parqueo</span>
+        </div>
+
+        <div class="fields-grid">
+          <div class="field">
+            <label>Nombre de la zona</label>
+            <input type="text" id="zone-name" placeholder="ej. Zona Centro A" />
+            <div class="error" id="zone-name-error"></div>
+          </div>
+          <div class="field">
+            <label>Dirección</label>
+            <input type="text" id="zone-address" placeholder="ej. Calle 15 #8-20" />
+            <div class="error" id="zone-address-error"></div>
+          </div>
+          <div class="field">
+            <label>Capacidad máxima</label>
+            <input type="number" id="zone-capacity" placeholder="ej. 20" min="1" />
+            <div class="error" id="zone-capacity-error"></div>
+          </div>
+        </div>
+
+        <div class="form-actions">
+          <button class="btn-secondary" id="btn-cancel">Cancelar</button>
+          <button class="btn-primary" id="btn-save">Guardar Zona</button>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<script src="../js/hu09-script.js"></script>
+</body>
+</html>
