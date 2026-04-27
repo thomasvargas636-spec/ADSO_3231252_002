@@ -302,3 +302,376 @@ body::before {
     transform: translateY(0);
     }
 }
+
+/* RESPONSIVE DESIGN */
+
+/* Tablets */
+@media (max-width: 768px) {
+    .screen {
+        padding: 32px 20px;
+        max-width: 420px;
+    }
+    
+    .logo {
+        margin-bottom: 24px;
+    }
+    
+    .logo-img {
+        height: 40px;
+    }
+    
+    .card {
+        padding: 28px 24px;
+    }
+    
+    .card-title {
+        font-size: 18px;
+    }
+    
+    .card-subtitle {
+        font-size: 12px;
+        margin-bottom: 20px;
+    }
+    
+    .field {
+        margin-bottom: 14px;
+    }
+    
+    .field input {
+        padding: 10px 12px;
+        font-size: 13px;
+    }
+    
+    .field label {
+        font-size: 10px;
+        margin-bottom: 5px;
+    }
+    
+    .field-row {
+        gap: 10px;
+    }
+    
+    .requirements {
+        padding: 10px 12px;
+        margin-bottom: 14px;
+    }
+    
+    .req-title {
+        font-size: 10px;
+        margin-bottom: 6px;
+    }
+    
+    .req-item {
+        font-size: 11px;
+        margin-bottom: 3px;
+    }
+    
+    .btn-primary,
+    .btn-success {
+        padding: 11px;
+        font-size: 13px;
+    }
+    
+    .success-icon {
+        font-size: 44px;
+        margin-bottom: 14px;
+    }
+    
+    .success-title {
+        font-size: 20px;
+    }
+    
+    .success-desc {
+        font-size: 12px;
+        margin-bottom: 18px;
+    }
+    
+    .success-email {
+        font-size: 12px;
+        padding: 6px 14px;
+    }
+    
+    .step {
+        width: 26px;
+        height: 26px;
+        font-size: 11px;
+    }
+    
+    .step-line {
+        width: 28px;
+    }
+}
+
+/* Mobile Phones */
+@media (max-width: 480px) {
+    body {
+        padding: 0;
+        align-items: stretch;
+    }
+    
+    .screen {
+        padding: 24px 16px;
+        max-width: none;
+        min-height: 100vh;
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+    }
+    
+    .logo {
+        margin-bottom: 20px;
+    }
+    
+    .logo-img {
+        height: 36px;
+    }
+    
+    .card {
+        padding: 24px 20px;
+        border-radius: 12px;
+    }
+    
+    .card-title {
+        font-size: 16px;
+        margin-bottom: 4px;
+    }
+    
+    .card-subtitle {
+        font-size: 11px;
+        margin-bottom: 18px;
+        line-height: 1.4;
+    }
+    
+    .field {
+        margin-bottom: 12px;
+    }
+    
+    .field input {
+        padding: 9px 11px;
+        font-size: 12.5px;
+        border-radius: 6px;
+    }
+    
+    .field label {
+        font-size: 9.5px;
+        margin-bottom: 4px;
+    }
+    
+    .field-row {
+        grid-template-columns: 1fr;
+        gap: 0;
+    }
+    
+    .error {
+        font-size: 10px;
+        margin-top: 4px;
+        min-height: 14px;
+    }
+    
+    .requirements {
+        padding: 8px 10px;
+        margin-bottom: 12px;
+        border-radius: 6px;
+    }
+    
+    .req-title {
+        font-size: 9.5px;
+        margin-bottom: 5px;
+    }
+    
+    .req-item {
+        font-size: 10px;
+        margin-bottom: 3px;
+        gap: 6px;
+    }
+    
+    .req-dot {
+        width: 5px;
+        height: 5px;
+    }
+    
+    .divider {
+        margin: 16px 0;
+    }
+    
+    .btn-primary,
+    .btn-success {
+        padding: 10px;
+        font-size: 12px;
+        border-radius: 6px;
+        margin-bottom: 14px;
+    }
+    
+    .login-link {
+        font-size: 12px;
+    }
+    
+    .success-icon {
+        font-size: 40px;
+        margin-bottom: 12px;
+    }
+    
+    .success-title {
+        font-size: 18px;
+        margin-bottom: 6px;
+    }
+    
+    .success-desc {
+        font-size: 11px;
+        margin-bottom: 16px;
+        line-height: 1.5;
+    }
+    
+    .success-email {
+        font-size: 11px;
+        padding: 6px 12px;
+        border-radius: 6px;
+    }
+    
+    .steps {
+        gap: 6px;
+        margin-bottom: 18px;
+    }
+    
+    .step {
+        width: 24px;
+        height: 24px;
+        font-size: 10px;
+    }
+    
+    .step-line {
+        width: 24px;
+    }
+}
+
+/* Extra Small Mobile */
+@media (max-width: 360px) {
+    .screen {
+        padding: 20px 12px;
+    }
+    
+    .card {
+        padding: 20px 16px;
+    }
+    
+    .card-title {
+        font-size: 15px;
+    }
+    
+    .card-subtitle {
+        font-size: 10px;
+        margin-bottom: 16px;
+    }
+    
+    .field input {
+        padding: 8px 10px;
+        font-size: 12px;
+    }
+    
+    .field label {
+        font-size: 9px;
+    }
+    
+    .btn-primary,
+    .btn-success {
+        padding: 9px;
+        font-size: 11px;
+    }
+    
+    .success-icon {
+        font-size: 36px;
+    }
+    
+    .success-title {
+        font-size: 16px;
+    }
+    
+    .success-desc {
+        font-size: 10px;
+    }
+    
+    .success-email {
+        font-size: 10px;
+        padding: 5px 10px;
+    }
+    
+    .step {
+        width: 22px;
+        height: 22px;
+        font-size: 9px;
+    }
+    
+    .step-line {
+        width: 20px;
+    }
+}
+
+/* Large Desktop */
+@media (min-width: 1200px) {
+    .screen {
+        max-width: 520px;
+        padding: 48px 32px;
+    }
+    
+    .logo-img {
+        height: 48px;
+    }
+    
+    .card {
+        padding: 36px;
+    }
+    
+    .card-title {
+        font-size: 22px;
+    }
+    
+    .card-subtitle {
+        font-size: 14px;
+    }
+    
+    .field input {
+        padding: 12px 16px;
+        font-size: 14px;
+    }
+    
+    .btn-primary,
+    .btn-success {
+        padding: 13px;
+        font-size: 15px;
+    }
+    
+    .success-icon {
+        font-size: 52px;
+    }
+    
+    .success-title {
+        font-size: 24px;
+    }
+}
+
+/* Extra Large Desktop */
+@media (min-width: 1440px) {
+    .screen {
+        max-width: 560px;
+        padding: 56px 40px;
+    }
+    
+    .card {
+        padding: 40px;
+    }
+    
+    .card-title {
+        font-size: 24px;
+    }
+    
+    .field input {
+        padding: 13px 18px;
+        font-size: 15px;
+    }
+    
+    .btn-primary,
+    .btn-success {
+        padding: 14px;
+        font-size: 16px;
+    }
+}
