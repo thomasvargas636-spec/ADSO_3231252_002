@@ -2,17 +2,16 @@
 <html lang="es">
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Parkalia – Consulta de Zonas</title>
     <link href="https://fonts.googleapis.com/css2?family=Syne:wght@400;600;700;800&family=DM+Sans:wght@300;400;500&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="../css/HU04-style.css">
 </head>
 <body>
     <div class="page">
-        <aside class="sidebar" id="sidebar">
+        <aside class="sidebar">
             <div class="logo">
                 <img src="../img/Group_2.png" alt="Parkalia Logo" class="logo-img" />
-                <button class="mobile-close" id="close-menu">✕</button>
             </div>
             <nav class="nav">
                 <div class="nav-item">🚗 Vehículos</div>
@@ -35,14 +34,11 @@
                 </div>
             </div>
         </aside>
-
         <div class="main">
             <div class="topbar">
-                <button class="mobile-menu-btn" id="open-menu">☰</button>
                 <div class="topbar-title">Zonas de Parqueo</div>
                 <span class="badge badge-green">4 zonas registradas</span>
             </div>
-
             <div class="content">
                 <div class="screen-label">Zonas disponibles</div>
                 <div class="section-header">
@@ -50,9 +46,8 @@
                         <div class="section-title">Zonas Disponibles</div>
                         <div class="section-sub">Consulta disponibilidad en tiempo real y reserva tu cupo</div>
                     </div>
-                    <button class="btn-secondary" id="filter-btn">🔍 Filtrar zonas</button>
+                    <button class="btn-secondary">🔍 Filtrar zonas</button>
                 </div>
-
                 <div class="zones-layout">
                     <div class="map-card">
                         <div class="map-placeholder">
@@ -61,7 +56,24 @@
                             <div class="map-road-h road-h-2"></div>
                             <div class="map-road-v road-v-1"></div>
                             <div class="map-road-v road-v-2"></div>
+                            
+                            <div class="map-pin pin-selected" style="top: 22%; left: 18%;">
+                                <div class="map-pin-icon"><span>📍</span></div>
+                                <div class="map-pin-label text-blue">Centro A</div>
                             </div>
+                            <div class="map-pin pin-warning" style="top: 18%; left: 58%;">
+                                <div class="map-pin-icon"><span>📍</span></div>
+                                <div class="map-pin-label text-warning">Norte B</div>
+                            </div>
+                            <div class="map-pin pin-available" style="top: 55%; left: 30%;">
+                                <div class="map-pin-icon"><span>📍</span></div>
+                                <div class="map-pin-label text-green">Sur C</div>
+                            </div>
+                            <div class="map-pin pin-full" style="top: 52%; left: 68%;">
+                                <div class="map-pin-icon"><span>📍</span></div>
+                                <div class="map-pin-label text-danger">Occ. D</div>
+                            </div>
+                        </div>
                         <div class="map-legend">
                             <div class="legend-item"><div class="legend-dot bg-green"></div> Disponible</div>
                             <div class="legend-item"><div class="legend-dot bg-warning"></div> Casi llena</div>
@@ -70,15 +82,47 @@
                         </div>
                     </div>
                     
-                    <div class="side-panel">
+                    <div>
                         <div class="zones-panel-header">
                             <div class="zones-panel-title">Zonas registradas</div>
-                            <span class="zones-status-text">Cargando...</span>
+                            <span class="zones-status-text">3 disponibles · 1 llena</span>
                         </div>
                         <div class="zones-list">
+                            <div class="zone-item selected">
+                                <div class="zone-item-header">
+                                    <div class="zone-name">Zona Centro A</div>
+                                    <span class="badge badge-green">Disponible</span>
+                                </div>
+                                <div class="zone-address">📍 Calle 15 #8-20, Centro</div>
+                                <div class="zone-details">
+                                    <div class="zone-price">$2.500/hr</div>
+                                    <div class="spots-bar"><div class="spots-fill high" style="width: 70%;"></div></div>
+                                    <div class="spots-text">14/20 cupos</div>
+                                </div>
                             </div>
-                        <div class="zone-detail-card" id="detail-panel" style="display: none;">
                             </div>
+                        <div class="zone-detail-card">
+                            <div class="zone-detail-header">
+                                <div class="zone-detail-name">Zona Centro A</div>
+                                <button class="btn-primary">Reservar cupo →</button>
+                            </div>
+                            <div class="detail-row">
+                                <span class="detail-label">Dirección</span>
+                                <span class="detail-value">Calle 15 #8-20</span>
+                            </div>
+                            <div class="detail-row">
+                                <span class="detail-label">Cupos disponibles</span>
+                                <span class="detail-value text-green">14 de 20</span>
+                            </div>
+                            <div class="detail-row">
+                                <span class="detail-label">Tarifa</span>
+                                <span class="detail-value">$2.500 por hora</span>
+                            </div>
+                            <div class="detail-row">
+                                <span class="detail-label">Horario</span>
+                                <span class="detail-value">6:00 AM — 10:00 PM</span>
+                            </div>
+                        </div>
                     </div>
                 </div>
             </div>
