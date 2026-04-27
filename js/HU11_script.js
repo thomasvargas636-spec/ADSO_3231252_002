@@ -42,12 +42,12 @@ let usuarios = [
 let filtroActual = "todos";
 let textoBusqueda = "";
 let usuarioSeleccionado = null;
+let accionToggle = null;
 
 // =========================
 // SUBCARDS
 // =========================
 function actualizarCards() {
-
   const total = usuarios.length;
   const activos = usuarios.filter(u => u.estado === "activo").length;
   const inactivos = usuarios.filter(u => u.estado === "inactivo").length;
@@ -69,11 +69,9 @@ function renderTabla() {
 
   usuarios
     .filter(u => {
-
       if (filtroActual === "activo") return u.estado === "activo";
       if (filtroActual === "inactivo") return u.estado === "inactivo";
       if (filtroActual === "admin") return u.rol === "Administrador";
-
       return true;
     })
     .filter(u => {
@@ -120,24 +118,34 @@ function renderTabla() {
 }
 
 // =========================
-// CAMBIO DE VISTA
+// CAMBIO DE VISTAS
 // =========================
 function volverTabla() {
-  document.querySelector(".tabla-card").classList.remove("oculto");
+
   document.getElementById("vista-editar").classList.add("oculto");
-  renderTabla();
+  document.getElementById("vista-toggle").classList.add("oculto");
+  document.getElementById("vista-eliminar").classList.add("oculto");
+
+  document.querySelector(".tabla-card").classList.remove("oculto");
   document.querySelector(".cards").classList.remove("oculto");
   document.querySelector(".filtros").classList.remove("oculto");
+
+  renderTabla();
+}
+
+function volverDesdeToggle() {
+  document.getElementById("vista-toggle").classList.add("oculto");
+  volverTabla();
 }
 
 // =========================
-// EVENTOS GENERALES
+// EVENTOS
 // =========================
 document.addEventListener("click", (e) => {
 
   const index = e.target.dataset.index;
 
-  // 🔵 EDITAR (NUEVA VISTA)
+  // 🔵 EDITAR
   if (e.target.classList.contains("editar")) {
 
     usuarioSeleccionado = index;
@@ -154,7 +162,7 @@ document.addEventListener("click", (e) => {
     document.getElementById("vista-editar").classList.remove("oculto");
   }
 
-  // 💾 GUARDAR EDICIÓN
+  // 💾 GUARDAR EDITAR
   if (e.target.id === "guardarEditar") {
 
     const user = usuarios[usuarioSeleccionado];
@@ -167,48 +175,90 @@ document.addEventListener("click", (e) => {
     volverTabla();
   }
 
-  // ❌ CANCELAR / CERRAR
-  if (
-    e.target.id === "cancelarEditar" ||
-    e.target.id === "cerrarEditar"
-  ) {
+  // ❌ CANCELAR EDITAR
+  if (e.target.id === "cancelarEditar" || e.target.id === "cerrarEditar") {
     volverTabla();
   }
 
-  // 🟡 TOGGLE ESTADO (SIN CAMBIOS)
+  // 🟡 TOGGLE (ABRIR VISTA)
   if (e.target.classList.contains("toggle")) {
 
+    usuarioSeleccionado = index;
     const user = usuarios[index];
 
-    const accion =
-      user.estado === "activo"
-        ? "desactivar"
-        : "activar";
+    accionToggle = user.estado === "activo" ? "desactivar" : "activar";
 
-    const confirmar = confirm(
-      `¿Seguro que deseas ${accion} este usuario?`
-    );
+    document.getElementById("tituloToggle").textContent =
+      accionToggle === "desactivar"
+        ? "Desactivar usuario"
+        : "Activar usuario";
 
-    if (!confirmar) return;
+    document.getElementById("mensajeToggle").innerHTML = `
+      ¿Seguro que deseas ${accionToggle} a <b>${user.nombre}</b>?
+      <br><br>
+      <span class="rol ${user.rol === "Administrador" ? "admin" : ""}">
+        ${user.rol}
+      </span>
+    `;
+
+    document.querySelector(".tabla-card").classList.add("oculto");
+    document.querySelector(".cards").classList.add("oculto");
+    document.querySelector(".filtros").classList.add("oculto");
+
+    document.getElementById("vista-toggle").classList.remove("oculto");
+  }
+
+  // ✅ CONFIRMAR TOGGLE
+  if (e.target.id === "confirmarToggle") {
+
+    const user = usuarios[usuarioSeleccionado];
 
     user.estado =
       user.estado === "activo" ? "inactivo" : "activo";
 
-    renderTabla();
+    volverDesdeToggle();
   }
 
-  // 🔴 ELIMINAR (SIN CAMBIOS)
+  // ❌ CANCELAR TOGGLE
+  if (e.target.id === "cancelarToggle" || e.target.id === "cerrarToggle") {
+    volverDesdeToggle();
+  }
+
+  // 🔴 ELIMINAR (ABRIR VISTA)
   if (e.target.classList.contains("delete")) {
 
-    const confirmar = confirm(
-      "¿Seguro que deseas eliminar este usuario?"
-    );
+    usuarioSeleccionado = index;
+    const user = usuarios[index];
 
-    if (!confirmar) return;
+    document.getElementById("deleteUserPreview").innerHTML = `
+      <div style="flex:1">
+        <b>${user.nombre}</b><br>
+        <small>${user.correo}</small>
+      </div>
 
-    usuarios.splice(index, 1);
+      <span class="rol ${user.rol === "Administrador" ? "admin" : ""}">
+        ${user.rol}
+      </span>
+    `;
 
-    renderTabla();
+    document.querySelector(".tabla-card").classList.add("oculto");
+    document.querySelector(".cards").classList.add("oculto");
+    document.querySelector(".filtros").classList.add("oculto");
+
+    document.getElementById("vista-eliminar").classList.remove("oculto");
+  }
+
+  // 🔥 CONFIRMAR ELIMINAR
+  if (e.target.id === "confirmarEliminar") {
+
+    usuarios.splice(usuarioSeleccionado, 1);
+
+    volverTabla();
+  }
+
+  // ❌ CANCELAR ELIMINAR
+  if (e.target.id === "cancelarEliminar" || e.target.id === "cerrarEliminar") {
+    volverTabla();
   }
 
 });
@@ -225,7 +275,6 @@ document.getElementById("buscador").addEventListener("input", (e) => {
 // FILTROS
 // =========================
 document.querySelectorAll(".botones button").forEach(btn => {
-
   btn.addEventListener("click", () => {
 
     document.querySelectorAll(".botones button")
@@ -237,7 +286,6 @@ document.querySelectorAll(".botones button").forEach(btn => {
 
     renderTabla();
   });
-
 });
 
 // =========================
@@ -245,9 +293,7 @@ document.querySelectorAll(".botones button").forEach(btn => {
 // =========================
 document.addEventListener("DOMContentLoaded", () => {
 
-  // 🔒 VALIDACIÓN ADMIN
   if (usuarioActual.rol !== "Administrador") {
-
     document.body.innerHTML = `
       <div style="
         display:flex;
@@ -265,7 +311,6 @@ document.addEventListener("DOMContentLoaded", () => {
         </div>
       </div>
     `;
-
     return;
   }
 

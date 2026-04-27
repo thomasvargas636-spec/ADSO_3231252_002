@@ -177,6 +177,63 @@
 
       </div>
 
+      <!-- ========================= -->
+      <!-- VISTA DESACTIVAR -->
+      <!-- ========================= -->
+      <div id="vista-toggle" class="vista oculto">
+
+        <div class="edit-card">
+
+          <div class="edit-header">
+            <h2 id="tituloToggle">Desactivar usuario</h2>
+            <button id="cerrarToggle" class="btn">✖</button>
+          </div>
+
+          <p id="mensajeToggle" style="color:#8B949E; margin-top:10px;">
+            ¿Seguro que deseas cambiar el estado de este usuario?
+          </p>
+
+          <div class="acciones-form">
+            <button id="cancelarToggle" class="btn">Cancelar</button>
+            <button id="confirmarToggle" class="btn toggle">Confirmar</button>
+          </div>
+
+        </div>
+
+      </div>
+
+      <!-- ========================= -->
+      <!-- VISTA ELIMINAR -->
+      <!-- ========================= -->
+      <div id="vista-eliminar" class="vista oculto">
+
+        <div class="delete-card">
+
+          <div class="edit-header">
+            <h2>Eliminar usuario</h2>
+            <button id="cerrarEliminar" class="btn">✖</button>
+          </div>
+
+          <!-- ALERTA ROJA -->
+          <div class="alerta-eliminar">
+            ⚠️ Esta acción es <b>permanente e irreversible</b>. El usuario y todos sus datos asociados serán eliminados del sistema.
+          </div>
+
+          <!-- INFO USUARIO -->
+          <div class="user-preview" id="deleteUserPreview"></div>
+
+          <!-- BOTONES -->
+          <div class="acciones-form">
+            <button id="cancelarEliminar" class="btn">Cancelar</button>
+            <button id="confirmarEliminar" class="btn delete-final">
+              Eliminar usuario
+            </button>
+          </div>
+
+        </div>
+
+      </div>
+
     </section>
 
   </div>
