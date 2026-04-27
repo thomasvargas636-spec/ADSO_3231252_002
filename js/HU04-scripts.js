@@ -9,6 +9,7 @@ class ZoneManager {
 
     init() {
         this.bindEvents();
+        this.bindMobileMenu();
         this.updateUI();
         this.simulateRealTimeUpdates();
     }
@@ -22,169 +23,158 @@ class ZoneManager {
         ];
     }
 
-    filterZones() {
-        this.isFilterActive = !this.isFilterActive;
-        this.applyFilters();
-    }
-    applyFilters() {
-        if (this.isFilterActive) {
-            this.filteredZones = this.zonesData.filter(zone => zone.availableSpots > 0);
-            document.getElementById('filter-btn').textContent = '✅ Mostrando disponibles';
-        } else {
-            this.filteredZones = [...this.zonesData];
-            document.getElementById('filter-btn').textContent = '🔍 Filtrar zonas';
-        }
+    bindMobileMenu() {
+        const sidebar = document.getElementById('sidebar');
+        const openBtn = document.getElementById('open-menu');
+        const closeBtn = document.getElementById('close-menu');
 
-        if (this.selectedZone && !this.filteredZones.find(z => z.id === this.selectedZone.id)) {
-            this.selectedZone = null;
-        }
-        this.updateUI();
-    }
-
-    simulateRealTimeUpdates() {
-        setInterval(() => {
-            this.zonesData.forEach(zone => {
-                const change = Math.floor(Math.random() * 3) - 1;
-                zone.availableSpots = Math.max(0, Math.min(zone.totalSpots, zone.availableSpots + change));
-            });
-            this.applyFilters();
-        }, 5000);
+        openBtn?.addEventListener('click', () => sidebar.classList.add('open'));
+        closeBtn?.addEventListener('click', () => sidebar.classList.remove('open'));
+        
+        // Cerrar al clickear opciones
+        document.querySelectorAll('.nav-item').forEach(item => {
+            item.addEventListener('click', () => sidebar.classList.remove('open'));
+        });
     }
 
     bindEvents() {
         document.addEventListener('click', (e) => {
             const zoneItem = e.target.closest('.zone-item');
-            if (zoneItem) this.selectZone(zoneItem.dataset.zoneId);
-            
             const mapPin = e.target.closest('.map-pin');
-            if (mapPin) this.selectZone(mapPin.dataset.zoneId);
 
-            if (e.target.id === 'reserve-btn' && !e.target.disabled) {
-                alert(`Redirecting to reservation for: ${this.selectedZone.name}`);
+            if (zoneItem || mapPin) {
+                const id = zoneItem ? zoneItem.dataset.zoneId : mapPin.dataset.zoneId;
+                this.selectZone(id);
+                
+                // Scroll automático en móviles si se toca un pin del mapa
+                if (window.innerWidth <= 1024 && mapPin) {
+                    document.getElementById('detail-panel').scrollIntoView({ behavior: 'smooth', block: 'center' });
+                }
             }
 
             if (e.target.id === 'filter-btn') {
-                this.filterZones();
+                this.isFilterActive = !this.isFilterActive;
+                this.applyFilters();
+            }
+
+            if (e.target.id === 'reserve-btn' && !e.target.disabled) {
+                alert(`Reservando en: ${this.selectedZone.name}`);
             }
         });
     }
 
-    selectZone(zoneId) {
-        this.selectedZone = this.zonesData.find(z => z.id === zoneId);
+    applyFilters() {
+        const btn = document.getElementById('filter-btn');
+        if (this.isFilterActive) {
+            this.filteredZones = this.zonesData.filter(z => z.availableSpots > 0);
+            btn.textContent = '✅ Mostrando disponibles';
+            btn.classList.add('active');
+        } else {
+            this.filteredZones = [...this.zonesData];
+            btn.textContent = '🔍 Filtrar zonas';
+            btn.classList.remove('active');
+        }
+        this.updateUI();
+    }
+
+    selectZone(id) {
+        this.selectedZone = this.zonesData.find(z => z.id === id);
         this.updateUI();
     }
 
     updateUI() {
-        this.renderMapPins();
-        this.renderZonesList();
-        this.updateDetailPanel();
+        this.renderMap();
+        this.renderList();
+        this.updateDetails();
         this.updateGlobalStatus();
+    }
+
+    renderMap() {
+        const container = document.querySelector('.map-placeholder');
+        container.querySelectorAll('.map-pin').forEach(p => p.remove());
+
+        this.filteredZones.forEach(zone => {
+            const isSelected = this.selectedZone?.id === zone.id;
+            const status = zone.availableSpots === 0 ? 'pin-full' : (zone.availableSpots <= 5 ? 'pin-warning' : 'pin-available');
+            
+            const pin = document.createElement('div');
+            pin.className = `map-pin ${status} ${isSelected ? 'pin-selected' : ''}`;
+            pin.style.top = zone.position.top;
+            pin.style.left = zone.position.left;
+            pin.dataset.zoneId = zone.id;
+            pin.innerHTML = `
+                <div class="map-pin-icon"><span>📍</span></div>
+                <div class="map-pin-label">${zone.shortName}</div>
+            `;
+            container.appendChild(pin);
+        });
+    }
+
+    renderList() {
+        const container = document.querySelector('.zones-list');
+        container.innerHTML = '';
+
+        if (this.filteredZones.length === 0) {
+            container.innerHTML = `<div style="padding:40px; text-align:center; color:gray;">No hay zonas disponibles</div>`;
+            return;
+        }
+
+        this.filteredZones.forEach(zone => {
+            const isSelected = this.selectedZone?.id === zone.id;
+            const occupancy = ((zone.totalSpots - zone.availableSpots) / zone.totalSpots) * 100;
+            const colorClass = zone.availableSpots === 0 ? 'low' : (zone.availableSpots <= 5 ? 'medium' : 'high');
+
+            const item = document.createElement('div');
+            item.className = `zone-item ${isSelected ? 'selected' : ''}`;
+            item.dataset.zoneId = zone.id;
+            item.innerHTML = `
+                <div class="zone-name">${zone.name}</div>
+                <div class="zone-address">📍 ${zone.address}</div>
+                <div class="zone-details">
+                    <div class="zone-price">$${zone.price}/hr</div>
+                    <div class="spots-bar"><div class="spots-fill bg-${colorClass === 'high' ? 'green' : (colorClass === 'medium' ? 'warning' : 'danger')}" style="width: ${occupancy}%"></div></div>
+                    <div class="spots-text">${zone.availableSpots}/${zone.totalSpots}</div>
+                </div>
+            `;
+            container.appendChild(item);
+        });
+    }
+
+    updateDetails() {
+        const panel = document.getElementById('detail-panel');
+        if (!this.selectedZone) { panel.style.display = 'none'; return; }
+
+        const z = this.selectedZone;
+        panel.style.display = 'block';
+        panel.innerHTML = `
+            <div class="zone-detail-header">
+                <div class="zone-detail-name">${z.name}</div>
+                <button id="reserve-btn" class="btn-primary" ${z.availableSpots === 0 ? 'disabled' : ''}>
+                    ${z.availableSpots > 0 ? 'Reservar plaza →' : 'Lleno'}
+                </button>
+            </div>
+            <div class="detail-row"><span>Dirección</span><span>${z.address}</span></div>
+            <div class="detail-row"><span>Cupos</span><span class="${z.availableSpots > 0 ? 'text-green' : 'text-danger'}">${z.availableSpots} de ${z.totalSpots}</span></div>
+            <div class="detail-row"><span>Tarifa</span><span>$${z.price}/hr</span></div>
+            <div class="detail-row"><span>Horario</span><span>${z.schedule}</span></div>
+        `;
     }
 
     updateGlobalStatus() {
         const statusText = document.querySelector('.zones-status-text');
-        if (!statusText) return;
-        const availableCount = this.zonesData.filter(z => z.availableSpots > 0).length;
-        statusText.textContent = `${availableCount} disponibles · ${this.zonesData.length - availableCount} llenas`;
+        const available = this.zonesData.filter(z => z.availableSpots > 0).length;
+        if (statusText) statusText.textContent = `${available} disponibles · ${this.zonesData.length - available} llenas`;
     }
 
-    updateDetailPanel() {
-        const detailContainer = document.querySelector('.zone-detail-card');
-        if (!detailContainer) return;
-
-        if (!this.selectedZone) {
-            detailContainer.style.display = 'none';
-            return;
-        }
-
-        const isAvailable = this.selectedZone.availableSpots > 0;
-        detailContainer.style.display = 'block';
-        detailContainer.innerHTML = `
-            <div class="zone-detail-header">
-                <div class="zone-detail-name">${this.selectedZone.name}</div>
-                <button id="reserve-btn" class="btn-primary" ${!isAvailable ? 'disabled' : ''}>
-                    ${isAvailable ? 'Reservar plaza →' : 'Sin disponibilidad'}
-                </button>
-            </div>
-            <div class="detail-row">
-                <span class="detail-label">Dirección</span>
-                <span class="detail-value">${this.selectedZone.address}</span>
-            </div>
-            <div class="detail-row">
-                <span class="detail-label">Cupos disponibles</span>
-                <span class="detail-value ${isAvailable ? 'text-green' : 'text-danger'}">${this.selectedZone.availableSpots} de ${this.selectedZone.totalSpots}</span>
-            </div>
-            <div class="detail-row"><span class="detail-label">Tarifa</span><span class="detail-value">$${this.selectedZone.price.toLocaleString()} por hora</span></div>
-            <div class="detail-row"><span class="detail-label">Horario</span><span class="detail-value">${this.selectedZone.schedule}</span></div>
-        `;
-    }
-
-    getZoneStatus(available) {
-        if (available === 0) return { text: 'Sin cupos', class: 'badge-red' };
-        if (available <= 5) return { text: 'Casi llena', class: 'badge-warning' };
-        return { text: 'Disponible', class: 'badge-green' };
-    }
-
-    renderMapPins() {
-        const mapPlaceholder = document.querySelector('.map-placeholder');
-        if (!mapPlaceholder) return;
-        mapPlaceholder.querySelectorAll('.map-pin').forEach(pin => pin.remove());
-
-        if (this.filteredZones.length === 0) {
-            const emptyMsg = document.createElement('div');
-            emptyMsg.className = 'map-empty-state';
-            emptyMsg.innerHTML = '<p>No matching zones found on the map.</p>';
-            mapPlaceholder.appendChild(emptyMsg);
-            return;
-        }
-
-        this.filteredZones.forEach(zone => {
-            const isSelected = this.selectedZone && this.selectedZone.id === zone.id;
-            const pinClass = isSelected ? 'pin-selected' : (zone.availableSpots === 0 ? 'pin-full' : (zone.availableSpots <= 5 ? 'pin-warning' : 'pin-available'));
-            const textClass = isSelected ? 'text-blue' : (zone.availableSpots === 0 ? 'text-danger' : (zone.availableSpots <= 5 ? 'text-warning' : 'text-green'));
-            const pin = document.createElement('div');
-            pin.className = `map-pin ${pinClass}`;
-            pin.style.cssText = `top: ${zone.position.top}; left: ${zone.position.left};`;
-            pin.dataset.zoneId = zone.id;
-            pin.innerHTML = `<div class="map-pin-icon"><span>📍</span></div><div class="map-pin-label ${textClass}">${zone.shortName}</div>`;
-            mapPlaceholder.appendChild(pin);
-        });
-    }
-
-    renderZonesList() {
-        const listContainer = document.querySelector('.zones-list');
-        if (!listContainer) return;
-        listContainer.innerHTML = '';
-
-        if (this.filteredZones.length === 0) {
-            listContainer.innerHTML = `
-                <div class="empty-state">
-                    <div class="empty-state-icon">⚠️</div>
-                    <div class="empty-state-title">No hay zonas disponibles</div>
-                    <div class="empty-state-text">Intenta ajustar los filtros para ver más resultados.</div>
-                </div>
-            `;
-            return;
-        }
-
-        this.filteredZones.forEach(zone => {
-            const isSelected = this.selectedZone && this.selectedZone.id === zone.id;
-            const status = this.getZoneStatus(zone.availableSpots);
-            const zoneItem = document.createElement('div');
-            zoneItem.className = `zone-item ${isSelected ? 'selected' : ''}`;
-            zoneItem.dataset.zoneId = zone.id;
-            zoneItem.innerHTML = `
-                <div class="zone-item-header"><div class="zone-name">${zone.name}</div><span class="badge ${status.class}">${status.text}</span></div>
-                <div class="zone-address">📍 ${zone.address}</div>
-                <div class="zone-details">
-                    <div class="zone-price">$${zone.price.toLocaleString()}/hr</div>
-                    <div class="spots-bar"><div class="spots-fill ${(zone.availableSpots === 0 ? 'low' : (zone.availableSpots <= 5 ? 'medium' : 'high'))}" style="width: ${((zone.totalSpots - zone.availableSpots) / zone.totalSpots) * 100}%;"></div></div>
-                    <div class="spots-text">${zone.availableSpots}/${zone.totalSpots} cupos</div>
-                </div>
-            `;
-            listContainer.appendChild(zoneItem);
-        });
+    simulateRealTimeUpdates() {
+        setInterval(() => {
+            this.zonesData.forEach(z => {
+                const change = Math.floor(Math.random() * 3) - 1;
+                z.availableSpots = Math.max(0, Math.min(z.totalSpots, z.availableSpots + change));
+            });
+            this.updateUI();
+        }, 5000);
     }
 }
 
-document.addEventListener('DOMContentLoaded', () => { window.zoneManager = new ZoneManager(); });
+document.addEventListener('DOMContentLoaded', () => new ZoneManager());
