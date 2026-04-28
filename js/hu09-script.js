@@ -139,6 +139,7 @@ function setFieldSuccess(inputId, errorId) {
 
 function validateCreationForm(name, address, capacityInput) {
   let valid = true;
+  const capacity = Number(capacityInput);
 
   if (!name) {
     setError('zone-name', 'zone-name-error', 'El nombre es requerido.');
@@ -157,7 +158,10 @@ function validateCreationForm(name, address, capacityInput) {
   if (!capacityInput) {
     setError('zone-capacity', 'zone-capacity-error', 'La capacidad es requerida.');
     valid = false;
-  } else if (Number.parseInt(capacityInput, 10) < 1) {
+  } else if (!Number.isInteger(capacity)) {
+    setError('zone-capacity', 'zone-capacity-error', 'La capacidad debe ser un numero entero.');
+    valid = false;
+  } else if (capacity < 1) {
     setError('zone-capacity', 'zone-capacity-error', 'La capacidad debe ser mayor a 0.');
     valid = false;
   } else {
