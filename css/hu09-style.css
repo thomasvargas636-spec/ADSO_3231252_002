@@ -434,4 +434,79 @@
     from { opacity: 0; transform: translateY(16px); }
     to { opacity: 1; transform: translateY(0); }
   }
+
+/* ── RESPONSIVE ── */
+@media (max-width: 1200px) {
+  .sidebar { width: 190px; }
+  .content { padding: 22px; }
+  .section-title { font-size: 20px; }
+}
+
+@media (max-width: 992px) {
+  .layout { flex-direction: column; }
+  .sidebar {
+    width: 100%;
+    border-right: none;
+    border-bottom: 1px solid var(--border);
+  }
+  .logo { padding: 14px 16px; }
+  .nav { padding: 10px 12px; }
+  .nav-item { padding: 8px 10px; font-size: 13px; }
+  .sidebar-footer { display: none; }
+  .topbar { height: 56px; padding: 0 20px; }
+  .content { padding: 18px; }
+  .section-header {
+    flex-direction: column;
+    gap: 14px;
+    align-items: stretch;
+  }
+  .btn-primary, .btn-secondary { justify-content: center; }
+}
+
+@media (max-width: 768px) {
+  .main { width: 100%; }
+  .topbar { padding: 0 14px; }
+  .topbar-title { font-size: 14px; }
+  .content { padding: 14px; }
+  .section-title { font-size: 18px; }
+  .section-sub { font-size: 12px; }
+
+  .table-card {
+    overflow-x: auto;
+    -webkit-overflow-scrolling: touch;
+  }
+  table { min-width: 680px; }
+  th, td { padding: 10px 12px; font-size: 12px; }
+
+  .form-card {
+    max-width: 100%;
+    padding: 16px;
+  }
+  .fields-grid {
+    grid-template-columns: 1fr;
+    gap: 12px;
+    margin-bottom: 10px;
+  }
+  .form-actions {
+    flex-direction: column;
+  }
+  .form-actions .btn-primary,
+  .form-actions .btn-secondary {
+    width: 100%;
+  }
+}
+
+@media (max-width: 480px) {
+  .logo-img { height: 30px; }
+  .nav-label { margin-top: 10px; }
+  .content { padding: 12px; }
+  .section-title { font-size: 17px; }
+  .empty-state { padding: 28px 16px; }
+  .empty-icon { font-size: 32px; }
+  .empty-title { font-size: 14px; }
+  .empty-sub { font-size: 12px; }
+  .form-card-title { font-size: 14px; margin-bottom: 14px; }
+  .field label { font-size: 10px; }
+  .field input, .field select { font-size: 12px; }
+}
   
