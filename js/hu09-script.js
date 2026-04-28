@@ -50,6 +50,9 @@ function renderTable() {
       <td style="font-weight:600;">${zone.name}</td>
       <td style="color:var(--muted);">${zone.address}</td>
       <td>${zone.capacity}</td>
+      <td>${zone.status === 'active'
+        ? '<span class="badge badge-green">Activa</span>'
+        : '<span class="badge badge-red">Inactiva</span>'}</td>
       <td>
         <div class="action-btns">
           <button class="btn-edit" onclick="editZone(${index})">✏</button>
@@ -87,6 +90,7 @@ function clearForm() {
     }
     if (error) error.textContent = '';
   });
+  document.getElementById('zone-status').value = 'active';
   editIndexInput.value = '-1';
 }
 
@@ -97,6 +101,7 @@ function editZone(index) {
   document.getElementById('zone-name').value = zone.name;
   document.getElementById('zone-address').value = zone.address;
   document.getElementById('zone-capacity').value = zone.capacity;
+  document.getElementById('zone-status').value = zone.status || 'active';
   editIndexInput.value = String(index);
   showForm(true);
 }
@@ -179,6 +184,7 @@ document.getElementById('btn-save').addEventListener('click', () => {
   const name = document.getElementById('zone-name').value.trim();
   const address = document.getElementById('zone-address').value.trim();
   const capacityInput = document.getElementById('zone-capacity').value.trim();
+  const status = document.getElementById('zone-status').value;
   const editIndex = Number.parseInt(editIndexInput.value, 10);
 
   if (!validateCreationForm(name, address, capacityInput)) return;
@@ -190,7 +196,8 @@ document.getElementById('btn-save').addEventListener('click', () => {
       ...zones[editIndex],
       name,
       address,
-      capacity
+      capacity,
+      status
     };
     showList();
     renderTable();
@@ -203,6 +210,7 @@ document.getElementById('btn-save').addEventListener('click', () => {
     name,
     address,
     capacity,
+    status,
     reservations: 0
   });
 

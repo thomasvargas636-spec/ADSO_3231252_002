@@ -67,6 +67,7 @@
               <th>Nombre</th>
               <th>Dirección</th>
               <th>Capacidad</th>
+              <th>Estado</th>
               <th>Acciones</th>
             </tr>
           </thead>
@@ -110,6 +111,13 @@
             <input type="number" id="zone-capacity" placeholder="ej. 20" min="1" max="500" />
             <div class="error" id="zone-capacity-error"></div>
           </div>
+        </div>
+        <div class="field">
+          <label>Estado</label>
+          <select id="zone-status">
+            <option value="active">Activa</option>
+            <option value="inactive">Inactiva</option>
+          </select>
         </div>
 
         <div class="form-actions">
