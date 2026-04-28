@@ -47,6 +47,7 @@ function renderTable() {
       <td>
         <div class="action-btns">
           <button class="btn-edit" onclick="editZone(${index})">✏</button>
+          <button class="btn-del" onclick="deleteZone(${index})">🗑</button>
         </div>
       </td>
     `;
@@ -92,6 +93,23 @@ function editZone(index) {
   document.getElementById('zone-capacity').value = zone.capacity;
   editIndexInput.value = String(index);
   showForm(true);
+}
+
+function deleteZone(index) {
+  const zone = zones[index];
+  if (!zone) return;
+
+  if ((zone.reservations || 0) > 0) {
+    showSuccess('No se puede eliminar: la zona tiene reservas activas.');
+    return;
+  }
+
+  const confirmed = window.confirm(`¿Deseas eliminar la zona ${zone.name}?`);
+  if (!confirmed) return;
+
+  zones.splice(index, 1);
+  renderTable();
+  showSuccess('Zona eliminada correctamente.');
 }
 
 function setError(inputId, errorId, message) {
@@ -171,7 +189,8 @@ document.getElementById('btn-save').addEventListener('click', () => {
     id: getNextZoneId(),
     name,
     address,
-    capacity
+    capacity,
+    reservations: 0
   });
 
   showList();
