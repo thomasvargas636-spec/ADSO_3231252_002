@@ -1,5 +1,6 @@
 // ── DATOS ──
 let zones = [];
+const MAX_ZONE_CAPACITY = 500;
 
 // ── REFERENCIAS ──
 const screenList = document.getElementById('screen-list');
@@ -163,6 +164,9 @@ function validateCreationForm(name, address, capacityInput) {
     valid = false;
   } else if (capacity < 1) {
     setError('zone-capacity', 'zone-capacity-error', 'La capacidad debe ser mayor a 0.');
+    valid = false;
+  } else if (capacity > MAX_ZONE_CAPACITY) {
+    setError('zone-capacity', 'zone-capacity-error', `La capacidad maxima permitida es ${MAX_ZONE_CAPACITY}.`);
     valid = false;
   } else {
     setFieldSuccess('zone-capacity', 'zone-capacity-error');
