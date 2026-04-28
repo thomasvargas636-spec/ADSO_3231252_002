@@ -31,6 +31,12 @@ function showSuccess(message) {
   setTimeout(() => successMsg.classList.add('hidden'), 3000);
 }
 
+function refreshAfterChange(message) {
+  showList();
+  renderTable();
+  showSuccess(message);
+}
+
 function renderTable() {
   zonesBody.innerHTML = '';
 
@@ -132,8 +138,7 @@ function deleteZone(index) {
   }
 
   zones.splice(zoneToDeleteIndex, 1);
-  renderTable();
-  showSuccess('Zona eliminada correctamente.');
+  refreshAfterChange('Zona eliminada correctamente.');
 }
 
 function setError(inputId, errorId, message) {
@@ -212,9 +217,7 @@ document.getElementById('btn-save').addEventListener('click', () => {
       capacity,
       status
     };
-    showList();
-    renderTable();
-    showSuccess('Cambios guardados correctamente.');
+    refreshAfterChange('Cambios guardados correctamente.');
     return;
   }
 
@@ -227,9 +230,7 @@ document.getElementById('btn-save').addEventListener('click', () => {
     reservations: 0
   });
 
-  showList();
-  renderTable();
-  showSuccess('Cambios guardados correctamente.');
+  refreshAfterChange('Cambios guardados correctamente.');
 });
 
 ['zone-name', 'zone-address', 'zone-capacity'].forEach(id => {
