@@ -106,11 +106,16 @@ function editZone(index) {
   showForm(true);
 }
 
+function hasActiveReservations(zone) {
+  return (zone?.reservations || 0) > 0;
+}
+
 function deleteZone(index) {
   const zone = zones[index];
   if (!zone) return;
 
-  if ((zone.reservations || 0) > 0) {
+  // Primera validacion: bloquear antes de mostrar confirmacion.
+  if (hasActiveReservations(zone)) {
     showSuccess('No se puede eliminar: la zona tiene reservas activas.');
     return;
   }
@@ -118,7 +123,15 @@ function deleteZone(index) {
   const confirmed = window.confirm(`¿Deseas eliminar la zona ${zone.name}?`);
   if (!confirmed) return;
 
-  zones.splice(index, 1);
+  // Segunda validacion: volver a revisar justo antes de eliminar.
+  const zoneToDeleteIndex = zones.findIndex(currentZone => currentZone.id === zone.id);
+  if (zoneToDeleteIndex === -1) return;
+  if (hasActiveReservations(zones[zoneToDeleteIndex])) {
+    showSuccess('No se puede eliminar: la zona tiene reservas activas.');
+    return;
+  }
+
+  zones.splice(zoneToDeleteIndex, 1);
   renderTable();
   showSuccess('Zona eliminada correctamente.');
 }
