@@ -214,7 +214,7 @@ document.getElementById('btn-save').addEventListener('click', () => {
     };
     showList();
     renderTable();
-    showSuccess('Zona actualizada correctamente.');
+    showSuccess('Cambios guardados correctamente.');
     return;
   }
 
@@ -229,7 +229,7 @@ document.getElementById('btn-save').addEventListener('click', () => {
 
   showList();
   renderTable();
-  showSuccess('Zona creada correctamente.');
+  showSuccess('Cambios guardados correctamente.');
 });
 
 ['zone-name', 'zone-address', 'zone-capacity'].forEach(id => {
