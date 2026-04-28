@@ -12,11 +12,16 @@ const formCardTitle = document.getElementById('form-card-title');
 const editIndexInput = document.getElementById('edit-index');
 
 function getNextZoneId() {
-  const currentMax = zones.reduce((max, zone) => {
-    const numericId = Number.parseInt(zone.id.replace('ZN-', ''), 10);
-    return Number.isNaN(numericId) ? max : Math.max(max, numericId);
-  }, 0);
-  return `ZN-${String(currentMax + 1).padStart(3, '0')}`;
+  const existingIds = new Set(zones.map(zone => zone.id));
+  let nextNumber = 1;
+  let nextId = `ZN-${String(nextNumber).padStart(3, '0')}`;
+
+  while (existingIds.has(nextId)) {
+    nextNumber += 1;
+    nextId = `ZN-${String(nextNumber).padStart(3, '0')}`;
+  }
+
+  return nextId;
 }
 
 function showSuccess(message) {
